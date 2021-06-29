@@ -1,4 +1,9 @@
-export const prefectures = [
+interface Prefectures {
+  prefCode: number;
+  prefName: string;
+}
+
+export const prefectures: Array<Prefectures> = [
   { prefCode: 1, prefName: '北海道' },
   { prefCode: 2, prefName: '青森県' },
   { prefCode: 3, prefName: '岩手県' },

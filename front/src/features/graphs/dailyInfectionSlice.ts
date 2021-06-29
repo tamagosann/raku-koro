@@ -56,8 +56,7 @@ export const fetchDailyInfectionAsync = createAsyncThunk(
           encoding: 'Shift-JIS',
           // エラーを取り除く
           skipEmptyLines: true,
-          transformHeader: function (header, index): string {
-            console.log('transformHeader', header, index);
+          transformHeader: function (header): string {
             if (header === '各地の感染者数_1日ごとの発表数') {
               return 'daily_infection';
             } else if (header === '各地の感染者数_累計') {
@@ -69,9 +68,9 @@ export const fetchDailyInfectionAsync = createAsyncThunk(
             } else if (header === '日付') {
               return 'date';
             } else if (header === '都道府県コード') {
-              return 'pre_number';
+              return 'pref_code';
             } else if (header === '都道府県名') {
-              return 'pre_name';
+              return 'pref_name';
             } else {
               return 'default';
             }
