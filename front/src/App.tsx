@@ -4,10 +4,7 @@ import Router from './Router';
 import { Header } from './components/header';
 
 // slice
-import {
-  fetchDailyInfectionAsync,
-  selectDailyInfection,
-} from './features/graphs/dailyInfection';
+import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
 
 const App = () => {
   const dispatch = useDispatch();
