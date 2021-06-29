@@ -27,7 +27,7 @@ const Graph8 = () => {
 
     console.log('items',prefecture_daily_infection);
 
-    const target_prefecture = prefecture_daily_infection.data.filter(el => el["都道府県コード"] == prefecture)
+    const target_prefecture = prefecture_daily_infection.data.filter((el:any) => el["都道府県コード"] == prefecture)
     console.log(target_prefecture);
 
     const select_prefecture = (e:any) => setPrefecture(e.target.value)
