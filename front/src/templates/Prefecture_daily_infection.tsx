@@ -12,8 +12,9 @@ import {
   Tooltip
 } from "recharts";
 import { Inner } from "../components/inner";
-import {useSelector} from 'react-redux'
+// import {useSelector} from 'react-redux'
 import {selectDailyInfection} from '../features/graphs/dailyInfectionSlice'
+import {useAppSelector} from '../app/hooks'
 
 
 
@@ -22,7 +23,7 @@ const Graph8 = () => {
   const [prefecture,setPrefecture] = useState(1)
   const [selector,setSelector] = useState(0)
 
-  const prefecture_daily_infection = useSelector(selectDailyInfection)
+  const prefecture_daily_infection = useAppSelector(selectDailyInfection)
 
     console.log('items',prefecture_daily_infection);
 
