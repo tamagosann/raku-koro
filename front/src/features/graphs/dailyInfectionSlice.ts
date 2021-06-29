@@ -56,10 +56,30 @@ export const fetchDailyInfectionAsync = createAsyncThunk(
           encoding: 'Shift-JIS',
           // エラーを取り除く
           skipEmptyLines: true,
+          transformHeader: function (header): string {
+            if (header === '各地の感染者数_1日ごとの発表数') {
+              return 'daily_infection';
+            } else if (header === '各地の感染者数_累計') {
+              return 'total_infection';
+            } else if (header === '各地の死者数_1日ごとの発表数') {
+              return 'daily_dead';
+            } else if (header === '各地の死者数_累計') {
+              return 'total_dead';
+            } else if (header === '日付') {
+              return 'date';
+            } else if (header === '都道府県コード') {
+              return 'pref_code';
+            } else if (header === '都道府県名') {
+              return 'pref_name';
+            } else {
+              return 'default';
+            }
+          },
         });
         // 取得したデータだけを取り出す
         const fetch_daily_infection_data =
           fetch_daily_infection.data as Array<Data>;
+        console.log('fetch_daily_infection_data', fetch_daily_infection_data);
         // 取り出したデータを格納する
         fetchData.data = fetch_daily_infection_data;
       });
