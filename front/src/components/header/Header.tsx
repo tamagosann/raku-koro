@@ -33,6 +33,9 @@ const Header: React.FC = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const doLogout () => {
+    
+  }
   return (
     <div className={classes.grow}>
       <AppBar>
@@ -52,7 +55,7 @@ const Header: React.FC = () => {
             <Typography>こんにちは、武藤遊戯さん</Typography>
               <PrimaryButton
                 label={"ログイン"}
-                onClick={() => {}}
+                onClick={() => history.push("/login")}}
               />
               <SecondaryButton
                 label={"ログアウト"}
