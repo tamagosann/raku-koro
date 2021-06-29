@@ -18,7 +18,7 @@ import {useAppSelector} from '../app/hooks'
 
 
 
-const Graph8 = () => {
+const PrefectureDailyInfention = () => {
 
   const [prefecture,setPrefecture] = useState(1)
   const [selector,setSelector] = useState(0)
@@ -27,7 +27,7 @@ const Graph8 = () => {
 
     console.log('items',prefecture_daily_infection);
 
-    const target_prefecture = prefecture_daily_infection.data.filter((el:any) => el["都道府県コード"] == prefecture)
+    const target_prefecture = prefecture_daily_infection.data.filter((el:any) => el.pref_code == prefecture)
     console.log(target_prefecture);
 
     const select_prefecture = (e:any) => setPrefecture(e.target.value)
@@ -99,20 +99,21 @@ const Graph8 = () => {
         {selector == 0? 
         <ResponsiveContainer width="100%" height="40%" minHeight={400}>
         <LineChart data={target_prefecture}>
-          <XAxis dataKey="日付"  tick={{ fontSize: '.7rem' }} />
+          <XAxis dataKey="date"  tick={{ fontSize: '.7rem' }} />
           <YAxis />
           <Tooltip />
           <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Legend  verticalAlign="top" wrapperStyle={{ lineHeight: '40px' }} />
+          <Legend verticalAlign="top" wrapperStyle={{ lineHeight: '40px' }} />
           <Line
             type="monotone"
-            dataKey="各地の感染者数_1日ごとの発表数"
+            dataKey="daily_infection"
             stroke="#fd7e00"
             strokeWidth={3}
+            name="日別感染者数"
           />
           
           <Brush
-            dataKey="日付"
+            dataKey="date"
             stroke="#fd7e00" 
             startIndex={target_prefecture.length-31}
             endIndex={target_prefecture.length - 1}
@@ -121,20 +122,21 @@ const Graph8 = () => {
       </ResponsiveContainer> :
       <ResponsiveContainer width="100%" height="40%" minHeight={400}>
       <LineChart data={target_prefecture}>
-        <XAxis dataKey="日付"  tick={{ fontSize: '.7rem' }} />
+        <XAxis dataKey="date"  tick={{ fontSize: '.7rem' }} />
         <YAxis />
         <Tooltip />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
         <Legend  verticalAlign="top" wrapperStyle={{ lineHeight: '40px' }} />
         <Line
           type="monotone"
-          dataKey="各地の感染者数_累計"
+          dataKey="total_infection"
           stroke="#fd7e00"
           strokeWidth={3}
+          name="累計感染者数"
         />
         
         <Brush
-          dataKey="日付"
+          dataKey="date"
           stroke="#fd7e00" 
           />
       </LineChart>
@@ -150,4 +152,4 @@ const Graph8 = () => {
   );
 };
 
-export default Graph8;
+export default PrefectureDailyInfention;
