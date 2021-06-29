@@ -78,7 +78,6 @@ export const dailyInfectionSlice = createSlice({
       // loadingを実現するためのstatusを「loading」変更
       .addCase(fetchDailyInfectionAsync.pending, (state) => {
         const clonedState = { ...state };
-        console.log('clonedState', clonedState);
         clonedState.status = 'loading';
         return clonedState;
       })
