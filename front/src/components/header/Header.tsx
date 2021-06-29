@@ -34,7 +34,7 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const doLogout () => {
-    
+    auth.signOut()
   }
   return (
     <div className={classes.grow}>
