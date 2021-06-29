@@ -1,54 +1,103 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+  current,
+} from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import axios from 'axios';
+import Papa from 'papaparse';
 
-export interface graphState {
-  value: number;
-  status: 'idle' | 'loading' | 'failed';
+interface Data {
+  各地の感染者数_1日ごとの発表数: number;
+  各地の感染者数_累計: number;
+  各地の死者数_1日ごとの発表数: number;
+  各地の死者数_累計: number;
+  日付: string;
+  都道府県コード: number;
+  都道府県名: string;
+}
+export interface GraphState {
+  data: Array<Data>;
+  status: 'success' | 'loading' | 'failed';
 }
 
-const initialState: graphState = {
-  value: 0,
-  status: 'idle',
+const initialState: GraphState = {
+  data: [
+    {
+      各地の感染者数_1日ごとの発表数: 0,
+      各地の感染者数_累計: 0,
+      各地の死者数_1日ごとの発表数: 0,
+      各地の死者数_累計: 0,
+      日付: '',
+      都道府県コード: 0,
+      都道府県名: '',
+    },
+  ],
+  status: 'loading',
 };
 
-//非同期処理はこの形で処理　<>内の型は
-export const incrementAsync = createAsyncThunk<any,any,{ state: RootState }>(
-  'thread/fetchCount',
-  async (amount: number) => {
-    const response = "dammy"
-    // The value we return becomes the `fulfilled` action payload
-    return response
+//非同期処理はこの形で処理<>内の型は
+export const fetchDailyInfectionAsync = createAsyncThunk(
+  'infection/fetchInfection',
+  async () => {
+    let fetchData: GraphState = { ...initialState };
+    await axios
+      .get(
+        'https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv'
+      )
+      .then((response) => {
+        const fetch_daily_infection = Papa.parse(response.data, {
+          // csvヘッダーをプロパティに変更
+          header: true,
+          // 文字列を数値に変換
+          dynamicTyping: true,
+          // 文字化け防止
+          encoding: 'Shift-JIS',
+          // エラーを取り除く
+          skipEmptyLines: true,
+        });
+        // 取得したデータだけを取り出す
+        const fetch_daily_infection_data =
+          fetch_daily_infection.data as Array<Data>;
+        // 取り出したデータを格納する
+        fetchData.data = fetch_daily_infection_data;
+      });
+    return fetchData;
   }
 );
 
-export const graph1Slice = createSlice({
-  name: 'graph1',
+export const dailyInfectionSlice = createSlice({
+  name: 'dailyInfection',
   initialState,
   // 非同期処理を行わないreducerはこっち
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    },
-  },
-  //　非同期処理を行うreducerはこっち　fulfilledを使う
+  reducers: {},
+  //非同期処理を行うreducerはこっちfulfilledを使う
   extraReducers: (builder) => {
     builder
-      .addCase(incrementAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.value += action.payload;
-      });
+      // loadingを実現するためのstatusを「loading」変更
+      .addCase(fetchDailyInfectionAsync.pending, (state) => {
+        const clonedState = { ...state };
+        console.log('clonedState', clonedState);
+        clonedState.status = 'loading';
+        return clonedState;
+      })
+      // 完了を表現するためのstatusを「success」変更
+      .addCase(
+        fetchDailyInfectionAsync.fulfilled,
+        (state, action: PayloadAction<GraphState>) => {
+          const clonedState: GraphState = { ...state };
+          clonedState.status = 'success';
+          clonedState.data = action.payload.data as Array<Data>;
+          return clonedState;
+        }
+      );
   },
 });
 
-export const { increment, decrement, incrementByAmount } = graph1Slice.actions;
+// export const { increment, decrement, incrementByAmount } = graph1Slice.actions;
 
 //useAppSelectorで呼び出したいデーターをここで定義
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectDailyInfection = (state: RootState) => state.dailyInfection;
 
-export default graph1Slice.reducer;
+export default dailyInfectionSlice.reducer;
