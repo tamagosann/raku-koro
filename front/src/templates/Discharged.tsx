@@ -3,8 +3,8 @@ import {
   Brush,
   CartesianGrid,
   Legend,
-  Area,
-  AreaChart,
+  Line,
+  LineChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -12,44 +12,42 @@ import {
 } from "recharts";
 import { Inner } from "../components/inner";
 import { Button, Typography } from "@material-ui/core";
-import { useAppSelector } from '../app/hooks';
-import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
 
-interface Data {
-  date: string;
-  npatients: number;
-  adpatients : number;
-}
 
 const InfectedPerson = () => {
-  const totalCorona = useAppSelector(selectTotalCorona)
-  const cumulativeInfectedPerson: Array<Data> = totalCorona.data
-
+  const data = [
+    { date: "2021-06-28", 感染者数: 635 },
+    { date: "2021-06-29", 感染者数: 700 },
+    { date: "2021-06-30", 感染者数: 810 },
+    { date: "2021-07-01", 感染者数: 943 },
+    { date: "2021-07-02", 感染者数: 1023 },
+    { date: "2021-07-03", 感染者数: 788 },
+    { date: "2021-07-04", 感染者数: 999 },
+  ];
 
   return (
     <Inner>
-      <Typography variant="h5" align="center">感染者数推移（累計）</Typography>
-      {/* <Typography>
+      <Typography variant="h5" align="center">感染者数推移</Typography>
+      <Typography>
         <Button variant="contained" style={{color: "#000"}}>累計</Button>
         <Button variant="contained" style={{color: "#000"}}>日別</Button>
-      </Typography> */}
+      </Typography>
       <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-        <AreaChart data={cumulativeInfectedPerson}>
+        <LineChart data={data}>
           <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
           <YAxis />
           <Tooltip />
           <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
           <Legend verticalAlign="top"/>
-          <Area
+          <Line
             type="monotone"
-            dataKey="npatients"
+            dataKey="感染者数"
             name="感染者数"
             stroke="#8884d8"
-            fill="#8884b8"
             strokeWidth={3}
           />
           <Brush dataKey="date" stroke="#8884d8" />
-        </AreaChart>
+        </LineChart>
       </ResponsiveContainer>
     </Inner>
   );
