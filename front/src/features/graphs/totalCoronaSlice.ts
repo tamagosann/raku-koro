@@ -42,8 +42,8 @@ export const fetchTotalCoronaAsync = createAsyncThunk(
           // 取得したデータだけを取り出す
         const fetch_total_corona_data =
         fetch_total_corona.data as Array<Data>;
-        console.log('トータル感染者')
-        console.log(fetch_total_corona_data)
+        // console.log('トータル感染者')
+        // console.log(fetch_total_corona_data)
         // 取り出したデータを格納する
         fetchData.data = fetch_total_corona_data;
       });

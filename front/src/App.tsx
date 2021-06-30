@@ -11,7 +11,12 @@ import { BedOccupancyRate } from './templates/BedOccupancyRate';
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
 import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
 import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
+import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
 import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSlice';
+
+
+
+
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,6 +25,7 @@ const App = () => {
     dispatch(fetchDailyCoronaAsync());
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchTotalCoronaAsync());
+    dispatch(fetchTotalDethAsync());
     dispatch(fetchBedOccupancyRateAsync());
   }, []);
 
@@ -27,7 +33,11 @@ const App = () => {
     <>
       <Header />
       <Router />
+<<<<<<< HEAD
       <BedOccupancyRate />
+=======
+    
+>>>>>>> 04c4a4a0819c091443e251b8664fb225b948d86f
     </>
   );
 };
