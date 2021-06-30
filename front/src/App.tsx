@@ -6,6 +6,7 @@ import { Prefecture } from './components/atoms/Prefecture';
 
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
+import { PrefectureDailyDead } from './templates/PrefectureDailyDead';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,8 @@ const App = () => {
     <>
       <Header />
       <Router />
-      <Prefecture />
+      {/* <Prefecture /> */}
+      <PrefectureDailyDead />
     </>
   );
 };

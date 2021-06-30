@@ -20,9 +20,17 @@ const useStyles = makeStyles((theme: Theme) =>
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
+      display: 'block',
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
+    },
+    centerText: {
+      textAlign: 'center',
+      display: 'block',
+    },
+    width: {
+      width: '250px',
     },
   })
 );
@@ -39,13 +47,19 @@ export const Prefecture = () => {
 
   return (
     <>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">都道府県</InputLabel>
+      <FormControl className={classes.formControl + ' ' + classes.centerText}>
+        {/* <InputLabel
+          className={classes.centerText}
+          id="demo-simple-select-helper-label"
+        >
+          都道府県
+        </InputLabel> */}
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
           value={prefecture}
           onChange={handleChange}
+          className={classes.width}
         >
           {prefectures.map((prefecture, index) => (
             <MenuItem key={index} value={String(prefecture.prefCode)}>
@@ -53,7 +67,9 @@ export const Prefecture = () => {
             </MenuItem>
           ))}
         </Select>
-        <FormHelperText>都道府県を選択してください。</FormHelperText>
+        <FormHelperText className={classes.centerText}>
+          都道府県を選択してください。
+        </FormHelperText>
       </FormControl>
     </>
   );
