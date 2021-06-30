@@ -12,6 +12,10 @@ import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
 import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
 import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
 import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSlice';
+
+
+
+
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,6 +32,7 @@ const App = () => {
     <>
       <Header />
       <Router />
+    
     </>
   );
 };
