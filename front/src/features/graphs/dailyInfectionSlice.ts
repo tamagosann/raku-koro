@@ -56,7 +56,7 @@ export const fetchDailyInfectionAsync = createAsyncThunk(
           encoding: 'Shift-JIS',
           // エラーを取り除く
           skipEmptyLines: true,
-          transformHeader: function (header): string {
+          transformHeader: function (header:string): string {
             if (header === '各地の感染者数_1日ごとの発表数') {
               return 'daily_infection';
             } else if (header === '各地の感染者数_累計') {

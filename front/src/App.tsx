@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Router from "./Router";
-import { Header } from "./components/header";
 import { auth } from "./firebase";
 import { useAppSelector } from "./app/hooks";
+
+//コンポーネント
+import { Header } from "./components/header";
+import { fetchDailyCoronaAsync } from "./features/graphs/dailyCoronaSlice";
 import { LoadingPage } from "./components/atoms";
 
 // slice
 import { fetchDailyInfectionAsync } from "./features/graphs/dailyInfectionSlice";
-import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
+import { fetchDailyDeadAsync } from "./features/graphs/dailyDeadSlice";
+import { fetchTotalCoronaAsync } from "./features/graphs/totalCoronaSlice";
+import { fetchTotalDethAsync } from "./features/graphs/totalDethSlice";
+import { fetchBedOccupancyRateAsync } from "./features/graphs/bedOccupancyRateSlice";
 import {
   unSetUser,
   selectUserStatus,
@@ -31,7 +37,11 @@ const App = () => {
       }
     });
     dispatch(fetchDailyInfectionAsync());
+    dispatch(fetchDailyDeadAsync());
+    dispatch(fetchDailyCoronaAsync());
     dispatch(fetchTotalCoronaAsync());
+    dispatch(fetchTotalDethAsync());
+    dispatch(fetchBedOccupancyRateAsync());
   }, []);
 
   return (
