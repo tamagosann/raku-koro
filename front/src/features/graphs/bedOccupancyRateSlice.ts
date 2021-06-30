@@ -8,31 +8,18 @@ import { RootState } from '../../app/store';
 import axios from 'axios';
 
 interface Data {
-都道府県番号: '',
-都道府県名: '',
-PCR検査陽性者数: '',
-入院者数: '',
-入院患者フェーズ: string,
-入院患者受入即応病床数: '',
-入院患者受入確保病床: '',
-入院患者病床使用率: '',
-入院率: '',
-うち重症者数: '',
-重症者フェーズ: '',
-重症患者受入即応病床数: '',
-重症患者受入確保病床数: '',
-重症患者病床使用率: '',
-宿泊療養者数: '',
-宿泊療養フェーズ: '',
-宿泊施設受入即応室数: '',
-宿泊施設受入可能室数: string
-宿泊療養施設居室使用率: '',
-自宅療養者数: '',
-うち社会福祉施設等療養者数: '',
-療養先調整中の人数: '',
-うち入院先調整中の人数: '',
-更新日: '',
-出典: string
+  pcr_positive: number
+  injured: number
+  secure_bed: number
+  use_bed_rate: string
+  inpatient: number
+  source: string
+  update: string
+  home_recuperator: number
+  prefecture: string
+  pref_code: number
+  injured_bed: number
+  use_injured_bed_rate: string
 }
 export interface GraphState {
   data: Array<Data>;
@@ -42,31 +29,18 @@ export interface GraphState {
 const initialState: GraphState = {
   data: [
     {
-      都道府県番号: '',
-      都道府県名: '',
-      PCR検査陽性者数: '',
-      入院者数: '',
-      入院患者フェーズ: '',
-      入院患者受入即応病床数: '',
-      入院患者受入確保病床: '',
-      入院患者病床使用率: '',
-      入院率: '',
-      うち重症者数: '',
-      重症者フェーズ: '',
-      重症患者受入即応病床数: '',
-      重症患者受入確保病床数: '',
-      重症患者病床使用率: '',
-      宿泊療養者数: '',
-      宿泊療養フェーズ: '',
-      宿泊施設受入即応室数: '',
-      宿泊施設受入可能室数: '',
-      宿泊療養施設居室使用率: '',
-      自宅療養者数: '',
-      うち社会福祉施設等療養者数: '',
-      療養先調整中の人数: '',
-      うち入院先調整中の人数: '',
-      更新日: '',
-      出典: '',
+      pcr_positive: 0,
+  injured: 0,
+  secure_bed: 0,
+  use_bed_rate: '',
+  inpatient: 0,
+  source: '',
+  update: '',
+  home_recuperator: 0,
+  prefecture: '',
+  pref_code: 0,
+  injured_bed: 0,
+  use_injured_bed_rate: ''
     },
   ],
   status: 'loading',
@@ -85,11 +59,35 @@ export const fetchBedOccupancyRateAsync = createAsyncThunk(
         const fetch_beb_occupansy_rate = response
           // 取得したデータだけを取り出す
         const fetch_beb_occupansy_rate_data =
-        fetch_beb_occupansy_rate.data as Array<Data>;
-        console.log('病床使用率')
+        fetch_beb_occupansy_rate.data;
+        
         console.log(fetch_beb_occupansy_rate_data)
+
+        const tranceData = []
+        for (let i = 0; i < fetch_beb_occupansy_rate_data.length; i++) {
+          tranceData.push({
+            pcr_positive: Number(fetch_beb_occupansy_rate_data[i]["PCR検査陽性者数"]),
+            injured: Number(fetch_beb_occupansy_rate_data[i]["うち重症者数"]),
+            secure_bed: Number(fetch_beb_occupansy_rate_data[i]["入院患者受入確保病床"]),
+            use_bed_rate: fetch_beb_occupansy_rate_data[i]["入院患者病床使用率"],
+            inpatient: Number(fetch_beb_occupansy_rate_data[i]["入院者数"]),
+            source: fetch_beb_occupansy_rate_data[i]["出典"],
+            update: fetch_beb_occupansy_rate_data[i]["更新日"],
+            home_recuperator: Number(fetch_beb_occupansy_rate_data[i]["自宅療養者数"]),
+            prefecture: fetch_beb_occupansy_rate_data[i]["都道府県名"],
+            pref_code: Number(fetch_beb_occupansy_rate_data[i]["都道府県番号"]),
+            injured_bed: Number(fetch_beb_occupansy_rate_data[i]["重症患者受入確保病床数"]),
+            use_injured_bed_rate: fetch_beb_occupansy_rate_data[i]["重症患者病床使用率"]
+          });
+
+          
+          
+}
+
+
+
         // 取り出したデータを格納する
-        fetchData.data = fetch_beb_occupansy_rate_data;
+        fetchData.data = tranceData;
       });
     return fetchData;
   }
