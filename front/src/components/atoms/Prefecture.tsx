@@ -1,8 +1,4 @@
-import React, { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
-
-// sliceのimport
-import { selectedPrefecture } from '../../features/common/prefectureSlice';
+import React from 'react';
 
 // common.jsから都道府県の情報を取得する
 import { prefectures } from '../../common/prefecture';
@@ -20,32 +16,51 @@ const useStyles = makeStyles((theme: Theme) =>
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
+      display: 'block',
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
     },
+    contentCenter: {
+      display: 'block',
+      width: '300px',
+      margin: '0 auto',
+      marginBottom: '32px',
+    },
+    centerText: {
+      textAlign: 'center',
+    },
+    width: {
+      width: '100%',
+    },
   })
 );
 
-export const Prefecture = () => {
-  const dispatch = useAppDispatch();
+interface Props {
+  prefecture: string;
+  setPrefecture: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const Prefecture = ({ prefecture, setPrefecture }: Props) => {
   const classes = useStyles();
-  const [prefecture, setPrefecture] = useState('');
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPrefecture(event.target.value as string);
-    const prefCode = event.target.value as string;
-    dispatch(selectedPrefecture(Number(prefCode)));
   };
 
   return (
     <>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">都道府県</InputLabel>
+      <FormControl
+        className={classes.formControl + ' ' + classes.contentCenter}
+      >
+        <InputLabel color="secondary" id="demo-simple-select-helper-label">
+          都道府県
+        </InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
           value={prefecture}
           onChange={handleChange}
+          className={classes.width + ' ' + classes.centerText}
         >
           {prefectures.map((prefecture, index) => (
             <MenuItem key={index} value={String(prefecture.prefCode)}>
@@ -53,7 +68,9 @@ export const Prefecture = () => {
             </MenuItem>
           ))}
         </Select>
-        <FormHelperText>都道府県を選択してください。</FormHelperText>
+        <FormHelperText className={classes.centerText}>
+          都道府県を選択してください。
+        </FormHelperText>
       </FormControl>
     </>
   );
