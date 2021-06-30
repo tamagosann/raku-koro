@@ -4,8 +4,6 @@ import Router from './Router';
 import { Header } from './components/header';
 import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
 
-import { BedOccupancyRate } from './templates/BedOccupancyRate';
-
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
 import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
@@ -16,7 +14,7 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchDailyDeadAsync());
-    
+
     dispatch(fetchDailyCoronaAsync());
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchTotalCoronaAsync());
@@ -26,7 +24,6 @@ const App = () => {
     <>
       <Header />
       <Router />
-      <BedOccupancyRate />
     </>
   );
 };
