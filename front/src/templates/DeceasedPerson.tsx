@@ -13,17 +13,17 @@ import {
 import { Inner } from "../components/inner";
 import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
-import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
+import { selectTotalDeth } from '../features/graphs/totalDethSlice';
 
 interface Data {
   date: string;
-  npatients: number;
-  adpatients : number;
+  ndeaths: number;
 }
 
 const DeceasedPerson = () => {
-  const totalCorona = useAppSelector(selectTotalCorona)
-  const cumulativeInfectedPerson: Array<Data> = totalCorona.data
+  const totalDeth = useAppSelector(selectTotalDeth)
+  const dethPerson: Array<Data> = totalDeth.data
+  console.log('死亡者', dethPerson)
 
 
   return (
@@ -34,7 +34,7 @@ const DeceasedPerson = () => {
         <Button variant="contained" style={{color: "#000"}}>日別</Button>
       </Typography> */}
       <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-        <AreaChart data={cumulativeInfectedPerson}>
+        <AreaChart data={dethPerson}>
           <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
           <YAxis />
           <Tooltip />
@@ -42,7 +42,7 @@ const DeceasedPerson = () => {
           <Legend verticalAlign="top"/>
           <Area
             type="monotone"
-            dataKey="npatients"
+            dataKey="ndeaths"
             name="死亡者数"
             stroke="#8884d8"
             fill="#8884b8"

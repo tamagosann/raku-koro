@@ -7,6 +7,7 @@ import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
 import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
+import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const App = () => {
     dispatch(fetchDailyCoronaAsync());
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchTotalCoronaAsync());
+    dispatch(fetchTotalDethAsync());
   }, []);
 
   return (
