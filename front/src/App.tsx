@@ -8,12 +8,14 @@ import { BedOccupancyRate } from './templates/BedOccupancyRate';
 
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
+import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchDailyCoronaAsync());
     dispatch(fetchDailyInfectionAsync());
+    dispatch(fetchTotalCoronaAsync());
   }, []);
 
   return (
