@@ -85,7 +85,7 @@ const Header: React.FC = () => {
                 <div
                   className={classes.graphs}
                   key={index}
-                  style={{ marginRight: 30 }}
+                  style={{ marginRight: 20, marginLeft: 20 }}
                 >
                   <Grid spacing={2}>
                     <Grid>
