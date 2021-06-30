@@ -8,7 +8,7 @@ import { RootState } from '../../app/store';
 import axios from 'axios';
 import Papa from 'papaparse';
 
-interface Data {
+export interface Data {
   daily_infection: number;
   total_infection: number;
   daily_dead: number;
