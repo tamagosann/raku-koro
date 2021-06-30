@@ -105,3 +105,4 @@ dist
 
 # vscode debug folder
 .vscode
+.DS_Store

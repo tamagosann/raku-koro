@@ -8,6 +8,7 @@ import { LoadingPage } from "./components/atoms";
 
 // slice
 import { fetchDailyInfectionAsync } from "./features/graphs/dailyInfectionSlice";
+import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
 import {
   unSetUser,
   selectUserStatus,
@@ -30,6 +31,7 @@ const App = () => {
       }
     });
     dispatch(fetchDailyInfectionAsync());
+    dispatch(fetchTotalCoronaAsync());
   }, []);
 
   return (
