@@ -7,7 +7,7 @@ import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
 import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
-import Graph from './templates/Prefecture_daily_infection'
+import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,13 +17,13 @@ const App = () => {
     
     dispatch(fetchDailyCoronaAsync());
     dispatch(fetchDailyInfectionAsync());
+    dispatch(fetchTotalCoronaAsync());
   }, []);
 
   return (
     <>
       <Header />
       <Router />
-      <Graph />
     </>
   );
 };
