@@ -66,17 +66,17 @@ export const fetchBedOccupancyRateAsync = createAsyncThunk(
         const tranceData = []
         for (let i = 0; i < fetch_beb_occupansy_rate_data.length; i++) {
           tranceData.push({
-            pcr_positive: fetch_beb_occupansy_rate_data[i]["PCR検査陽性者数"],
-            injured: fetch_beb_occupansy_rate_data[i]["うち重症者数"],
-            secure_bed: fetch_beb_occupansy_rate_data[i]["入院患者受入確保病床"],
+            pcr_positive: Number(fetch_beb_occupansy_rate_data[i]["PCR検査陽性者数"]),
+            injured: Number(fetch_beb_occupansy_rate_data[i]["うち重症者数"]),
+            secure_bed: Number(fetch_beb_occupansy_rate_data[i]["入院患者受入確保病床"]),
             use_bed_rate: fetch_beb_occupansy_rate_data[i]["入院患者病床使用率"],
-            inpatient: fetch_beb_occupansy_rate_data[i]["入院者数"],
+            inpatient: Number(fetch_beb_occupansy_rate_data[i]["入院者数"]),
             source: fetch_beb_occupansy_rate_data[i]["出典"],
             update: fetch_beb_occupansy_rate_data[i]["更新日"],
-            home_recuperator: fetch_beb_occupansy_rate_data[i]["自宅療養者数"],
+            home_recuperator: Number(fetch_beb_occupansy_rate_data[i]["自宅療養者数"]),
             prefecture: fetch_beb_occupansy_rate_data[i]["都道府県名"],
-            pref_code: fetch_beb_occupansy_rate_data[i]["都道府県番号"],
-            injured_bed: fetch_beb_occupansy_rate_data[i]["重症患者受入確保病床数"],
+            pref_code: Number(fetch_beb_occupansy_rate_data[i]["都道府県番号"]),
+            injured_bed: Number(fetch_beb_occupansy_rate_data[i]["重症患者受入確保病床数"]),
             use_injured_bed_rate: fetch_beb_occupansy_rate_data[i]["重症患者病床使用率"]
           });
 
