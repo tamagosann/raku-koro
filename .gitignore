@@ -105,6 +105,3 @@ dist
 
 # vscode debug folder
 .vscode
-
-# mac setting file
-.DS_Store

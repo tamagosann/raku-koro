@@ -27,7 +27,7 @@ const Login = () => {
   });
 
   const doLogin: SubmitHandler<LoginInfoType> = (data) => {
-    dispatch(login(data.email!, data.password!));
+    login(data.email!, data.password!);
   };
   return (
     <Container maxWidth="sm">

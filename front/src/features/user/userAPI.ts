@@ -5,9 +5,7 @@ import { UserDataType } from "./userSlice";
 //ログイン
 export const login = (email: string, password: string): void => {
   auth.setPersistence(sessionPersistance).then(() => {
-    auth.signInWithEmailAndPassword(email, password).catch((e) => {
-      console.error(e);
-    });
+    auth.signInWithEmailAndPassword(email, password);
   });
 };
 
@@ -53,32 +51,28 @@ export const registerUserData = (
   prefecture: string
 ): Promise<UserDataType | null> => {
   const userData = { uid: uid, username: username, prefecture: prefecture };
-  return new Promise((resolve, reject) => {
-    axios
-      .post("/users/add", { userData })
-      .then((res) => {
-        resolve(res.data);
-      })
-      .catch((e) => {
-        console.error(e);
-        reject(null);
-      });
-  });
+  return axios
+    .post("/users/add", { userData })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      console.error(e);
+      return null;
+    });
 };
 
 //mongoDBからユーザー情報取得
 export const fetchUserData = (uid: string): Promise<UserDataType | null> => {
-  return new Promise((resolve, reject) => {
-    axios
-      .post("/users", { uid })
-      .then((res) => {
-        if (res) {
-          resolve(res.data);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        reject(null);
-      });
-  });
+  return axios
+    .post("/users", { uid })
+    .then((res) => {
+      if (res) {
+        return res.data;
+      }
+    })
+    .catch((e) => {
+      console.error(e);
+      return null;
+    });
 };

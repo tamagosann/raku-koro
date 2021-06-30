@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import { RootState } from "../../app/store";
-import { login, fetchUserData, register } from "./userAPI";
+import { login, fetchUserData, register, logout } from "./userAPI";
 export interface UserDataType {
   uid: string | null;
   username: string | null;
@@ -26,12 +27,19 @@ const initialState: UserState = {
 //ログイン
 export const fetchUserDataAsync = createAsyncThunk<
   UserDataType | null,
-  { uid: string }
+  { uid: string },
+  any
 >("user/fetchUserData", async ({ uid }) => {
-  const userData = await fetchUserData(uid);
-  if (userData) {
-    return userData;
-  } else {
+  try {
+    const userData = await fetchUserData(uid);
+    if (userData) {
+      return userData;
+    } else {
+      throw new Error("サーバーへの接続に失敗しました");
+    }
+  } catch (e) {
+    console.error(e.message);
+    logout();
     return null;
   }
 });
@@ -41,10 +49,27 @@ export const registerAsync = createAsyncThunk<
   UserDataType | null,
   RegisterType
 >("user/register", async ({ username, email, password, prefecture }) => {
-  const userData = await register(email!, password!, username!, prefecture!);
-  if (userData) {
-    return userData;
-  } else {
+  try {
+    let server = await axios.get("/users").then((res) => {
+      return res;
+    });
+    if (server.status !== 200) {
+      throw new Error("サーバーへの接続に失敗しました");
+    } else {
+      const userData = await register(
+        email!,
+        password!,
+        username!,
+        prefecture!
+      );
+      if (userData) {
+        return userData;
+      } else {
+        throw new Error("サーバーへの接続に失敗しました");
+      }
+    }
+  } catch (e) {
+    console.error(e.message);
     return null;
   }
 });

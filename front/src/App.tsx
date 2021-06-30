@@ -23,7 +23,6 @@ const App = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         if (!userData) {
-          console.log("try fetch user data");
           dispatch(fetchUserDataAsync({ uid: user.uid }));
         }
       } else {
