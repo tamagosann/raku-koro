@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import Router from './Router';
 import { Header } from './components/header';
 import { Prefecture } from './components/atoms/Prefecture';
+import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
+
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
 import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
@@ -12,8 +14,8 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchDailyDeadAsync());
-    console.log('fetch');
     
+    dispatch(fetchDailyCoronaAsync());
   }, []);
 
   return (
