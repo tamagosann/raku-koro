@@ -38,6 +38,7 @@ export const PrefectureDailyDead = () => {
               dataKey="daily_dead"
               startIndex={targetPrefecture.length - 31}
               endIndex={targetPrefecture.length - 1}
+              value={value}
             >
               日別死者数
             </ReChart>
@@ -47,6 +48,7 @@ export const PrefectureDailyDead = () => {
               dataKey="total_dead"
               startIndex={0}
               endIndex={0}
+              value={value}
             >
               累計死者数
             </ReChart>

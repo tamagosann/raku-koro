@@ -25,12 +25,13 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'block',
       width: '300px',
       margin: '0 auto',
+      marginBottom: '32px',
     },
     centerText: {
       textAlign: 'center',
     },
     width: {
-      width: '250px',
+      width: '100%',
     },
   })
 );
@@ -51,7 +52,9 @@ export const Prefecture = ({ prefecture, setPrefecture }: Props) => {
       <FormControl
         className={classes.formControl + ' ' + classes.contentCenter}
       >
-        <InputLabel id="demo-simple-select-helper-label">都道府県</InputLabel>
+        <InputLabel color="secondary" id="demo-simple-select-helper-label">
+          都道府県
+        </InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
