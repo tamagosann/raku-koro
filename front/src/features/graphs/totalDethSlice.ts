@@ -41,8 +41,8 @@ export const fetchTotalDethAsync = createAsyncThunk(
           // 取得したデータだけを取り出す
         const fetch_total_deth_data =
         fetch_total_deth.data as Array<Data>;
-        console.log('トータル死亡者')
-        console.log(fetch_total_deth_data)
+        // console.log('トータル死亡者')
+        // console.log(fetch_total_deth_data)
         // 取り出したデータを格納する
         fetchData.data = fetch_total_deth_data;
       });
