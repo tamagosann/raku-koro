@@ -83,7 +83,7 @@ export const fetchBedOccupancyRateAsync = createAsyncThunk(
           
           
 }
-console.log(tranceData);
+
 
 
         // 取り出したデータを格納する
