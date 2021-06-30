@@ -1,48 +1,60 @@
 import React, { useState } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { useAppSelector } from '../app/hooks';
+import { Prefecture } from '../components/atoms/Prefecture';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  })
-);
+// slice
+import { selectDailyInfection } from '../features/graphs/dailyInfectionSlice';
+
+// コンポーネント
+import Inner from '../components/inner/Inner';
+import { DailyTotalRadio } from '../components/atoms/DailyTotalRadio';
+import { ReChart } from '../components/organisms/ReChart';
 
 export const PrefectureDailyDead = () => {
-  const classes = useStyles();
-  const [age, setAge] = React.useState('');
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setAge(event.target.value as string);
+  const prefecture_dead = useAppSelector(selectDailyInfection);
+  // ラジオボタンの初期値（日別）
+  const [value, setValue] = useState<string>('0');
+  // 初期値は北海道だがユーザーが登録した都道府県に変更したい
+  const [prefecture, setPrefecture] = useState<string>('1');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
   };
+
+  // 都道府県コードで対象の都道府県をフィルタリングをかける
+  const targetPrefecture = prefecture_dead.data.filter(
+    (element) => element.pref_code === Number(prefecture)
+  );
+
   return (
     <>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={age}
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>select prefecture</FormHelperText>
-      </FormControl>
+      {prefecture_dead.status === 'loading' ? null : (
+        <Inner>
+          <Prefecture prefecture={prefecture} setPrefecture={setPrefecture} />
+          <DailyTotalRadio handleChange={handleChange} value={value} />
+          {value === '0' ? (
+            <ReChart
+              targetPrefecture={targetPrefecture}
+              dataKey="daily_dead"
+              startIndex={targetPrefecture.length - 31}
+              endIndex={targetPrefecture.length - 1}
+              value={value}
+            >
+              日別死者数
+            </ReChart>
+          ) : (
+            <ReChart
+              targetPrefecture={targetPrefecture}
+              dataKey="total_dead"
+              startIndex={0}
+              endIndex={0}
+              value={value}
+            >
+              累計死者数
+            </ReChart>
+          )}
+        </Inner>
+      )}
     </>
   );
 };
