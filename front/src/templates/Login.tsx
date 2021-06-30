@@ -1,19 +1,18 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
-// import { login } from "../../app/store/user/userOperation";
-// import { Email } from "../molecules/forms/Email";
-// import { Password } from "../molecules/forms/Password";
-// import { Btn } from "../atoms/Btn";
-// import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { login } from "../features/user/userAPI";
+import { EmailInput } from "../components/atoms/EmailInput";
+import { PasswordInput } from "../components/atoms/PasswordInput";
+import PrimaryButton from "../components/UIKit/PrimaryButton";
 
 interface LoginInfoType {
   email?: string;
   password?: string;
 }
 
-export const Login = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const {
     control,
@@ -27,14 +26,6 @@ export const Login = () => {
     },
   });
 
-  useEffect(() => {
-    return () => {
-      if (localStorage.ItemInfo) {
-        localStorage.removeItem("ItemInfo");
-      }
-    };
-  }, []);
-
   const doLogin: SubmitHandler<LoginInfoType> = (data) => {
     dispatch(login(data.email!, data.password!));
   };
@@ -43,10 +34,14 @@ export const Login = () => {
       <Box mt={3} textAlign="center">
         <h2>ログイン</h2>
         <form onSubmit={handleSubmit(doLogin)}>
-          <Email control={control} error={errors.email!} />
-          <Password control={control} error={errors.password!} />
           <Box mt={3}>
-            <Btn text="ログイン" onClk={handleSubmit(doLogin)} />
+            <EmailInput control={control} error={errors.email!} />
+          </Box>
+          <Box mt={3}>
+            <PasswordInput control={control} error={errors.password!} />
+          </Box>
+          <Box mt={3}>
+            <PrimaryButton label="ログイン" onClick={handleSubmit(doLogin)} />
           </Box>
         </form>
         <Box mt={3}>
@@ -56,3 +51,5 @@ export const Login = () => {
     </Container>
   );
 };
+
+export default Login;
