@@ -19,13 +19,7 @@ import { selectDailyInfection } from '../features/graphs/dailyInfectionSlice';
 
 // コンポーネント
 import Inner from '../components/inner/Inner';
-
-// マテリアルUI
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import { DailyTotalRadio } from '../components/atoms/DailyTotalRadio';
 
 export const PrefectureDailyDead = () => {
   const prefecture_dead = useAppSelector(selectDailyInfection);
@@ -48,26 +42,7 @@ export const PrefectureDailyDead = () => {
       {prefecture_dead.status === 'loading' ? null : (
         <Inner>
           <Prefecture prefecture={prefecture} setPrefecture={setPrefecture} />
-          <FormControl component="fieldset">
-            <FormLabel component="legend">日別 / 累計</FormLabel>
-            <RadioGroup
-              aria-label="corona"
-              name="coronaStatus"
-              value={value}
-              onChange={handleChange}
-            >
-              <FormControlLabel
-                value="0"
-                control={<Radio color="primary" />}
-                label="日別"
-              />
-              <FormControlLabel
-                value="1"
-                control={<Radio color="primary" />}
-                label="累計"
-              />
-            </RadioGroup>
-          </FormControl>
+          <DailyTotalRadio handleChange={handleChange} value={value} />
           {value === '0' ? (
             <ResponsiveContainer width="100%" height="40%" minHeight={600}>
               <LineChart
