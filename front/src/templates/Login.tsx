@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,11 +15,13 @@ interface LoginInfoType {
 }
 
 const Login = () => {
-  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  const history = useHistory();
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginInfoType>({
     mode: "onBlur",
     defaultValues: {
@@ -27,12 +31,23 @@ const Login = () => {
   });
 
   const doLogin: SubmitHandler<LoginInfoType> = (data) => {
-    login(data.email!, data.password!);
+    login(data.email!, data.password!)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        setError(error);
+        reset({
+          email: "",
+          password: "",
+        });
+      });
   };
   return (
     <Container maxWidth="sm">
       <Box mt={3} textAlign="center">
         <h2>ログイン</h2>
+        {error !== "" && <span style={{ color: "red" }}>{error}</span>}
         <form onSubmit={handleSubmit(doLogin)}>
           <Box mt={3}>
             <EmailInput control={control} error={errors.email!} />

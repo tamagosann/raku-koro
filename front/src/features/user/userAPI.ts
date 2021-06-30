@@ -1,11 +1,24 @@
+import { CollectionsOutlined } from "@material-ui/icons";
 import axios from "axios";
 import { auth, sessionPersistance } from "../../firebase";
 import { UserDataType } from "./userSlice";
 
 //ログイン
-export const login = (email: string, password: string): void => {
-  auth.setPersistence(sessionPersistance).then(() => {
-    auth.signInWithEmailAndPassword(email, password);
+export const login = (
+  email: string,
+  password: string
+): Promise<string | void> => {
+  return new Promise((resolve, reject) => {
+    auth.setPersistence(sessionPersistance).then(async () => {
+      await auth
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          resolve();
+        })
+        .catch((e) => {
+          reject(e.message);
+        });
+    });
   });
 };
 
@@ -20,7 +33,7 @@ export const register = (
   password: string,
   username: string,
   prefecture: string
-): Promise<UserDataType | void> => {
+): Promise<UserDataType | null> => {
   return new Promise((resolve, reject) => {
     auth.setPersistence(sessionPersistance).then(() => {
       auth
@@ -50,9 +63,9 @@ export const registerUserData = (
   username: string,
   prefecture: string
 ): Promise<UserDataType | null> => {
-  const userData = { uid: uid, username: username, prefecture: prefecture };
+  const user = { uid: uid, username: username, prefecture: prefecture };
   return axios
-    .post("/users/add", { userData })
+    .post("http://localhost:3001/users/create-user", { user })
     .then((res) => {
       return res.data;
     })
@@ -65,7 +78,7 @@ export const registerUserData = (
 //mongoDBからユーザー情報取得
 export const fetchUserData = (uid: string): Promise<UserDataType | null> => {
   return axios
-    .post("/users", { uid })
+    .post("http://localhost:3001/users/fetch-user", { uid })
     .then((res) => {
       if (res) {
         return res.data;

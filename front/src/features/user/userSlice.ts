@@ -38,7 +38,7 @@ export const fetchUserDataAsync = createAsyncThunk<
       throw new Error("サーバーへの接続に失敗しました");
     }
   } catch (e) {
-    console.error(e.message);
+    alert(e.message);
     logout();
     return null;
   }
@@ -50,10 +50,10 @@ export const registerAsync = createAsyncThunk<
   RegisterType
 >("user/register", async ({ username, email, password, prefecture }) => {
   try {
-    let server = await axios.get("/users").then((res) => {
+    let server = await axios.get("http://localhost:3001/users").then((res) => {
       return res;
     });
-    if (server.status !== 200) {
+    if (server.data.status !== "OK") {
       throw new Error("サーバーへの接続に失敗しました");
     } else {
       const userData = await register(
@@ -69,7 +69,7 @@ export const registerAsync = createAsyncThunk<
       }
     }
   } catch (e) {
-    console.error(e.message);
+    alert(e.message);
     return null;
   }
 });
