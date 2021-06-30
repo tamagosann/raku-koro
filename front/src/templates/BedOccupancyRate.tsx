@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppSelector } from '../app/hooks';
 import Inner from '../components/inner/Inner';
+import { PieChart, Pie, Cell } from 'recharts';
 
 // slice
 import { selectBedOccupancyRate } from '../features/graphs/bedOccupancyRateSlice';
@@ -43,9 +44,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const test = [{ inpatient: 747 }, { secure_bed: 2088 }];
+//円グラフの各領域の色を定義
+const COLORS = ['#2250A2', '#da50a2'];
+
 export const BedOccupancyRate = () => {
   const classes = useStyles();
   const BedOccupancyRates = useAppSelector(selectBedOccupancyRate);
+  console.log('BedOccupancyRates', BedOccupancyRates);
 
   return (
     <>
