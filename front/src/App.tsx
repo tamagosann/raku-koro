@@ -6,12 +6,16 @@ import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
 
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
+import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
 import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
 import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(fetchDailyInfectionAsync());
+    dispatch(fetchDailyDeadAsync());
+    
     dispatch(fetchDailyCoronaAsync());
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchTotalCoronaAsync());
