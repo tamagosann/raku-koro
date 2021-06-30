@@ -4,6 +4,8 @@ import Router from './Router';
 import { Header } from './components/header';
 import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
 
+import { BedOccupancyRate } from './templates/BedOccupancyRate';
+
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
 
@@ -18,6 +20,7 @@ const App = () => {
     <>
       <Header />
       <Router />
+      <BedOccupancyRate />
     </>
   );
 };
