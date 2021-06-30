@@ -16,11 +16,11 @@ import {
 
 // slice
 import { selectDailyInfection } from '../features/graphs/dailyInfectionSlice';
-import { selectPrefecture } from '../features/common/prefectureSlice';
 
 // コンポーネント
 import Inner from '../components/inner/Inner';
 
+// マテリアルUI
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -29,22 +29,25 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 export const PrefectureDailyDead = () => {
   const prefecture_dead = useAppSelector(selectDailyInfection);
-  const prefectureStatus = useAppSelector(selectPrefecture);
+  // ラジオボタンの初期値（日別）
   const [value, setValue] = useState<string>('0');
+  // 初期値は北海道だがユーザーが登録した都道府県に変更したい
+  const [prefecture, setPrefecture] = useState<string>('1');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
 
+  // 都道府県コードで対象の都道府県をフィルタリングをかける
   const targetPrefecture = prefecture_dead.data.filter(
-    (element) => element.pref_code === prefectureStatus.prefCode
+    (element) => element.pref_code === Number(prefecture)
   );
 
   return (
     <>
       {prefecture_dead.status === 'loading' ? null : (
         <Inner>
-          <Prefecture />
+          <Prefecture prefecture={prefecture} setPrefecture={setPrefecture} />
           <FormControl component="fieldset">
             <FormLabel component="legend">日別 / 累計</FormLabel>
             <RadioGroup
