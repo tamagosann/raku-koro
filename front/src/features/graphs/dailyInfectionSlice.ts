@@ -8,14 +8,14 @@ import { RootState } from '../../app/store';
 import axios from 'axios';
 import Papa from 'papaparse';
 
-interface Data {
-  各地の感染者数_1日ごとの発表数: number;
-  各地の感染者数_累計: number;
-  各地の死者数_1日ごとの発表数: number;
-  各地の死者数_累計: number;
-  日付: string;
-  都道府県コード: number;
-  都道府県名: string;
+export interface Data {
+  daily_infection: number;
+  total_infection: number;
+  daily_dead: number;
+  total_dead: number;
+  date: string;
+  pref_code: number;
+  pref_name: string;
 }
 export interface GraphState {
   data: Array<Data>;
@@ -25,13 +25,13 @@ export interface GraphState {
 const initialState: GraphState = {
   data: [
     {
-      各地の感染者数_1日ごとの発表数: 0,
-      各地の感染者数_累計: 0,
-      各地の死者数_1日ごとの発表数: 0,
-      各地の死者数_累計: 0,
-      日付: '',
-      都道府県コード: 0,
-      都道府県名: '',
+      daily_infection: 0,
+      total_infection: 0,
+      daily_dead: 0,
+      total_dead: 0,
+      date: '',
+      pref_code: 1,
+      pref_name: '',
     },
   ],
   status: 'loading',
