@@ -30,7 +30,7 @@ import {
   selectThreadStatus,
 } from "./features/thread/threadSlice";
 
-import { FormLayout } from "./components/organisms";
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -67,7 +67,6 @@ const App = () => {
         <>
           <Router />
           <PcrPositiveRate />
-          <FormLayout type="createcomment" />
         </>
       )}
     </>

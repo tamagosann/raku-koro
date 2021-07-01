@@ -8,10 +8,7 @@ import { selectUser } from "../../features/user/userSlice";
 import { useAppSelector } from "../../app/hooks";
 import { PrimaryButton } from "../UIKit";
 import { TextFieldInput } from "../atoms/TextFieldInput";
-import {
-  selectThread,
-  ThreadDataType,
-} from "../../features/thread/threadSlice";
+import { ThreadDataType } from "../../features/thread/threadSlice";
 import { createThreadAsync } from "../../features/thread/threadSlice";
 import { datetimeToString } from "../../common/functions";
 

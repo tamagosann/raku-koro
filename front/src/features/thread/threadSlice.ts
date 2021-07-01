@@ -47,7 +47,6 @@ export const createThreadAsync = createAsyncThunk<
   try {
     const threadData = await createThread(data);
     if (threadData) {
-      console.log(threadData);
       return threadData;
     } else {
       throw new Error("サーバーへの接続に失敗しました");

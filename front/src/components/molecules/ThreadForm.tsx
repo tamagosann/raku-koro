@@ -17,7 +17,6 @@ import { updateThreadAsync } from "../../features/thread/threadSlice";
 import { datetimeToString } from "../../common/functions";
 
 const ThreadForm = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
   const thread = useAppSelector(selectThread);
