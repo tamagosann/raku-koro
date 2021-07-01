@@ -1,9 +1,9 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 const User = require("../models/user");
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const cors = require('cors')
+const cors = require("cors");
 
 router.use(
   cors({
@@ -37,8 +37,8 @@ router.post("/create-user", (req, res) => {
 
 router.post("/fetch-user", (req, res) => {
   console.log(req.body);
-  const uid = req.body.uid
-  User.findOne({uid}).then((user) => {
+  const uid = req.body.uid;
+  User.findOne({ uid }).then((user) => {
     console.log(user);
     res.header("Content-Type", "application/json; charset=utf-8");
     res.send(user);
@@ -46,13 +46,13 @@ router.post("/fetch-user", (req, res) => {
 });
 
 router.post("/update-user", (req, res) => {
-  console.log(req.body.updatedUser)
+  console.log(req.body.updatedUser);
   const userToUpdate = req.body.updatedUser;
   console.log(userToUpdate);
   User.findByIdAndUpdate(userToUpdate._id, userToUpdate, { new: true }).then(
     (updatedUser) => {
       res.header("Content-Type", "application/json; charset=utf-8");
-      console.log(updatedUser)
+      console.log(updatedUser);
       //新しいuser情報のオブジェクトを返している。
       res.send({ updatedUser });
     }
@@ -61,16 +61,17 @@ router.post("/update-user", (req, res) => {
 
 router.post("/delete-user", (req, res) => {
   const _id = req.body._id;
-  User.findByIdAndDelete(_id).then(
-    (doc) => {
-      res.header("Content-Type", "application/json; charset=utf-8");
-      //このdocは特に使う必要なし
-      //消したuserが入っている
-      res.send({ doc });
-    }
-  );
+  User.findByIdAndDelete(_id).then((doc) => {
+    res.header("Content-Type", "application/json; charset=utf-8");
+    //このdocは特に使う必要なし
+    //消したuserが入っている
+    res.send({ doc });
+  });
 });
 
-
+//サーバー起動チェック用
+router.get("/", (req, res) => {
+  res.send({ status: "OK" });
+});
 
 module.exports = router;
