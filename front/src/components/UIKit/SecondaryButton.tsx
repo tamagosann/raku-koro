@@ -5,6 +5,7 @@ type SecondaryButtonProps = {
   label: string;
   onClick: () => void;
   className?: string;
+  disabled?: boolean;
 };
 
 const SecondaryButton: FC<SecondaryButtonProps> = (props) => {
@@ -14,6 +15,7 @@ const SecondaryButton: FC<SecondaryButtonProps> = (props) => {
       variant="contained"
       color="secondary"
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.label}
     </Button>

@@ -52,8 +52,8 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
       <div className={classes.container}>
         <List>
           {user
-            ? headers.logins.map((login) => (
-                <>
+            ? headers.logins.map((login, index) => (
+                <div key={index}>
                   <ListItem button onClick={login.method}>
                     <ListItemIcon>
                       <IconButtonSelect
@@ -65,10 +65,10 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
                     <ListItemText primary={login.text} />
                   </ListItem>
                   <Divider />
-                </>
+                </div>
               ))
-            : headers.logouts.map((logout) => (
-                <>
+            : headers.logouts.map((logout, index) => (
+                <div key={index}>
                   <ListItem button onClick={logout.method}>
                     <ListItemIcon>
                       <IconButtonSelect
@@ -80,10 +80,10 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
                     <ListItemText primary={logout.text} />
                   </ListItem>
                   <Divider />
-                </>
+                </div>
               ))}
-          {headers.graphs.map((graph) => (
-            <>
+          {headers.graphs.map((graph, index) => (
+            <div key={index}>
               <ListItem button onClick={graph.method}>
                 <ListItemIcon>
                   <IconButtonSelect
@@ -95,7 +95,7 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
                 <ListItemText primary={graph.text} />
               </ListItem>
               <Divider />
-            </>
+            </div>
           ))}
         </List>
       </div>

@@ -75,6 +75,30 @@ export const registerUserData = (
     });
 };
 
+//mongoDBへユーザー情報更新
+export const updateUserData = (
+  _id: string,
+  uid: string,
+  username: string,
+  prefecture: string
+): Promise<UserDataType | null> => {
+  const updatedUser = {
+    _id: _id,
+    uid: uid,
+    username: username,
+    prefecture: prefecture,
+  };
+  return axios
+    .post("http://localhost:3001/users/update-user", { updatedUser })
+    .then((res) => {
+      return res.data.updatedUser;
+    })
+    .catch((e) => {
+      console.error(e);
+      return null;
+    });
+};
+
 //mongoDBからユーザー情報取得
 export const fetchUserData = (uid: string): Promise<UserDataType | null> => {
   return axios
