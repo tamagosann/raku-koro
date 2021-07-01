@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Inner } from "../components/inner";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
-import { OrangeButton } from "../components/atoms";
+import { OrangeButton, ReferenceDataLink } from "../components/atoms";
 
 // マテリアルUI
 import { Button, Typography } from "@material-ui/core";
@@ -78,7 +78,11 @@ const InfectedPerson = () => {
           endIndex={dayInfectedPerson.length - 1}
         />
       </>
-    }
+      }
+      <ReferenceDataLink
+        label={"新型コロナウイルス感染症対策"}
+        href={"https://corona.go.jp/dashboard/"}
+      />
     </Inner>
   );
 };

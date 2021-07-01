@@ -4,7 +4,7 @@ import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalDeth } from '../features/graphs/totalDethSlice';
 import { AreaReChart, LineReChart } from "../components/organisms";
-import { OrangeButton } from "../components/atoms";
+import { OrangeButton, ReferenceDataLink } from "../components/atoms";
 
 interface Data {
   date: string;
@@ -73,6 +73,10 @@ const DeceasedPerson = () => {
         />
       </>
       }
+      <ReferenceDataLink
+        label={"新型コロナウイルス感染症対策"}
+        href={"https://corona.go.jp/dashboard/"}
+      />
     </Inner>
   );
 };
