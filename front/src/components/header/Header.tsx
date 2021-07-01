@@ -63,7 +63,7 @@ const Header: React.FC = () => {
       },
     ],
     graphs: [
-      { text: "全国", icon: "LineGrph1", method: () => history.push("/infected-person") },
+      { text: "全国", icon: "LineGrph1", method: () => history.push("/nationwide") },
       { text: "都道府県", icon: "LineGrph1", method: () => history.push("/every_prefecture") },
       { text: "病床使用率", icon: "CircleGrph", method: () => history.push("/bed-usage-rate") },
     ],

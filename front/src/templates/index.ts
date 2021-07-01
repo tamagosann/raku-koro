@@ -3,5 +3,6 @@ export { default as Graph2 } from "./Graph2";
 export { default as Login } from "./Login";
 export { default as Register } from "./Register";
 export { default as InfectedPerson } from './InfectedPerson'
+export { default as DeceasedPerson } from './DeceasedPerson'
 export { default as BedOccupancyRate} from './BedOccupancyRate'
 export { default as PrefectureDailyInfention } from './Prefecture_daily_infection'

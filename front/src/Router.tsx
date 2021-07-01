@@ -1,4 +1,5 @@
 import { Route, Switch } from "react-router-dom";
+import { NationwideData } from "./pages/NationwideData";
 import {
   Graph1,
   InfectedPerson,
@@ -12,7 +13,7 @@ const Router = () => {
   return (
     <Switch>
       <Route exact path={"(/)?"} component={Graph1} />
-      <Route exact path={"/infected-person"} component={InfectedPerson} />
+      <Route exact path={"/nationwide"} component={NationwideData} />
       <Route exact path={"/bed-usage-rate"} component={BedOccupancyRate} />
       <Route exact path={"/every_prefecture"} component={PrefectureDailyInfention} />
       <Route exact path={"/login"} component={Login} />
