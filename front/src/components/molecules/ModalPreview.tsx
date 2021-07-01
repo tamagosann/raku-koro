@@ -5,7 +5,7 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
 
 import Modal from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import {PieChartComponent} from '../molecules/PieChartComponent'
+import {PieChartComponent} from '../atoms/PieChartComponent'
 
 interface Props {
     element: Data;

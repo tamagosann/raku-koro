@@ -7,7 +7,7 @@ import { selectBedOccupancyRate } from '../features/graphs/bedOccupancyRateSlice
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {ModalPreview} from '../components/organisms/ModalPreview'
+import {ModalPreview} from '../components/molecules/ModalPreview'
 
 // Modal.setAppElement("#root");
 
