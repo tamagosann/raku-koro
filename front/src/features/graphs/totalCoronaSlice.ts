@@ -7,7 +7,7 @@ import {
 import { RootState } from '../../app/store';
 import axios from 'axios';
 
-interface Data {
+export interface Data {
   date: string;
   npatients: number;
   adpatients : number;

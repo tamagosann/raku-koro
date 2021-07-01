@@ -7,12 +7,12 @@ import {
 import { RootState } from '../../app/store';
 import axios from 'axios';
 
-interface Data {
+export interface DethData {
   date: string;
   ndeaths: number;
 }
 export interface GraphState {
-  data: Array<Data>;
+  data: Array<DethData>;
   status: 'success' | 'loading' | 'failed';
 }
 
@@ -40,7 +40,7 @@ export const fetchTotalDethAsync = createAsyncThunk(
         const fetch_total_deth = response
           // 取得したデータだけを取り出す
         const fetch_total_deth_data =
-        fetch_total_deth.data as Array<Data>;
+        fetch_total_deth.data as Array<DethData>;
         // console.log('トータル死亡者')
         // console.log(fetch_total_deth_data)
         // 取り出したデータを格納する
@@ -70,7 +70,7 @@ export const totalDethSlice = createSlice({
         (state, action: PayloadAction<GraphState>) => {
           const clonedState: GraphState = { ...state };
           clonedState.status = 'success';
-          clonedState.data = action.payload.data as Array<Data>;
+          clonedState.data = action.payload.data as Array<DethData>;
           return clonedState;
         }
       );

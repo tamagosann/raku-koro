@@ -1,21 +1,9 @@
 import React, { useState } from "react";
-import {
-  Brush,
-  CartesianGrid,
-  Legend,
-  Area,
-  AreaChart,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip
-} from "recharts";
 import { Inner } from "../components/inner";
 import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalDeth } from '../features/graphs/totalDethSlice';
+import { AreaReChart, LineReChart } from "../components/organisms";
 
 interface Data {
   date: string;
@@ -66,50 +54,24 @@ const DeceasedPerson = () => {
       {toggle ? 
       <>
         <Typography variant="h5" align="center">死亡者数推移（累計）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-          <AreaChart data={dethPerson}>
-            <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Legend verticalAlign="top"/>
-            <Area
-              type="monotone"
-              dataKey="ndeaths"
-              name="死亡者数"
-              stroke="#8884d8"
-              fill="#8884b8"
-              strokeWidth={3}
-            />
-            <Brush dataKey="date" stroke="#8884d8" />
-          </AreaChart>
-        </ResponsiveContainer>
+        <AreaReChart 
+          data={dethPerson}
+          xDataKey={"date"}
+          areaDataKey={"ndeaths"}
+          areaName={"死亡者数"}
+        />
       </>
       :
       <>
         <Typography variant="h5" align="center">死亡者数推移（日別）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-        <LineChart data={dayDethPerson}>
-          <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-          <YAxis />
-          <Tooltip />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Legend verticalAlign="top"/>
-          <Line
-            dataKey="ndeaths"
-            name="死亡者数"
-            stroke="#8884d8"
-            fill="#8884b8"
-            strokeWidth={3}
-          />
-          <Brush
-            dataKey="date"
-            stroke="#8884d8"
-            startIndex={dayDethPerson.length - 31}
-            endIndex={dayDethPerson.length - 1}
-          />
-          </LineChart>
-        </ResponsiveContainer>
+        <LineReChart 
+          data={dayDethPerson}
+          xDataKey={"date"}
+          lineDataKey={"ndeaths"}
+          lineName={"死亡者数"}
+          startIndex={dayDethPerson.length - 31}
+          endIndex={dayDethPerson.length - 1}
+        />
       </>
       }
     </Inner>

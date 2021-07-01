@@ -1,21 +1,11 @@
 import React, { useState } from "react";
-import {
-  Brush,
-  CartesianGrid,
-  Legend,
-  Area,
-  AreaChart,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip
-} from "recharts";
 import { Inner } from "../components/inner";
-import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
+
+// マテリアルUI
+import { Button, Typography } from "@material-ui/core";
+import { AreaReChart, LineReChart } from "../components/organisms";
 
 interface Data {
   date: string;
@@ -63,57 +53,29 @@ const InfectedPerson = () => {
 
   return (
     <Inner>
-      <Typography>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeToggle}>累計</Button>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeDay}>日別</Button>
-      </Typography>
+        <Button variant="contained" style={{background: "#fd7e00", color: "#fff"}} onClick={changeToggle}>累計</Button>
+        <Button variant="contained" style={{background: "#fd7e00", color: "#fff"}} onClick={changeDay}>日別</Button>
       {toggle ?
       <>
         <Typography variant="h5" align="center">感染者数推移（累計）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-          <AreaChart data={cumulativeInfectedPerson}>
-            <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Legend verticalAlign="top"/>
-            <Area
-              type="monotone"
-              dataKey="npatients"
-              name="感染者数"
-              stroke="#8884d8"
-              fill="#8884b8"
-              strokeWidth={3}
-            />
-            <Brush dataKey="date" stroke="#8884d8" />
-          </AreaChart>
-        </ResponsiveContainer>
+        <AreaReChart 
+          data={cumulativeInfectedPerson}
+          xDataKey={"date"}
+          areaDataKey={"npatients"}
+          areaName={"感染者数"}
+        />
       </>
       :
       <>
         <Typography variant="h5" align="center">感染者数推移（日別）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-          <LineChart data={dayInfectedPerson}>
-            <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Legend verticalAlign="top"/>
-            <Line
-              dataKey="npatients"
-              name="感染者数"
-              stroke="#8884d8"
-              fill="#8884b8"
-              strokeWidth={3}
-            />
-            <Brush
-              dataKey="date"
-              stroke="#8884d8"
-              startIndex={dayInfectedPerson.length - 31}
-              endIndex={dayInfectedPerson.length - 1}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        <LineReChart 
+          data={dayInfectedPerson}
+          xDataKey={"date"}
+          lineDataKey={"npatients"}
+          lineName={"感染者数"}
+          startIndex={dayInfectedPerson.length - 31}
+          endIndex={dayInfectedPerson.length - 1}
+        />
       </>
     }
     </Inner>
