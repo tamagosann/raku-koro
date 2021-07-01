@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import Router from './Router';
 import { auth } from './firebase';
 import { useAppSelector } from './app/hooks';
+import axios from 'axios';
+import Papa from 'papaparse';
 
 //コンポーネント
 import { Header } from './components/header';
@@ -16,6 +18,7 @@ import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
 import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
 import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
 import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSlice';
+import { fetchDailyPositiveAsync } from './features/graphs/dailyPositiveSlice';
 import {
   unSetUser,
   selectUserStatus,
@@ -24,6 +27,7 @@ import {
 } from './features/user/userSlice';
 
 import { BedOccupancyRate } from './templates/BedOccupancyRate';
+import { ContactlessOutlined } from '@material-ui/icons';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -45,6 +49,7 @@ const App = () => {
     dispatch(fetchTotalCoronaAsync());
     dispatch(fetchTotalDethAsync());
     dispatch(fetchBedOccupancyRateAsync());
+    dispatch(fetchDailyPositiveAsync());
   }, []);
 
   return (
