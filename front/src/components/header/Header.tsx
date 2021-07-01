@@ -89,13 +89,13 @@ const Header: React.FC = () => {
                 >
                   <Grid spacing={2}>
                     <Grid>
+                      <small>{graph.text}</small>
+                    </Grid>
+                    <Grid>
                       <IconButtonSelect
                         icon={graph.icon}
                         onClick={graph.method}
                       />
-                    </Grid>
-                    <Grid>
-                      <small>{graph.text}</small>
                     </Grid>
                   </Grid>
                 </div>
