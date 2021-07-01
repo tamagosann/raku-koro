@@ -3,47 +3,44 @@ import {
   createSlice,
   PayloadAction,
   current,
-} from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-import axios from 'axios';
+} from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import axios from "axios";
 
 export interface Data {
   date: string;
   npatients: number;
-  adpatients : number;
+  adpatients: number;
 }
 export interface GraphState {
   data: Array<Data>;
-  status: 'success' | 'loading' | 'failed';
+  status: "success" | "loading" | "failed";
 }
 
 const initialState: GraphState = {
   data: [
     {
-      date: '',
+      date: "",
       npatients: 0,
-      adpatients : 0
+      adpatients: 0,
     },
   ],
-  status: 'loading',
+  status: "loading",
 };
 
 //非同期処理はこの形で処理<>内の型は
 export const fetchTotalCoronaAsync = createAsyncThunk(
-  'totalCorona/fetchTotalCorona',
+  "totalCorona/fetchTotalCorona",
   async () => {
     let fetchData: GraphState = { ...initialState };
     await axios
       .get(
-        'https://data.corona.go.jp/converted-json/covid19japan-npatients.json'
+        "https://data.corona.go.jp/converted-json/covid19japan-npatients.json"
       )
       .then((response) => {
-        const fetch_total_corona = response
-          // 取得したデータだけを取り出す
-        const fetch_total_corona_data =
-        fetch_total_corona.data as Array<Data>;
-        // console.log('トータル感染者')
-        // console.log(fetch_total_corona_data)
+        const fetch_total_corona = response;
+        // 取得したデータだけを取り出す
+        const fetch_total_corona_data = fetch_total_corona.data as Array<Data>;
         // 取り出したデータを格納する
         fetchData.data = fetch_total_corona_data;
       });
@@ -52,7 +49,7 @@ export const fetchTotalCoronaAsync = createAsyncThunk(
 );
 
 export const totalCoronaSlice = createSlice({
-  name: 'totalCorona',
+  name: "totalCorona",
   initialState,
   // 非同期処理を行わないreducerはこっち
   reducers: {},
@@ -62,7 +59,7 @@ export const totalCoronaSlice = createSlice({
       // loadingを実現するためのstatusを「loading」変更
       .addCase(fetchTotalCoronaAsync.pending, (state) => {
         const clonedState = { ...state };
-        clonedState.status = 'loading';
+        clonedState.status = "loading";
         return clonedState;
       })
       // 完了を表現するためのstatusを「success」変更
@@ -70,7 +67,7 @@ export const totalCoronaSlice = createSlice({
         fetchTotalCoronaAsync.fulfilled,
         (state, action: PayloadAction<GraphState>) => {
           const clonedState: GraphState = { ...state };
-          clonedState.status = 'success';
+          clonedState.status = "success";
           clonedState.data = action.payload.data as Array<Data>;
           return clonedState;
         }

@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../app/store";
-import { login, fetchUserData, register, logout } from "./userAPI";
+import { login, fetchUserData, register, logout, updateUserData } from "./userAPI";
 export interface UserDataType {
+  _id?: string;
   uid: string | null;
   username: string | null;
   prefecture: string | null;
@@ -74,6 +75,24 @@ export const registerAsync = createAsyncThunk<
   }
 });
 
+//ユーザー情報更新処理
+export const updateUserAsync = createAsyncThunk<
+  UserDataType | null,
+  UserDataType
+>("user/update", async ({ _id, uid, username, prefecture }) => {
+  try {
+    const userData = await updateUserData( _id!, uid!, username!, prefecture! );
+      if (userData) {
+        return userData;
+      } else {
+        throw new Error("サーバーへの接続に失敗しました");
+      }
+    } catch (e) {
+    alert(e.message);
+    return null;
+  }
+});
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -93,10 +112,16 @@ export const userSlice = createSlice({
       state.value = action.payload;
     });
     builder.addCase(registerAsync.pending, (state) => {
-      console.log("status pending");
       state.status = "loading";
     });
     builder.addCase(registerAsync.fulfilled, (state, action) => {
+      state.status = "idle";
+      state.value = action.payload;
+    });
+    builder.addCase(updateUserAsync.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(updateUserAsync.fulfilled, (state, action) => {
       state.status = "idle";
       state.value = action.payload;
     });

@@ -3,9 +3,9 @@ import {
   createSlice,
   PayloadAction,
   current,
-} from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-import axios from 'axios';
+} from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import axios from "axios";
 
 export interface DethData {
   date: string;
@@ -19,23 +19,20 @@ export interface GraphState {
 const initialState: GraphState = {
   data: [
     {
-      date: '',
+      date: "",
       ndeaths: 0,
-  
     },
   ],
-  status: 'loading',
+  status: "loading",
 };
 
 //非同期処理はこの形で処理<>内の型は
 export const fetchTotalDethAsync = createAsyncThunk(
-  'totalDeth/fetchTotalDeth',
+  "totalDeth/fetchTotalDeth",
   async () => {
     let fetchData: GraphState = { ...initialState };
     await axios
-      .get(
-        'https://data.corona.go.jp/converted-json/covid19japan-ndeaths.json'
-      )
+      .get("https://data.corona.go.jp/converted-json/covid19japan-ndeaths.json")
       .then((response) => {
         const fetch_total_deth = response
           // 取得したデータだけを取り出す
@@ -45,13 +42,14 @@ export const fetchTotalDethAsync = createAsyncThunk(
         // console.log(fetch_total_deth_data)
         // 取り出したデータを格納する
         fetchData.data = fetch_total_deth_data;
+        // console.log(fetchData.data);
       });
     return fetchData;
   }
 );
 
 export const totalDethSlice = createSlice({
-  name: 'totalDeth',
+  name: "totalDeth",
   initialState,
   // 非同期処理を行わないreducerはこっち
   reducers: {},
@@ -61,7 +59,7 @@ export const totalDethSlice = createSlice({
       // loadingを実現するためのstatusを「loading」変更
       .addCase(fetchTotalDethAsync.pending, (state) => {
         const clonedState = { ...state };
-        clonedState.status = 'loading';
+        clonedState.status = "loading";
         return clonedState;
       })
       // 完了を表現するためのstatusを「success」変更

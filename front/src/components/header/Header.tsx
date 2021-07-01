@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
         display: "none",
       },
     },
+    userName: {
+      "&:hover": {
+        color: "red",
+      },
+    },
   })
 );
 
@@ -63,9 +68,21 @@ const Header: React.FC = () => {
       },
     ],
     graphs: [
-      { text: "全国", icon: "LineGrph1", method: () => history.push("/nationwide") },
-      { text: "都道府県", icon: "LineGrph1", method: () => history.push("/every_prefecture") },
-      { text: "病床使用率", icon: "CircleGrph", method: () => history.push("/bed-usage-rate") },
+      {
+        text: "全国",
+        icon: "LineGrph1",
+        method: () => history.push("/nationwide"),
+      },
+      {
+        text: "都道府県",
+        icon: "LineGrph1",
+        method: () => history.push("/every_prefecture"),
+      },
+      {
+        text: "病床使用率",
+        icon: "CircleGrph",
+        method: () => history.push("/bed-usage-rate"),
+      },
     ],
   };
   return (
@@ -82,16 +99,16 @@ const Header: React.FC = () => {
                 <div
                   className={classes.graphs}
                   key={index}
-                  style={{ marginRight: 20, marginLeft: 20 }}
+                  style={{ marginRight: 10, marginLeft: 10 }}
                 >
                   <Grid container direction={"column"}>
-                    <div style={{textAlign: 'center'}}>
+                    <div style={{ textAlign: "center" }}>
                       <IconButtonSelect
                         icon={graph.icon}
                         onClick={graph.method}
                       />
                     </div>
-                    <div style={{textAlign: 'center'}}>
+                    <div style={{ textAlign: "center" }}>
                       <small>{graph.text}</small>
                     </div>
                   </Grid>
@@ -101,7 +118,13 @@ const Header: React.FC = () => {
             <div className={classes.grow} />
             {userData ? (
               <>
-                <Typography> {userData?.username} さん</Typography>
+                <Typography
+                  className={classes.userName}
+                  onClick={() => history.push("/userinfo")}
+                >
+                  {" "}
+                  {userData?.username} さん
+                </Typography>
                 {headers.logins.map((login, index) => (
                   <div className={classes.menu} key={index}>
                     <IconButtonSelect
