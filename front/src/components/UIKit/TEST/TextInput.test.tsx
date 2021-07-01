@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
-import { TextInput } from "../index";
+import { TextInput } from "../../atoms/index";
 
 describe("TextInput test", () => {
   const mockProps = {
