@@ -50,8 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Test = (props:any) => {
-  const useBedRateing =(Number(props.element.inpatient) / Number(props.element.secure_bed)) *100;
-  const classes = useStyles();
+  
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {

@@ -15,7 +15,6 @@ import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSl
 
 
 
-
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
