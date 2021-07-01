@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { UserNameInput } from "../components/atoms/UserNameInput";
 import { EmailInput } from "../components/atoms/EmailInput";
 import { PasswordInput } from "../components/atoms/PasswordInput";
@@ -17,7 +17,7 @@ const Register = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterType>({
+  } = useForm<FieldValues>({
     mode: "onBlur",
     defaultValues: {
       email: "",

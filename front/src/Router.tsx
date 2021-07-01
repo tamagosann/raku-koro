@@ -6,6 +6,8 @@ import {
   DeceasedPerson,
   Login,
   Register,
+  UserInfo,
+  ThreadInfo
 } from "./templates";
 
 const Router = () => {
@@ -17,6 +19,8 @@ const Router = () => {
       <Route exact path={"/login"} component={Login} />
       <Route exact path={"/register"} component={Register} />
       <Route exact path={"/graph-5"} component={DeceasedPerson} />
+      <Route exact path={"/userinfo"} component={UserInfo} />
+      <Route exact path={"/thread/:thread_id"} component={ThreadInfo} />
     </Switch>
   );
 };

@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
         display: "none",
       },
     },
+    userName: {
+      "&:hover": {
+        color: "red",
+      },
+    },
   })
 );
 
@@ -85,17 +90,17 @@ const Header: React.FC = () => {
                 <div
                   className={classes.graphs}
                   key={index}
-                  style={{ marginRight: 20, marginLeft: 20 }}
+                  style={{ marginRight: 10, marginLeft: 10 }}
                 >
-                  <Grid spacing={2}>
-                    <Grid>
-                      <small>{graph.text}</small>
-                    </Grid>
-                    <Grid>
+                  <Grid container direction={"column"}>
+                    <Grid item>
                       <IconButtonSelect
                         icon={graph.icon}
                         onClick={graph.method}
                       />
+                    </Grid>
+                    <Grid item>
+                      <small>{graph.text}</small>
                     </Grid>
                   </Grid>
                 </div>
@@ -104,7 +109,13 @@ const Header: React.FC = () => {
             <div className={classes.grow} />
             {userData ? (
               <>
-                <Typography> {userData?.username} さん</Typography>
+                <Typography
+                  className={classes.userName}
+                  onClick={() => history.push("/userinfo")}
+                >
+                  {" "}
+                  {userData?.username} さん
+                </Typography>
                 {headers.logins.map((login, index) => (
                   <div className={classes.menu} key={index}>
                     <IconButtonSelect

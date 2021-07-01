@@ -5,6 +5,7 @@ type PrimaryButtonProps = {
   label: string;
   onClick: () => void;
   className?: string;
+  disabled?: boolean;
 };
 
 const PrimaryButton: FC<PrimaryButtonProps> = (props) => {
@@ -14,6 +15,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = (props) => {
       variant="contained"
       color="primary"
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.label}
     </Button>
