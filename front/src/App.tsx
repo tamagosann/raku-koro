@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import Router from "./Router";
-import { auth } from "./firebase";
-import { useAppSelector } from "./app/hooks";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import Router from './Router';
+import { auth } from './firebase';
+import { useAppSelector } from './app/hooks';
 
 //コンポーネント
-import { Header } from "./components/header";
-import { fetchDailyCoronaAsync } from "./features/graphs/dailyCoronaSlice";
-import { LoadingPage } from "./components/atoms";
+import { Header } from './components/header';
+import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
+import { LoadingPage } from './components/atoms';
 
 // slice
-import { fetchDailyInfectionAsync } from "./features/graphs/dailyInfectionSlice";
-import { fetchDailyDeadAsync } from "./features/graphs/dailyDeadSlice";
-import { fetchTotalCoronaAsync } from "./features/graphs/totalCoronaSlice";
-import { fetchTotalDethAsync } from "./features/graphs/totalDethSlice";
-import { fetchBedOccupancyRateAsync } from "./features/graphs/bedOccupancyRateSlice";
+import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
+import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
+import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
+import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
+import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSlice';
 import {
   unSetUser,
   selectUserStatus,
   selectUser,
   fetchUserDataAsync,
-} from "./features/user/userSlice";
+} from './features/user/userSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const App = () => {
   return (
     <>
       <Header />
-      {userStatus === "loading" ? <LoadingPage /> : <Router />}
+      {userStatus === 'loading' ? <LoadingPage /> : <Router />}
     </>
   );
 };
