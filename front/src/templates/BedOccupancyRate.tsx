@@ -3,9 +3,10 @@ import { useAppSelector } from '../app/hooks';
 import Inner from '../components/inner/Inner';
 
 //react-modal
-import Modal from 'react-modal';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip ,ResponsiveContainer} from 'recharts';
 
+import Modal from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 // slice
 import { selectBedOccupancyRate } from '../features/graphs/bedOccupancyRateSlice';
 
@@ -14,7 +15,9 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-Modal.setAppElement('#root');
+// Modal.setAppElement("#root");
+
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,24 +29,28 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: theme.palette.text.secondary,
       backgroundColor: '#ffff',
+      cursor:"pointer"
     },
     paperStegeSecond: {
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
       backgroundColor: '#ffd5d5',
+      cursor:"pointer"
     },
     paperStegeThird: {
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
       backgroundColor: '#ff8080',
+      cursor:"pointer"
     },
     paperStegeForth: {
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
       backgroundColor: '#ff2b2b',
+      cursor:"pointer"
     },
   })
 );
@@ -79,6 +86,8 @@ const renderCustomizedLabel = ({
 const ModalPreview = ({ element, customStyles, data, useBedRateing }: any) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
+
+
   function openModal() {
     setIsOpen(true);
   }
@@ -88,7 +97,7 @@ const ModalPreview = ({ element, customStyles, data, useBedRateing }: any) => {
   }
 
   return (
-    <>
+    <div>
       <div onClick={openModal}>
         <h3>{element.prefecture}</h3>
         <p>{element.use_bed_rate}</p>
@@ -97,16 +106,15 @@ const ModalPreview = ({ element, customStyles, data, useBedRateing }: any) => {
         </p>
       </div>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
+        open={modalIsOpen}
+        onClose={closeModal}
       >
         <h2>
           {element.prefecture} 病床使用率{' '}
           {((element.inpatient / element.secure_bed) * 100).toFixed(2)} % (参考)
         </h2>
-        <PieChart width={400} height={400} style={{ margin: '0 auto' }}>
+        <ResponsiveContainer width="99%" height={400}>
+        <PieChart style={{ margin: '0 auto' }}>
           <Pie
             startAngle={-270}
             data={data}
@@ -124,21 +132,24 @@ const ModalPreview = ({ element, customStyles, data, useBedRateing }: any) => {
               />
             ))}
           </Pie>
-          {/* Tooltipに表示される単位を選定 */}
+         
           <Tooltip
             formatter={(value: number) => {
               return `${value}%`;
             }}
           />
         </PieChart>
+        </ResponsiveContainer>
+        
         <p>PCR検査陽性者数：{element.pcr_positive}人</p>
         <p>うち重症者数：{element.injured}人</p>
         <p>入院患者受入確保病床：{element.secure_bed}床</p>
         <p>入院者数：{element.inpatient}人</p>
-        <p>出典：{element.source}</p>
+        <p style={{wordBreak:'break-all'}}>出典：{element.source}</p>
         <p>最終更新日：{element.update}</p>
+        
       </Modal>
-    </>
+    </div>
   );
 };
 
@@ -183,7 +194,8 @@ export const BedOccupancyRate = () => {
                   (Number(element.inpatient) / Number(element.secure_bed)) *
                   100;
                 return (
-                  <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={2}>
+                  <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={2}
+                  >
                     <Paper
                       className={
                         useBedRateing >= 50

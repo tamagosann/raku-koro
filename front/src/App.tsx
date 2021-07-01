@@ -22,6 +22,8 @@ import {
   fetchUserDataAsync,
 } from './features/user/userSlice';
 
+import {BedOccupancyRate} from './templates/BedOccupancyRate'
+
 const App = () => {
   const dispatch = useDispatch();
   const userStatus = useAppSelector(selectUserStatus);
@@ -48,6 +50,7 @@ const App = () => {
     <>
       <Header />
       {userStatus === 'loading' ? <LoadingPage /> : <Router />}
+      <BedOccupancyRate />
     </>
   );
 };
