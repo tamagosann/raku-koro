@@ -22,14 +22,14 @@ export const store = configureStore({
     dailyInfection: dailyInfectionRuducer,
     graph2: graph2Ruducer,
     prefecture: prefectureRuducer,
-    dailyCorona:dailyCoronaRuducer,
-    totalCorona:totalCoronaRuducer,
-    totalRecovery:totalRecoveryRuducer,
-    totalDeth:totalDethRuducer,
-    vaccination:vaccinationRuducer,
-    bedOccupancyRate:bedOccupancyRateRuducer,
-    dailyDeth:dailyDethRuducer,
-    dailyRecovery:dailyRecoveryRuducer
+    dailyCorona: dailyCoronaRuducer,
+    totalCorona: totalCoronaRuducer,
+    totalRecovery: totalRecoveryRuducer,
+    totalDeth: totalDethRuducer,
+    vaccination: vaccinationRuducer,
+    bedOccupancyRate: bedOccupancyRateRuducer,
+    dailyDeth: dailyDethRuducer,
+    dailyRecovery: dailyRecoveryRuducer
   },
 });
 
