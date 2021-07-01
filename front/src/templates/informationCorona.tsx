@@ -50,15 +50,7 @@ export const InformationCorona = () => {
     setDethHuman(totalDeth.data);
     setBedUsed(bedOccupancyRate.data);
   }, [totalCorona, totalDeth, bedOccupancyRate]);
-  // =============
-  // 対策病床使用率を算出
-  // 入院者数*入院患者受入確保病床=入院患者病床使用率
-  // const humans = bedUsed.map((human){
-  //   return NUm=human.入院者数=+
-  // })
-  // inpatient
-  // secure_bed
-  // =============
+
   const coronaIndex = coronaHuman.length - 1;
   let coronaToday;
   let coronaYesterday;
@@ -89,6 +81,26 @@ export const InformationCorona = () => {
     dethDayBeforeYesterday = (totalDeth.data[index4].ndeaths -
       totalDeth.data[index6].ndeaths) as number;
   }
+  // 対策病床使用率を算出
+  // 入院者数*入院患者受入確保病床=入院患者病床使用率
+  console.log(bedOccupancyRate.data);
+
+  let sumBed = 0;
+  bedOccupancyRate.data.forEach((todayBed) => {
+    // console.log(todayBed.secure_bed);
+    sumBed += todayBed.secure_bed;
+  });
+  console.log(sumBed);
+
+  let sumInpatient = 0;
+  bedOccupancyRate.data.forEach((todayInpatient) => {
+    // console.log(todayBed.inpatient);
+    sumInpatient += todayInpatient.inpatient;
+  });
+  console.log(sumInpatient);
+
+  let total = ((sumInpatient / sumBed) * 100).toFixed(2);
+
   const classes = useStyles();
 
   return (
@@ -107,8 +119,17 @@ export const InformationCorona = () => {
               <Grid item xs={6}>
                 <Paper className={classes.inline}>
                   <h2 style={{ fontSize: 24 }}>対策病床使用率(参考)※</h2>
-                  <h2 style={{ fontSize: 40 }}>25.6%</h2>
-                  <h2 style={{ fontSize: 40 }}>ステージ3</h2>
+                  <h2 style={{ fontSize: 40 }}>{Number(total)}%</h2>
+                  <h2 style={{ fontSize: 40 }}>
+                    {Number(total) > 50
+                      ? "ステージ4"
+                      : Number(total) > 25
+                      ? "ステージ3"
+                      : Number(total) > 5
+                      ? "ステージ2"
+                      : "ステージ1"}
+                  </h2>
+                  {/* {coronaBed} */}
                 </Paper>
               </Grid>
               <Grid item xs={6}>
