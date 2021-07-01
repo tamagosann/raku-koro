@@ -8,6 +8,7 @@ import { useAppSelector } from './app/hooks';
 import { Header } from './components/header';
 import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
 import { LoadingPage } from './components/atoms';
+import { PrefectureData } from './pages/PrefectureData';
 
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
@@ -22,8 +23,7 @@ import {
   fetchUserDataAsync,
 } from './features/user/userSlice';
 
-import {BedOccupancyRate} from './templates/BedOccupancyRate'
-import Graph from './templates/Prefecture_daily_infection'
+import { BedOccupancyRate } from './templates/BedOccupancyRate';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const App = () => {
       <Header />
       {userStatus === 'loading' ? <LoadingPage /> : <Router />}
       <BedOccupancyRate />
-      <Graph />
+      <PrefectureData />
     </>
   );
 };
