@@ -48,8 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Test = (props: any) => {
-  const classes = useStyles();
+const ModalPreview = (props: any) => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -135,7 +134,10 @@ export const BedOccupancyRate = () => {
                           : classes.paperStegeOne
                       }
                     >
-                      <Test customStyles={customStyles} element={element} />
+                      <ModalPreview
+                        customStyles={customStyles}
+                        element={element}
+                      />
                     </Paper>
                   </Grid>
                 );
