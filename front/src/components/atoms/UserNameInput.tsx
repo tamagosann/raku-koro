@@ -5,16 +5,19 @@ import { Controller, Control, FieldError } from "react-hook-form";
 interface Props {
   control: Control;
   error: FieldError;
+  disabled?: boolean;
 }
 
-export const UserNameInput: FC<Props> = ({ control, error }) => {
+export const UserNameInput: FC<Props> = ({ control, error, disabled }) => {
   return (
     <>
       <Controller
         name="username"
         control={control}
         rules={{ required: true }}
-        render={({ field }) => <TextField label="ユーザー名" {...field} />}
+        render={({ field }) => (
+          <TextField label="ユーザー名" disabled={disabled} {...field} />
+        )}
       />
       {error !== undefined && (
         <p style={{ color: "red" }}>

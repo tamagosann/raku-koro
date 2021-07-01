@@ -1,54 +1,102 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import { fetchThread, updateThread } from "./threadAPI";
 
+export interface ThreadDataType {
+  _id?: string;
+  uid: string | null;
+  username: string | null;
+  prefecture: string | null;
+  comment: string | null;
+}
 export interface ThreadState {
-  value: number;
-  status: 'idle' | 'loading' | 'failed';
+  value: ThreadDataType[] | null;
+  status: "idle" | "loading" | "failed";
 }
 
+//初期値
 const initialState: ThreadState = {
-  value: 0,
-  status: 'idle',
+  value: null,
+  status: "idle",
 };
 
-//非同期処理はこの形で処理　<>内の型は
-export const incrementAsync = createAsyncThunk<any,any,{ state: RootState }>(
-  'thread/fetchCount',
-  async (amount: number) => {
-    const response = "dammy"
-    // The value we return becomes the `fulfilled` action payload
-    return response
+//掲示板全ての取得処理
+export const fetchThreadAsync = createAsyncThunk<ThreadDataType[] | null>(
+  "thread/fetchdata",
+  async () => {
+    try {
+      const thread = await fetchThread();
+      if (thread) {
+        return thread;
+      } else {
+        throw new Error("サーバーへの接続に失敗しました");
+      }
+    } catch (e) {
+      alert(e.message);
+      return null;
+    }
   }
 );
 
+//投稿内容更新処理
+export const updateThreadAsync = createAsyncThunk<
+  ThreadDataType | null,
+  ThreadDataType
+>("thread/update", async (data) => {
+  try {
+    const threadData = await updateThread(data);
+    if (threadData) {
+      return threadData;
+    } else {
+      throw new Error("サーバーへの接続に失敗しました");
+    }
+  } catch (e) {
+    alert(e.message);
+    return null;
+  }
+});
+
 export const threadSlice = createSlice({
-  name: 'thread',
+  name: "thread",
   initialState,
   // 非同期処理を行わないreducerはこっち
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+    unSetThread: (state) => {
+      return (state = initialState);
     },
   },
   //　非同期処理を行うreducerはこっち　fulfilledを使う
   extraReducers: (builder) => {
-    builder
-      .addCase(incrementAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.value += action.payload;
-      });
+    builder.addCase(fetchThreadAsync.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(fetchThreadAsync.fulfilled, (state, action) => {
+      state.status = "idle";
+      state.value = action.payload;
+    });
+    builder.addCase(updateThreadAsync.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(updateThreadAsync.fulfilled, (state, action) => {
+      state.status = "idle";
+      if (state.value && action.payload) {
+        let threadId = action.payload._id;
+        let newState = state.value.map((val) => {
+          if (val._id === threadId) {
+            return action.payload!;
+          }
+          return val!;
+        });
+        state.value = newState;
+      }
+    });
   },
 });
 
-export const { increment, decrement, incrementByAmount } = threadSlice.actions;
+export const { unSetThread } = threadSlice.actions;
 
 //useAppSelectorで呼び出したいデーターをここで定義
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectThread = (state: RootState) => state.thread.value;
+export const selectThreadStatus = (state: RootState) => state.thread.status;
 
 export default threadSlice.reducer;

@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Paper } from "@material-ui/core";
 import { useAppSelector } from "../../app/hooks";
 import { useHistory } from "react-router";
 import { logout } from "../../features/user/userAPI";
@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
         display: "none",
       },
     },
+    userName: {
+      "&:hover": {
+        color: "red",
+      },
+    },
   })
 );
 
@@ -63,12 +68,21 @@ const Header: React.FC = () => {
       },
     ],
     graphs: [
-      { text: "グラフ1", icon: "LineGrph1", method: () => history.push("/") },
-      { text: "グラフ2", icon: "LineGrph2", method: () => history.push("/") },
-      { text: "グラフ3", icon: "LineGrph3", method: () => history.push("/") },
-      { text: "グラフ4", icon: "CircleGrph", method: () => history.push("/") },
-      { text: "グラフ5", icon: "BarGrph1", method: () => history.push("/") },
-      { text: "グラフ6", icon: "BarGrph2", method: () => history.push("/") },
+      {
+        text: "全国",
+        icon: "LineGrph1",
+        method: () => history.push("/infected-person"),
+      },
+      {
+        text: "都道府県",
+        icon: "LineGrph1",
+        method: () => history.push("/every_prefecture"),
+      },
+      {
+        text: "病床使用率",
+        icon: "CircleGrph",
+        method: () => history.push("/bed-usage-rate"),
+      },
     ],
   };
   return (
@@ -85,18 +99,18 @@ const Header: React.FC = () => {
                 <div
                   className={classes.graphs}
                   key={index}
-                  style={{ marginRight: 20, marginLeft: 20 }}
+                  style={{ marginRight: 10, marginLeft: 10 }}
                 >
-                  <Grid spacing={2}>
-                    <Grid>
+                  <Grid container direction={"column"}>
+                    <div style={{ textAlign: "center" }}>
                       <IconButtonSelect
                         icon={graph.icon}
                         onClick={graph.method}
                       />
-                    </Grid>
-                    <Grid>
+                    </div>
+                    <div style={{ textAlign: "center" }}>
                       <small>{graph.text}</small>
-                    </Grid>
+                    </div>
                   </Grid>
                 </div>
               ))}
@@ -104,7 +118,13 @@ const Header: React.FC = () => {
             <div className={classes.grow} />
             {userData ? (
               <>
-                <Typography> {userData?.username} さん</Typography>
+                <Typography
+                  className={classes.userName}
+                  onClick={() => history.push("/userinfo")}
+                >
+                  {" "}
+                  {userData?.username} さん
+                </Typography>
                 {headers.logins.map((login, index) => (
                   <div className={classes.menu} key={index}>
                     <IconButtonSelect

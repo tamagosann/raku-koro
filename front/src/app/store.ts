@@ -14,6 +14,7 @@ import vaccinationRuducer from '../features/graphs/vaccinationSlice';
 import bedOccupancyRateRuducer from '../features/graphs/bedOccupancyRateSlice';
 import dailyDethRuducer from '../features/graphs/dailyDethSlice';
 import dailyRecoveryRuducer from '../features/graphs/dailyRecoverySlice';
+import dailyPositiveRuducer from '../features/graphs/dailyPositiveSlice';
 
 export const store = configureStore({
   reducer: {
@@ -23,15 +24,16 @@ export const store = configureStore({
     dailyInfection: dailyInfectionRuducer,
     graph2: graph2Ruducer,
     prefecture: prefectureRuducer,
-    dailyDead:dailyDeadRuducer,
-    dailyCorona:dailyCoronaRuducer,
-    totalCorona:totalCoronaRuducer,
-    totalRecovery:totalRecoveryRuducer,
-    totalDeth:totalDethRuducer,
-    vaccination:vaccinationRuducer,
-    bedOccupancyRate:bedOccupancyRateRuducer,
-    dailyDeth:dailyDethRuducer,
-    dailyRecovery:dailyRecoveryRuducer
+    dailyDead: dailyDeadRuducer,
+    dailyCorona: dailyCoronaRuducer,
+    totalCorona: totalCoronaRuducer,
+    totalRecovery: totalRecoveryRuducer,
+    totalDeth: totalDethRuducer,
+    vaccination: vaccinationRuducer,
+    bedOccupancyRate: bedOccupancyRateRuducer,
+    dailyDeth: dailyDethRuducer,
+    dailyRecovery: dailyRecoveryRuducer,
+    dailyPositive: dailyPositiveRuducer,
   },
 });
 
