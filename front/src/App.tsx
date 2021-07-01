@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Router from "./Router";
 import { auth } from "./firebase";
 import { useAppSelector } from "./app/hooks";
+import {BedOccupancyRate} from './templates/BedOccupancyRate'
 
 //コンポーネント
 import { Header } from "./components/header";
@@ -48,6 +49,7 @@ const App = () => {
     <>
       <Header />
       {userStatus === "loading" ? <LoadingPage /> : <Router />}
+      <BedOccupancyRate />
     </>
   );
 };

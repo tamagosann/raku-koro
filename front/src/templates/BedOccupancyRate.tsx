@@ -3,8 +3,8 @@ import { useAppSelector } from "../app/hooks";
 import Inner from "../components/inner/Inner";
 
 //react-modal
-import Modal from "react-modal";
-
+import Modal from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 // slice
 import { selectBedOccupancyRate } from "../features/graphs/bedOccupancyRateSlice";
 
@@ -13,7 +13,9 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
-Modal.setAppElement("#root");
+// Modal.setAppElement("#root");
+
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,11 +47,16 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "#ff2b2b",
     },
     backgroundColorStageOne: {},
-    
+    styles:{
+      fontFamily: "sans-serif",
+      textAlign: "center"
+    }
   })
 );
 
+
 const Test = (props:any) => {
+  const classes = useStyles();
   
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -62,7 +69,7 @@ const Test = (props:any) => {
   }
 
   return (
-    <>
+    <div>
       <div onClick={openModal}>
         <h3>{props.element.prefecture}</h3>
         <p>{props.element.use_bed_rate}</p>
@@ -71,10 +78,10 @@ const Test = (props:any) => {
         </p>
       </div>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={props.customStyles}
-        contentLabel="Example Modal"
+        open={modalIsOpen}
+        onClose={closeModal}
+        // styles={props.customStyles.content}
+        
       >
         <h2>{props.element.prefecture} 病床使用率 {(props.element.inpatient / props.element.secure_bed * 100).toFixed(2)} % (参考)</h2>
 
@@ -85,11 +92,11 @@ const Test = (props:any) => {
         <p>うち重症者数：{props.element.injured}人</p>
         <p>入院患者受入確保病床：{props.element.secure_bed}床</p>
         <p>入院者数：{props.element.inpatient}人</p>
-        <p>出典：{props.element.source}</p>
+        <p style={{wordBreak: "break-all"}}>出典：{props.element.source}</p>
         <p>最終更新日：{props.element.update}</p>
         
       </Modal>
-    </>
+    </div>
   );
 };
 
