@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Inner } from "../components/inner";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
+import { OrangeButton } from "../components/atoms";
 
 // マテリアルUI
 import { Button, Typography } from "@material-ui/core";
@@ -53,8 +54,8 @@ const InfectedPerson = () => {
 
   return (
     <Inner>
-        <Button variant="contained" style={{background: "#fd7e00", color: "#fff"}} onClick={changeToggle}>累計</Button>
-        <Button variant="contained" style={{background: "#fd7e00", color: "#fff"}} onClick={changeDay}>日別</Button>
+      <OrangeButton label={"累計"} onClick={changeToggle} />
+      <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ?
       <>
         <Typography variant="h5" align="center">感染者数推移（累計）</Typography>

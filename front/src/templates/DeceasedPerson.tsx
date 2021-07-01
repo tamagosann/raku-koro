@@ -4,6 +4,7 @@ import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalDeth } from '../features/graphs/totalDethSlice';
 import { AreaReChart, LineReChart } from "../components/organisms";
+import { OrangeButton } from "../components/atoms";
 
 interface Data {
   date: string;
@@ -47,10 +48,8 @@ const DeceasedPerson = () => {
 
   return (
     <Inner>
-      <Typography>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeToggle}>累計</Button>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeDay}>日別</Button>
-      </Typography>
+      <OrangeButton label={"累計"} onClick={changeToggle} />
+      <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ? 
       <>
         <Typography variant="h5" align="center">死亡者数推移（累計）</Typography>
