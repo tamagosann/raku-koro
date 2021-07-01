@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
-import { PrimaryButton } from '../index';
+import { PrimaryButton } from '../../atoms/index';
 
 describe('PrimaryButton test', () => {
 
