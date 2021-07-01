@@ -23,6 +23,7 @@ import {
 } from './features/user/userSlice';
 
 import {BedOccupancyRate} from './templates/BedOccupancyRate'
+import Graph from './templates/Prefecture_daily_infection'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const App = () => {
       <Header />
       {userStatus === 'loading' ? <LoadingPage /> : <Router />}
       <BedOccupancyRate />
+      <Graph />
     </>
   );
 };

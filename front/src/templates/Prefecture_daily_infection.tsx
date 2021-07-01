@@ -57,7 +57,15 @@ const PrefectureDailyInfention = () => {
               累計感染者数
             </ReChart>
           )}
+          <a
+           href="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/"
+           target="_blank"
+           rel="noopener"
+            >
+            都道府県ごとの感染者数の推移情報提供:NHK
+           </a>
         </Inner>
+        
       )}
     </>
     
