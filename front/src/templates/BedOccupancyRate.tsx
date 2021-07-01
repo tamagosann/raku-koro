@@ -235,3 +235,5 @@ export const BedOccupancyRate = () => {
     </>
   );
 };
+
+export default BedOccupancyRate

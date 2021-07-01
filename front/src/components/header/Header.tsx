@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Paper } from "@material-ui/core";
 import { useAppSelector } from "../../app/hooks";
 import { useHistory } from "react-router";
 import { logout } from "../../features/user/userAPI";
@@ -63,12 +63,9 @@ const Header: React.FC = () => {
       },
     ],
     graphs: [
-      { text: "グラフ1", icon: "LineGrph1", method: () => history.push("/") },
-      { text: "グラフ2", icon: "LineGrph2", method: () => history.push("/") },
-      { text: "グラフ3", icon: "LineGrph3", method: () => history.push("/") },
-      { text: "グラフ4", icon: "CircleGrph", method: () => history.push("/") },
-      { text: "グラフ5", icon: "BarGrph1", method: () => history.push("/") },
-      { text: "グラフ6", icon: "BarGrph2", method: () => history.push("/") },
+      { text: "全国", icon: "LineGrph1", method: () => history.push("/infected-person") },
+      { text: "都道府県", icon: "LineGrph1", method: () => history.push("/every_prefecture") },
+      { text: "病床使用率", icon: "CircleGrph", method: () => history.push("/bed-usage-rate") },
     ],
   };
   return (
@@ -87,16 +84,16 @@ const Header: React.FC = () => {
                   key={index}
                   style={{ marginRight: 20, marginLeft: 20 }}
                 >
-                  <Grid spacing={2}>
-                    <Grid>
+                  <Grid container direction={"column"}>
+                    <div style={{textAlign: 'center'}}>
                       <IconButtonSelect
                         icon={graph.icon}
                         onClick={graph.method}
                       />
-                    </Grid>
-                    <Grid>
+                    </div>
+                    <div style={{textAlign: 'center'}}>
                       <small>{graph.text}</small>
-                    </Grid>
+                    </div>
                   </Grid>
                 </div>
               ))}
