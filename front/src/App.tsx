@@ -7,7 +7,10 @@ import { useAppSelector } from "./app/hooks";
 //コンポーネント
 import { Header } from "./components/header";
 import { fetchDailyCoronaAsync } from "./features/graphs/dailyCoronaSlice";
+import { InformationCorona } from "./templates/informationCorona";
+
 import { LoadingPage } from "./components/atoms";
+import { PrefectureData } from "./pages/PrefectureData";
 
 // slice
 import { fetchDailyInfectionAsync } from "./features/graphs/dailyInfectionSlice";
@@ -25,6 +28,8 @@ import {
   fetchThreadAsync,
   selectThreadStatus,
 } from "./features/thread/threadSlice";
+
+import { BedOccupancyRate } from "./templates/BedOccupancyRate";
 
 const App = () => {
   const dispatch = useDispatch();

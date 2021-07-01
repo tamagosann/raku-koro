@@ -37,7 +37,6 @@ export const fetchDailyDethAsync = createAsyncThunk(
         'https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv'
       )
       .then((response) => {
-        console.log(response)
         const fetch_daily_deth = Papa.parse(response.data, { 
           header: true,  
           dynamicTyping: true,
@@ -47,8 +46,6 @@ export const fetchDailyDethAsync = createAsyncThunk(
         // 取得したデータだけを取り出す
         const fetch_daily_deth_data =
           fetch_daily_deth.data as Array<Data>;
-          console.log('日毎死亡者')
-          console.log(fetch_daily_deth_data)
         // 取り出したデータを格納する
         fetchData.data = fetch_daily_deth_data;
       });
