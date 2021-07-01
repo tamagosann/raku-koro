@@ -2,7 +2,7 @@ import React from 'react';
 
 // コンポーネント
 import { PrefectureDailyDead } from '../templates/PrefectureDailyDead';
-import PrefectureDailyInfention from '../templates/Prefecture_daily_infection';
+import PrefectureDailyInfention from '../templates/PrefectureDailyInfection';
 
 // マテリアルUI
 import Grid from '@material-ui/core/Grid';

@@ -17,6 +17,8 @@ import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
 import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSlice';
 import { fetchDailyPositiveAsync } from './features/graphs/dailyPositiveSlice';
 
+import PcrPositiveRate from './templates/PcrPositiveRate'
+
 import {
   unSetUser,
   selectUserStatus,
@@ -60,7 +62,10 @@ const App = () => {
       {userStatus === 'loading' && threadStatus === 'loading' ? (
         <LoadingPage />
       ) : (
+        <>
         <Router />
+        <PcrPositiveRate />
+        </>
       )}
     </>
   );
