@@ -1,25 +1,27 @@
-import React from 'react';
-import { render, screen, cleanup, fireEvent } from '@testing-library/react';
-import { SecondaryButton } from '../index';
+import React from "react";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { SecondaryButton } from "../../atoms/index";
 
-describe('SecondaryButton test', () => {
-  const sampleText = '戻る'
-  const MockFunc = jest.fn()
+describe("SecondaryButton test", () => {
+  const sampleText = "戻る";
+  const MockFunc = jest.fn();
 
   afterEach(() => {
-    cleanup()
-  })
+    cleanup();
+  });
 
-  test('render', () => {
-    const component = render(<SecondaryButton label={sampleText} onClick={MockFunc} />);
+  test("render", () => {
+    const component = render(
+      <SecondaryButton label={sampleText} onClick={MockFunc} />
+    );
     const linkElement = screen.getByText(sampleText);
     expect(linkElement).toBeInTheDocument();
   });
 
   test("click:SecondaryButton", () => {
-    render(<SecondaryButton label={sampleText} onClick={MockFunc} />)
+    render(<SecondaryButton label={sampleText} onClick={MockFunc} />);
     const button = screen.getByText(sampleText);
-    fireEvent.click(button)
-    expect(MockFunc.mock.calls.length).toBe(1)
-  })
-})
+    fireEvent.click(button);
+    expect(MockFunc.mock.calls.length).toBe(1);
+  });
+});

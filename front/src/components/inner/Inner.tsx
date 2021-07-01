@@ -1,16 +1,15 @@
-import { Container, Paper } from "@material-ui/core";
-import { FC } from "react";
+import { Container, Paper } from '@material-ui/core';
+import { FC } from 'react';
 
-
-const Inner: FC = ({children}) => {
+const Inner: FC = ({ children }) => {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="lg">
       <Paper
         variant="outlined"
         component="div"
         style={{ padding: 20, marginTop: 90 }}
       >
-        {children} 
+        {children}
       </Paper>
     </Container>
   );

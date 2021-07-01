@@ -42,7 +42,7 @@ const graph1 = () => {
             strokeDasharray="3 3"
           />
           <ReferenceLine
-            y={60}
+            y={55}
             label="目標体重"
             stroke="blue"
             strokeDasharray="3 3"
