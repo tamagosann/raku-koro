@@ -3,14 +3,11 @@ import { useDispatch } from 'react-redux';
 import Router from './Router';
 import { auth } from './firebase';
 import { useAppSelector } from './app/hooks';
-import axios from 'axios';
-import Papa from 'papaparse';
 
 //コンポーネント
 import { Header } from './components/header';
 import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
 import { LoadingPage } from './components/atoms';
-import { PrefectureData } from './pages/PrefectureData';
 
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
@@ -25,9 +22,6 @@ import {
   selectUser,
   fetchUserDataAsync,
 } from './features/user/userSlice';
-
-import { BedOccupancyRate } from './templates/BedOccupancyRate';
-import { ContactlessOutlined } from '@material-ui/icons';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -56,8 +50,6 @@ const App = () => {
     <>
       <Header />
       {userStatus === 'loading' ? <LoadingPage /> : <Router />}
-      <BedOccupancyRate />
-      <PrefectureData />
     </>
   );
 };
