@@ -3,6 +3,8 @@ import { Container, Paper } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { ThreadForm } from "../molecules";
 import { UserInfoForm } from "../molecules";
+import { CreateCommentForm } from "../molecules";
+
 const useStyles = makeStyles(() =>
   createStyles({
     formlayout: {
@@ -11,7 +13,7 @@ const useStyles = makeStyles(() =>
   })
 );
 interface Props {
-  type: "userinfo" | "threadinfo";
+  type: "userinfo" | "threadinfo" | "createcomment";
 }
 const FormLayout: FC<Props> = ({ type }) => {
   const classes = useStyles();
@@ -19,6 +21,7 @@ const FormLayout: FC<Props> = ({ type }) => {
     <Container maxWidth={"sm"} component={Paper} className={classes.formlayout}>
       {type === "userinfo" && <UserInfoForm />}
       {type === "threadinfo" && <ThreadForm />}
+      {type === "createcomment" && <CreateCommentForm />}
     </Container>
   );
 };

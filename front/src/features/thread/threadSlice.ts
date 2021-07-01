@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { fetchThread, updateThread } from "./threadAPI";
+import { fetchThread, updateThread, createThread } from "./threadAPI";
 
 export interface ThreadDataType {
   _id?: string;
+  date: string;
   uid: string | null;
   username: string | null;
   prefecture: string | null;
@@ -38,6 +39,25 @@ export const fetchThreadAsync = createAsyncThunk<ThreadDataType[] | null>(
   }
 );
 
+//新規投稿処理
+export const createThreadAsync = createAsyncThunk<
+  ThreadDataType | null,
+  ThreadDataType
+>("thread/create", async (data) => {
+  try {
+    const threadData = await createThread(data);
+    if (threadData) {
+      console.log(threadData);
+      return threadData;
+    } else {
+      throw new Error("サーバーへの接続に失敗しました");
+    }
+  } catch (e) {
+    alert(e.message);
+    return null;
+  }
+});
+
 //投稿内容更新処理
 export const updateThreadAsync = createAsyncThunk<
   ThreadDataType | null,
@@ -67,6 +87,7 @@ export const threadSlice = createSlice({
   },
   //　非同期処理を行うreducerはこっち　fulfilledを使う
   extraReducers: (builder) => {
+    //取得
     builder.addCase(fetchThreadAsync.pending, (state) => {
       state.status = "loading";
     });
@@ -74,6 +95,18 @@ export const threadSlice = createSlice({
       state.status = "idle";
       state.value = action.payload;
     });
+    //追加
+    builder.addCase(createThreadAsync.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(createThreadAsync.fulfilled, (state, action) => {
+      state.status = "idle";
+      if (state.value && action.payload) {
+        let newState = [ ...state.value, action.payload ]
+        state.value = newState;
+      }
+    });
+    //更新
     builder.addCase(updateThreadAsync.pending, (state) => {
       state.status = "loading";
     });
