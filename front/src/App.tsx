@@ -23,15 +23,21 @@ import {
   selectUser,
   fetchUserDataAsync,
 } from './features/user/userSlice';
+import {
+  fetchThreadAsync,
+  selectThreadStatus,
+} from './features/thread/threadSlice';
 
 const App = () => {
   const dispatch = useDispatch();
   const userStatus = useAppSelector(selectUserStatus);
+  const threadStatus = useAppSelector(selectThreadStatus);
   const userData = useAppSelector(selectUser);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         if (!userData) {
+          dispatch(fetchThreadAsync());
           dispatch(fetchUserDataAsync({ uid: user.uid }));
         }
       } else {
@@ -50,7 +56,12 @@ const App = () => {
   return (
     <>
       <Header />
-      {userStatus === 'loading' ? <LoadingPage /> : <Router />}
+      {/* ここの条件分岐に書くグラフのデータ取得ステータスを追加してください */}
+      {userStatus === 'loading' && threadStatus === 'loading' ? (
+        <LoadingPage />
+      ) : (
+        <Router />
+      )}
     </>
   );
 };
