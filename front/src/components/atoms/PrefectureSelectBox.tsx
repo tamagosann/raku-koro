@@ -6,9 +6,10 @@ import { prefectures } from "../../common/prefecture";
 interface Props {
   control: Control;
   error: FieldError;
+  disabled?: boolean;
 }
 
-export const PrefectureSelectBox: FC<Props> = ({ control, error }) => {
+export const PrefectureSelectBox: FC<Props> = ({ control, error,disabled }) => {
   return (
     <>
       <Controller
@@ -18,7 +19,7 @@ export const PrefectureSelectBox: FC<Props> = ({ control, error }) => {
           required: true,
         }}
         render={({ field }) => (
-          <Select {...field}>
+          <Select {...field} disabled={disabled}>
             {prefectures.map((pref, index) => (
               <MenuItem key={index} value={pref.prefName}>
                 {pref.prefName}
