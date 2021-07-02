@@ -28,7 +28,7 @@ export interface RegisterType {
 //初期値
 const initialState: UserState = {
   value: null,
-  status: "loading",
+  status: "idle",
 };
 
 //ログイン

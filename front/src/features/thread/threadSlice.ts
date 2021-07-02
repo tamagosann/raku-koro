@@ -23,7 +23,7 @@ export interface ThreadState {
 //初期値
 const initialState: ThreadState = {
   value: null,
-  status: "loading",
+  status: "idle",
 };
 
 //掲示板全ての取得処理

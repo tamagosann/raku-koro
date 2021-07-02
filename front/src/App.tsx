@@ -44,6 +44,7 @@ import {
 import {
   fetchThreadAsync,
   selectThreadStatus,
+  unSetThread,
 } from "./features/thread/threadSlice";
 
 const App = () => {
@@ -67,6 +68,7 @@ const App = () => {
         }
       } else {
         dispatch(unSetUser());
+        dispatch(unSetThread());
       }
     });
     dispatch(fetchDailyInfectionAsync());
@@ -81,13 +83,13 @@ const App = () => {
     <>
       <Header />
       {/* ここの条件分岐に書くグラフのデータ取得ステータスを追加してください */}
-      {userStatus === "loading" &&
-      threadStatus === "loading" &&
-      bedOcuStatus === "loading" &&
-      totalDethStatus === "loading" &&
-      dayDeadStatus === "loading" &&
-      dayInfectStatus === "loading" &&
-      dayPosiStatus === "loading" &&
+      {userStatus === "loading" ||
+      threadStatus === "loading" ||
+      bedOcuStatus === "loading" ||
+      totalDethStatus === "loading" ||
+      dayDeadStatus === "loading" ||
+      dayInfectStatus === "loading" ||
+      dayPosiStatus === "loading" ||
       totalCoroStatus === "loading" ? (
         <LoadingPage />
       ) : (
