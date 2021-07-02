@@ -133,7 +133,17 @@ export const InformationCorona = () => {
                     <h2 style={{ fontSize: "40px" }}>
                       {Number(totalBedUsed)}%
                     </h2>
-                    <h2 style={{ fontSize: "40px" }}>
+                    <h2
+                      style={
+                        Number(totalBedUsed) > 50
+                          ? { background: "#ff2b2b" }
+                          : Number(totalBedUsed) > 25
+                          ? { background: "#ff8080" }
+                          : Number(totalBedUsed) > 5
+                          ? { background: "#ffd5d5" }
+                          : { background: "#ffff" }
+                      }
+                    >
                       {Number(totalBedUsed) > 50
                         ? "ステージ4"
                         : Number(totalBedUsed) > 25
@@ -146,17 +156,17 @@ export const InformationCorona = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Paper className={classes.paper}>
-                    <h2 style={{ fontSize: "24px" }}>感染者数</h2>
+                    <h2 style={{ fontSize: "24px" }}>累計感染者数</h2>
                     <h2 style={{ fontSize: "32px" }}>
                       {!coronaToday ? 0 : coronaToday.toLocaleString()}人
                     </h2>
                     <h3 style={{ fontSize: "24px" }}>
-                      前日：＋
+                      前日比：＋
                       {!coronaYesterday ? 0 : coronaYesterday.toLocaleString()}
                       人
                     </h3>
                     <h3 style={{ fontSize: "24px" }}>
-                      前々日：＋
+                      前々日比：＋
                       {!coronaDayBeforeYesterday
                         ? 0
                         : coronaDayBeforeYesterday.toLocaleString()}
@@ -166,16 +176,16 @@ export const InformationCorona = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Paper className={classes.paper}>
-                    <h2 style={{ fontSize: "24px" }}>死亡者数</h2>
+                    <h2 style={{ fontSize: "24px" }}>累計死亡者数</h2>
                     <h2 style={{ fontSize: "32px" }}>
                       {!dethToday ? 0 : dethToday.toLocaleString()}人
                     </h2>
                     <h3 style={{ fontSize: "24px" }}>
-                      前日：＋
+                      前日比：＋
                       {!dethYesterday ? 0 : dethYesterday.toLocaleString()}人
                     </h3>
                     <h3 style={{ fontSize: "24px" }}>
-                      前々日：＋
+                      前々日比：＋
                       {!dethDayBeforeYesterday
                         ? 0
                         : dethDayBeforeYesterday.toLocaleString()}
@@ -205,12 +215,20 @@ export const InformationCorona = () => {
               <br />
               ※対策病床使用率(参考)=現在患者 / 新型コロナ対策病床数
               <br />
-              <a href="https://corona.go.jp/dashboard/">
+              <a
+                href="https://corona.go.jp/dashboard/"
+                target="_blunk"
+                rel="noopener noreferrer"
+              >
                 新型コロナウイルス感染症対策オープンデータ
               </a>
               を使用
               <br />
-              <a href="https://www.stopcovid19.jp/">
+              <a
+                href="https://www.stopcovid19.jp/"
+                target="_blunk"
+                rel="noopener noreferrer"
+              >
                 新型コロナウイルス対策ダッシュボード
               </a>
               を使用
