@@ -85,14 +85,14 @@ const Header: React.FC = () => {
       },
       {
         text: "PCR検査",
-        icon: "CircleGrph",
+        icon: "BarGrph1",
         method: () => history.push("/pcr-rate"),
       },
     ],
   };
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{background: "#fd7e00"}}>
         <Container maxWidth="lg">
           <Toolbar>
             <Typography variant="h6" noWrap onClick={() => history.push("/")}>

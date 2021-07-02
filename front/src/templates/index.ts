@@ -8,3 +8,4 @@ export { default as UserInfo } from "./UserInfo";
 export { default as ThreadInfo } from "./ThreadInfo";
 export { default as BedOccupancyRate } from "./BedOccupancyRate";
 export { default as PrefectureDailyInfention } from "./PrefectureDailyInfection";
+export { default as InformationCorona } from "./informationCorona";

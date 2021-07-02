@@ -67,6 +67,7 @@ const PcrPositiveRate = () => {
       <Inner><p>Loading...</p></Inner>
       : (
         <Inner>
+            <h1>PCR検査数と陽性者数の推移</h1>
             <ResponsiveContainer width="100%" height={400}>
         <ComposedChart
           width={500}
@@ -97,8 +98,8 @@ const PcrPositiveRate = () => {
               className="TimeLineChart-brush"
               dataKey="date"
               stroke="#fd7e00"
-              startIndex={tranceData.length - 31}
-              endIndex={tranceData.length - 1}
+              startIndex={0}
+              endIndex={0}
             />
         </ComposedChart>
       </ResponsiveContainer>    
