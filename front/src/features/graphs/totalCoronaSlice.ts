@@ -78,5 +78,6 @@ export const totalCoronaSlice = createSlice({
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectTotalCorona = (state: RootState) => state.totalCorona;
+export const selectTotalCoronaStatus = (state: RootState) => state.totalCorona.status;
 
 export default totalCoronaSlice.reducer;

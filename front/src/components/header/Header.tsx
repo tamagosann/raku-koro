@@ -92,7 +92,7 @@ const Header: React.FC = () => {
   };
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{background: "#fd7e00"}}>
+      <AppBar position="static" style={{ background: "#fd7e00" }}>
         <Container maxWidth="lg">
           <Toolbar>
             <Typography variant="h6" noWrap onClick={() => history.push("/")}>
@@ -121,6 +121,13 @@ const Header: React.FC = () => {
               ))}
             </>
             <div className={classes.grow} />
+            <Typography
+              className={classes.userName}
+              onClick={() => history.push("/about")}
+            >
+              {" "}
+              About
+            </Typography>
             {userData ? (
               <>
                 <Typography
