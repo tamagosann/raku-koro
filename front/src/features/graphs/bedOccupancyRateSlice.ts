@@ -53,8 +53,6 @@ export const fetchBedOccupancyRateAsync = createAsyncThunk(
         // 取得したデータだけを取り出す
         const fetch_beb_occupansy_rate_data = fetch_beb_occupansy_rate.data;
 
-        console.log(fetch_beb_occupansy_rate_data);
-
         const tranceData = [];
         for (let i = 0; i < fetch_beb_occupansy_rate_data.length; i++) {
           tranceData.push({

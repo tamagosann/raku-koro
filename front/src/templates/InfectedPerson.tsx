@@ -1,32 +1,23 @@
-import React, { useState } from "react";
-import {
-  Brush,
-  CartesianGrid,
-  Legend,
-  Area,
-  AreaChart,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip
-} from "recharts";
+import React, { useState, FC } from "react";
 import { Inner } from "../components/inner";
-import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
+import { OrangeButton, ReferenceDataLink } from "../components/atoms";
 
-interface Data {
+// マテリアルUI
+import { Button, Typography } from "@material-ui/core";
+import { AreaReChart, LineReChart } from "../components/organisms";
+
+interface InfectedData {
   date: string;
   npatients: number;
   adpatients : number;
 }
 
-const InfectedPerson = () => {
+const InfectedPerson: FC = () => {
   const totalCorona = useAppSelector(selectTotalCorona)
-  const cumulativeInfectedPerson: Array<Data> = totalCorona.data
-  const [dayInfectedPerson, setDayInfectedPerson] = useState<Array<Data>>([])
+  const cumulativeInfectedPerson: InfectedData[] = totalCorona.data
+  const [dayInfectedPerson, setDayInfectedPerson] = useState<InfectedData[]>([])
   const [toggle, setToggle] = useState<boolean>(true)
 
   // 累計への切り替え
@@ -36,16 +27,16 @@ const InfectedPerson = () => {
 
   // 日別への切り替え
   const changeDay = (): void => {
-    let daysData: Array<Data> = []
+    let daysData: InfectedData[] = []
     let count:number = 0
-    let infectedPersonDay:Data = {
+    let infectedPersonDay: InfectedData = {
       date: '',
       npatients: 0,
       adpatients: 0
     }
     cumulativeInfectedPerson.forEach((data, index) => {
       count = data.npatients - infectedPersonDay.npatients
-      let pushData:Data = {
+      let pushData: InfectedData = {
         date: data.date,
         npatients: count,
         adpatients: 0
@@ -63,59 +54,35 @@ const InfectedPerson = () => {
 
   return (
     <Inner>
-      <Typography>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeToggle}>累計</Button>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeDay}>日別</Button>
-      </Typography>
+      <OrangeButton label={"累計"} onClick={changeToggle} />
+      <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ?
       <>
         <Typography variant="h5" align="center">感染者数推移（累計）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-          <AreaChart data={cumulativeInfectedPerson}>
-            <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Legend verticalAlign="top"/>
-            <Area
-              type="monotone"
-              dataKey="npatients"
-              name="感染者数"
-              stroke="#8884d8"
-              fill="#8884b8"
-              strokeWidth={3}
-            />
-            <Brush dataKey="date" stroke="#8884d8" />
-          </AreaChart>
-        </ResponsiveContainer>
+        <AreaReChart 
+          data={cumulativeInfectedPerson}
+          xDataKey={"date"}
+          areaDataKey={"npatients"}
+          areaName={"感染者数"}
+        />
       </>
       :
       <>
         <Typography variant="h5" align="center">感染者数推移（日別）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-          <LineChart data={dayInfectedPerson}>
-            <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Legend verticalAlign="top"/>
-            <Line
-              dataKey="npatients"
-              name="感染者数"
-              stroke="#8884d8"
-              fill="#8884b8"
-              strokeWidth={3}
-            />
-            <Brush
-              dataKey="date"
-              stroke="#8884d8"
-              startIndex={dayInfectedPerson.length - 31}
-              endIndex={dayInfectedPerson.length - 1}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        <LineReChart 
+          data={dayInfectedPerson}
+          xDataKey={"date"}
+          lineDataKey={"npatients"}
+          lineName={"感染者数"}
+          startIndex={dayInfectedPerson.length - 31}
+          endIndex={dayInfectedPerson.length - 1}
+        />
       </>
-    }
+      }
+      <ReferenceDataLink
+        label={"新型コロナウイルス感染症対策"}
+        href={"https://corona.go.jp/dashboard/"}
+      />
     </Inner>
   );
 };
