@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Router from "./Router";
 import { auth } from "./firebase";
 import { useAppSelector } from "./app/hooks";
+import { InformationCorona } from "./templates/informationCorona";
 
 //コンポーネント
 import { Header } from "./components/header";
@@ -29,8 +30,6 @@ import {
   fetchThreadAsync,
   selectThreadStatus,
 } from "./features/thread/threadSlice";
-
-
 
 const App = () => {
   const dispatch = useDispatch();
@@ -67,6 +66,7 @@ const App = () => {
         <>
           <Router />
           <PcrPositiveRate />
+          <InformationCorona />
         </>
       )}
     </>
