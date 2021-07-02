@@ -10,7 +10,7 @@ import Inner from '../components/inner/Inner';
 import { DailyTotalRadio } from '../components/atoms/DailyTotalRadio';
 import { ReChart } from '../components/organisms/ReChart';
 
-export const PrefectureDailyDead = () => {
+export const PrefectureDailyDead  = () => {
   const prefecture_dead = useAppSelector(selectDailyInfection);
   // ラジオボタンの初期値（日別）
   const [value, setValue] = useState<string>('0');
