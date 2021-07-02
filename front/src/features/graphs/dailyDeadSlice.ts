@@ -79,7 +79,6 @@ import {
           // 取得したデータだけを取り出す
           const fetch_daily_dead_data =
             fetch_daily_dead.data as Array<Data>;
-          console.log('fetch_daily_infection_data', fetch_daily_dead_data);
           // 取り出したデータを格納する
           fetchData.data = fetch_daily_dead_data;
         });

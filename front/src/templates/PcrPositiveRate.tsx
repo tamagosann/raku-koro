@@ -28,8 +28,6 @@ const PcrPositiveRate = () => {
 
   const PcrPositiveRate = useAppSelector(selectDailyPositive)
 
-    console.log('items',PcrPositiveRate);
-
     const tranceData = [] as Data[];
 
     PcrPositiveRate.data.forEach((el) => {

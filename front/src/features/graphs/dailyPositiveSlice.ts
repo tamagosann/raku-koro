@@ -97,7 +97,6 @@ export const dailyPositiveSlice = createSlice({
           const clonedState: GraphState = { ...state };
           clonedState.status = 'success';
           clonedState.data = action.payload.data as Array<Data>;
-          console.log('action.payload', action.payload);
           return clonedState;
         }
       );

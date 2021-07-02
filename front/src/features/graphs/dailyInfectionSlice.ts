@@ -79,7 +79,6 @@ export const fetchDailyInfectionAsync = createAsyncThunk(
         // 取得したデータだけを取り出す
         const fetch_daily_infection_data =
           fetch_daily_infection.data as Array<Data>;
-        console.log('fetch_daily_infection_data', fetch_daily_infection_data);
         // 取り出したデータを格納する
         fetchData.data = fetch_daily_infection_data;
       });
