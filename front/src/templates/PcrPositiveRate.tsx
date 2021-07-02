@@ -89,7 +89,7 @@ const PcrPositiveRate:FC = () => {
             
           }}
           />
-          <Legend />
+          <Legend verticalAlign="top"/>
           <Area type="monotone" dataKey="daily_pcr" fill="#ffe2b2" stroke="#fd7e00" name="PCR検査人数" />
           <Bar dataKey="daily_positive" barSize={20} fill="#fd7e00" name="陽性者数" />
           {/* <Line type="monotone" dataKey="daily_pcr" stroke="#ff7300" /> */}

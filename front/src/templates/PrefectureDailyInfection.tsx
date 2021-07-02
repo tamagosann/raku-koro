@@ -71,6 +71,7 @@ const PrefectureDailyInfention: FC = () => {
               startIndex={0}
               endIndex={0}
               value={value}
+              date={"date"}
             >
               累計感染者数
             </ReChart>
@@ -81,6 +82,7 @@ const PrefectureDailyInfention: FC = () => {
               startIndex={target_prefecture.length - 31}
               endIndex={target_prefecture.length - 1}
               value={value}
+              date={"date"}
             >
               日別感染者数
             </ReChart>

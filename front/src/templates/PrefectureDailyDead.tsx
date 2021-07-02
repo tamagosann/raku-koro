@@ -39,6 +39,8 @@ export const PrefectureDailyDead: FC = () => {
   const targetPrefecture = prefecture_dead.data.filter(
     (element) => element.pref_code === Number(prefecture)
   );
+  console.log(targetPrefecture);
+  
 
   return (
     <>
@@ -56,6 +58,7 @@ export const PrefectureDailyDead: FC = () => {
               startIndex={0}
               endIndex={0}
               value={value}
+              date={"date"}
             >
               累計死者数
             </ReChart>
@@ -66,6 +69,7 @@ export const PrefectureDailyDead: FC = () => {
               startIndex={targetPrefecture.length - 31}
               endIndex={targetPrefecture.length - 1}
               value={value}
+              date={"date"}
             >
               日別死者数
             </ReChart>
