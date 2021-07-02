@@ -6,14 +6,16 @@ interface TypographyProps {
   children: string;
   variant: Variant;
   align: PropTypes.Alignment;
+  className?: string;
 }
 
-const TypographyTitle: FC<TypographyProps> = ({ children, variant, align }) => {
+const TypographyTitle: FC<TypographyProps> = ({ children, variant, align, className }) => {
   return (
     <Typography
       variant={variant}
       align={align}
       style={{ marginBottom: '40px' }}
+      className={className}
     >
       {children}
     </Typography>
