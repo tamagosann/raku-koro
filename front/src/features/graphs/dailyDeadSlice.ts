@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-import axios from 'axios';
-import Papa from 'papaparse';
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import axios from "axios";
+import Papa from "papaparse";
 
 interface Data {
   daily_infection: number;
@@ -14,7 +14,7 @@ interface Data {
 }
 export interface GraphState {
   data: Data[];
-  status: 'success' | 'loading' | 'failed';
+  status: "success" | "loading" | "failed";
 }
 
 const initialState: GraphState = {
@@ -24,12 +24,12 @@ const initialState: GraphState = {
       total_infection: 0,
       daily_dead: 0,
       total_dead: 0,
-      date: '',
+      date: "",
       pref_code: 0,
-      pref_name: '',
+      pref_name: "",
     },
   ],
-  status: 'loading',
+  status: "loading",
 };
 
 //非同期処理はこの形で処理<>内の型は
@@ -37,11 +37,11 @@ export const fetchDailyDeadAsync = createAsyncThunk<
   GraphState,
   void,
   { state: RootState }
->('Dead/fetchDead', async () => {
+>("Dead/fetchDead", async () => {
   let fetchData: GraphState = { ...initialState };
   await axios
     .get(
-      'https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv'
+      "https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv"
     )
     .then((response) => {
       const fetch_daily_dead = Papa.parse(response.data, {
@@ -50,26 +50,26 @@ export const fetchDailyDeadAsync = createAsyncThunk<
         // 文字列を数値に変換
         dynamicTyping: true,
         // 文字化け防止
-        encoding: 'Shift-JIS',
+        encoding: "Shift-JIS",
         // エラーを取り除く
         skipEmptyLines: true,
         transformHeader: function (header: string): string {
-          if (header === '各地の感染者数_1日ごとの発表数') {
-            return 'daily_infection';
-          } else if (header === '各地の感染者数_累計') {
-            return 'total_infection';
-          } else if (header === '各地の死者数_1日ごとの発表数') {
-            return 'daily_dead';
-          } else if (header === '各地の死者数_累計') {
-            return 'total_dead';
-          } else if (header === '日付') {
-            return 'date';
-          } else if (header === '都道府県コード') {
-            return 'pref_code';
-          } else if (header === '都道府県名') {
-            return 'pref_name';
+          if (header === "各地の感染者数_1日ごとの発表数") {
+            return "daily_infection";
+          } else if (header === "各地の感染者数_累計") {
+            return "total_infection";
+          } else if (header === "各地の死者数_1日ごとの発表数") {
+            return "daily_dead";
+          } else if (header === "各地の死者数_累計") {
+            return "total_dead";
+          } else if (header === "日付") {
+            return "date";
+          } else if (header === "都道府県コード") {
+            return "pref_code";
+          } else if (header === "都道府県名") {
+            return "pref_name";
           } else {
-            return 'default';
+            return "default";
           }
         },
       });
@@ -82,7 +82,7 @@ export const fetchDailyDeadAsync = createAsyncThunk<
 });
 
 export const dailyDeadSlice = createSlice({
-  name: 'dailyDead',
+  name: "dailyDead",
   initialState,
   // 非同期処理を行わないreducerはこっち
   reducers: {},
@@ -92,7 +92,7 @@ export const dailyDeadSlice = createSlice({
       // loadingを実現するためのstatusを「loading」変更
       .addCase(fetchDailyDeadAsync.pending, (state) => {
         const clonedState: GraphState = { ...state };
-        clonedState.status = 'loading';
+        clonedState.status = "loading";
         return clonedState;
       })
       // 完了を表現するためのstatusを「success」変更
@@ -100,7 +100,7 @@ export const dailyDeadSlice = createSlice({
         fetchDailyDeadAsync.fulfilled,
         (state, action: PayloadAction<GraphState>) => {
           const clonedState: GraphState = { ...state };
-          clonedState.status = 'success';
+          clonedState.status = "success";
           clonedState.data = action.payload.data;
           return clonedState;
         }
@@ -110,5 +110,6 @@ export const dailyDeadSlice = createSlice({
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectDailyDead = (state: RootState) => state.dailyDead;
+export const selectDailyDeadStatus = (state: RootState) => state.dailyDead.status;
 
 export default dailyDeadSlice.reducer;

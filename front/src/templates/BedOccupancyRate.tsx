@@ -1,13 +1,14 @@
-import React from 'react';
+import React,{FC} from 'react';
 import { useAppSelector } from '../app/hooks';
 import Inner from '../components/inner/Inner';
+import { TypographyTitle } from '../components/atoms';
 // slice
 import { selectBedOccupancyRate } from '../features/graphs/bedOccupancyRateSlice';
 // マテリアルUI
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {ModalPreview} from '../components/molecules/ModalPreview'
+import { ModalPreview } from '../components/molecules/ModalPreview';
 
 // Modal.setAppElement("#root");
 
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export const BedOccupancyRate = () => {
+export const BedOccupancyRate:FC = () => {
   const classes = useStyles();
   const BedOccupancyRates = useAppSelector(selectBedOccupancyRate);
 
@@ -54,6 +55,9 @@ export const BedOccupancyRate = () => {
     <>
       {BedOccupancyRates.status === 'loading' ? null : (
         <Inner>
+          <TypographyTitle align={'center'} variant="h5">
+            都道府県別病床使用率
+          </TypographyTitle>
           <div className={classes.root}>
             <Grid container spacing={3}>
               {BedOccupancyRates.data.map((element, index) => {
@@ -71,7 +75,7 @@ export const BedOccupancyRate = () => {
                   (Number(element.inpatient) / Number(element.secure_bed)) *
                   100;
                 return (
-                  <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={2}>
+                  <Grid key={index} item xs={6} sm={6} md={3} lg={2} xl={2}>
                     <Paper
                       className={
                         useBedRateing >= 50
@@ -90,25 +94,28 @@ export const BedOccupancyRate = () => {
               })}
             </Grid>
           </div>
-         <div>
-           <a href="https://www.stopcovid19.jp/" target="_blank" rel="noopener">
-          療養状況等及び入院患者受入病床数等に関する調査についてのJSONデータ情報提供:新型コロナウイルス対策ダッシュボード
-           </a>
-           </div> 
-           <div>
-           <a
-            href="https://www.mhlw.go.jp/stf/seisakunitsuite/newpage_00023.html/"
-            target="_blank"
-            rel="noopener"
-             >
-            療養状況等及び入院患者受入病床数等に関する調査についての元データ情報提供:厚生労働省
+          <div>
+            <a
+              href="https://www.stopcovid19.jp/"
+              target="_blank"
+              rel="noopener"
+            >
+              療養状況等及び入院患者受入病床数等に関する調査についてのJSONデータ情報提供:新型コロナウイルス対策ダッシュボード
             </a>
-           </div>
-
+          </div>
+          <div>
+            <a
+              href="https://www.mhlw.go.jp/stf/seisakunitsuite/newpage_00023.html/"
+              target="_blank"
+              rel="noopener"
+            >
+              療養状況等及び入院患者受入病床数等に関する調査についての元データ情報提供:厚生労働省
+            </a>
+          </div>
         </Inner>
       )}
     </>
   );
 };
 
-export default BedOccupancyRate
+export default BedOccupancyRate;

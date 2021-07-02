@@ -1,9 +1,10 @@
 import axios from "axios";
 import { ThreadDataType } from "./threadSlice";
+import { SERVER_URI,THREADS_TABLE_URI } from "../../apis/mongoDB";
 
 export const fetchThread = (): Promise<ThreadDataType[] | null> => {
   return axios
-    .post("http://localhost:3001/threads/fetch-thread-all")
+    .post(`${SERVER_URI + THREADS_TABLE_URI}/fetch-thread-all`)
     .then((res) => {
       return res.data.threads;
     })
@@ -17,7 +18,7 @@ export const createThread = (
   thread: ThreadDataType
 ): Promise<ThreadDataType | null> => {
   return axios
-    .post("http://localhost:3001/threads/create-thread", { thread })
+    .post(`${SERVER_URI + THREADS_TABLE_URI}/create-thread`, { thread })
     .then((res) => {
       return res.data.newThread;
     })
@@ -31,7 +32,7 @@ export const updateThread = (
   updatedThread: ThreadDataType
 ): Promise<ThreadDataType | null> => {
   return axios
-    .post("http://localhost:3001/threads/update-thread", { updatedThread })
+    .post(`${SERVER_URI + THREADS_TABLE_URI}/update-thread`, { updatedThread })
     .then((res) => {
       return res.data.updatedThread;
     })
@@ -45,7 +46,7 @@ export const deleteThread = (
   _id: string
 ): Promise<ThreadDataType | null> => {
   return axios
-    .post("http://localhost:3001/threads/delete-thread", { _id })
+    .post(`${SERVER_URI + THREADS_TABLE_URI}/delete-thread`, { _id })
     .then((res) => {
       console.log(res.data.doc);
       return res.data.doc;

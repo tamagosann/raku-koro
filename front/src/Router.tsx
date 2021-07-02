@@ -1,6 +1,5 @@
 import { Route, Switch } from "react-router-dom";
 import {
-  Graph1,
   InfectedPerson,
   BedOccupancyRate,
   Login,
@@ -8,6 +7,7 @@ import {
   UserInfo,
   Threads,
   ThreadInfo,
+  About
 } from './templates';
 import { PrefectureData } from './pages/PrefectureData';
 import { NationwideData } from "./pages/NationwideData";
@@ -18,6 +18,7 @@ const Router = () => {
   return (
     <Switch>
       <Route exact path={"(/)?"} component={InformationCorona} />
+      <Route exact path={"/about"} component={About} />
       <Route exact path={"/infected-person"} component={InfectedPerson} />
       <Route exact path={"/bed-usage-rate"} component={BedOccupancyRate} />
       <Route exact path={"/every_prefecture"} component={PrefectureData} />

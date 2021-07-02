@@ -89,5 +89,6 @@ export const vaccinationSlice = createSlice({
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectVaccination= (state: RootState) => state.vaccination;
+export const selectVaccinationStatus= (state: RootState) => state.vaccination.status;
 
 export default vaccinationSlice.reducer;
