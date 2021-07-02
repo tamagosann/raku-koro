@@ -56,7 +56,7 @@ const DeceasedPerson: FC = () => {
           variant={"h5"}
           align="center"
         >
-          感染者数推移（累計）
+          死亡者数推移（累計）
         </TypographyTitle>
         <AreaReChart 
           data={dethPerson}
@@ -71,7 +71,7 @@ const DeceasedPerson: FC = () => {
           variant={"h5"}
           align="center"
         >
-          感染者数推移（日別）
+          死亡者数推移（日別）
         </TypographyTitle>
         <LineReChart 
           data={dayDethPerson}
