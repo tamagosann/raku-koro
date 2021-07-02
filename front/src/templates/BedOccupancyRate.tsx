@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{FC} from 'react';
 import { useAppSelector } from '../app/hooks';
 import Inner from '../components/inner/Inner';
 import { TypographyTitle } from '../components/atoms';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export const BedOccupancyRate = () => {
+export const BedOccupancyRate:FC = () => {
   const classes = useStyles();
   const BedOccupancyRates = useAppSelector(selectBedOccupancyRate);
 
