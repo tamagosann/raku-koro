@@ -40,3 +40,18 @@ export const updateThread = (
       return null;
     });
 };
+
+export const deleteThread = (
+  _id: string
+): Promise<ThreadDataType | null> => {
+  return axios
+    .post("http://localhost:3001/threads/delete-thread", { _id })
+    .then((res) => {
+      console.log(res.data.doc);
+      return res.data.doc;
+    })
+    .catch((e) => {
+      console.error(e);
+      return null;
+    });
+};

@@ -1,9 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { fetchThread, updateThread, createThread } from "./threadAPI";
+import {
+  fetchThread,
+  updateThread,
+  createThread,
+  deleteThread,
+} from "./threadAPI";
 
 export interface ThreadDataType {
-  _id?: string;
+  _id: string;
   date: string;
   uid: string | null;
   username: string | null;
@@ -75,6 +80,25 @@ export const updateThreadAsync = createAsyncThunk<
   }
 });
 
+//投稿内容削除処理
+export const deleteThreadAsync = createAsyncThunk<string | null, string>(
+  "thread/delete",
+  async (_id) => {
+    try {
+      const threadData = await deleteThread(_id);
+      if (threadData?._id === _id) {
+        console.log(threadData);
+        return _id;
+      } else {
+        throw new Error("サーバーへの接続に失敗しました");
+      }
+    } catch (e) {
+      alert(e.message);
+      return null;
+    }
+  }
+);
+
 export const threadSlice = createSlice({
   name: "thread",
   initialState,
@@ -101,7 +125,7 @@ export const threadSlice = createSlice({
     builder.addCase(createThreadAsync.fulfilled, (state, action) => {
       state.status = "idle";
       if (state.value && action.payload) {
-        let newState = [ ...state.value, action.payload ]
+        let newState = [...state.value, action.payload];
         state.value = newState;
       }
     });
@@ -119,6 +143,17 @@ export const threadSlice = createSlice({
           }
           return val!;
         });
+        state.value = newState;
+      }
+    });
+    //削除
+    builder.addCase(deleteThreadAsync.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(deleteThreadAsync.fulfilled, (state, action) => {
+      state.status = "idle";
+      if (state.value && action.payload) {
+        let newState = state.value.filter((val) => val._id !== action.payload);
         state.value = newState;
       }
     });
