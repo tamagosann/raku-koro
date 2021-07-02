@@ -107,5 +107,6 @@ export const dailyPositiveSlice = createSlice({
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectDailyPositive = (state: RootState) => state.dailyPositive;
+export const selectDailyPositiveStatus = (state: RootState) => state.dailyPositive.status;
 
 export default dailyPositiveSlice.reducer;
