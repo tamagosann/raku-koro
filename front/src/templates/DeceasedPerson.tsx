@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Inner } from "../components/inner";
 import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
@@ -6,15 +6,15 @@ import { selectTotalDeth } from '../features/graphs/totalDethSlice';
 import { AreaReChart, LineReChart } from "../components/organisms";
 import { OrangeButton, ReferenceDataLink } from "../components/atoms";
 
-interface Data {
+interface DeceasedData {
   date: string;
   ndeaths: number;
 }
 
-const DeceasedPerson = () => {
+const DeceasedPerson: FC = () => {
   const totalDeth = useAppSelector(selectTotalDeth)
-  const dethPerson: Array<Data> = totalDeth.data
-  const [dayDethPerson, setDayDethPerson] = useState<Array<Data>>([])
+  const dethPerson: DeceasedData[] = totalDeth.data
+  const [dayDethPerson, setDayDethPerson] = useState<DeceasedData[]>([])
   const [toggle, setToggle] = useState<boolean>(true)
 
   // 累計への切り替え
@@ -24,15 +24,15 @@ const DeceasedPerson = () => {
   
   // 日別への切り替え
   const changeDay = (): void => {
-    let daysData: Array<Data> = []
+    let daysData: DeceasedData[] = []
     let count:number = 0
-    let dethPersonDay:Data = {
+    let dethPersonDay: DeceasedData = {
       date: '',
       ndeaths: 0
     }
     dethPerson.forEach((data, index) => {
       count = data.ndeaths - dethPersonDay.ndeaths
-      let pushData:Data = {
+      let pushData: DeceasedData = {
         date: data.date,
         ndeaths: count
       }
