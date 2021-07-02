@@ -18,6 +18,7 @@ import { datetimeToString } from "../../common/functions";
 
 const ThreadForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useAppSelector(selectUser);
   const thread = useAppSelector(selectThread);
   const [disable, setDisable] = useState(true);
@@ -61,10 +62,10 @@ const ThreadForm = () => {
     let date = new Date();
     data.date = datetimeToString(date);
     dispatch(updateThreadAsync(data));
+    history.push("/threads");
   };
   return (
     <Container maxWidth="sm">
-      {/* {threadData !== undefined && ( */}
       <Box mt={3} textAlign="center">
         <h2>投稿内容</h2>
         <form onSubmit={handleSubmit(doUpdate)}>
@@ -98,7 +99,6 @@ const ThreadForm = () => {
           </Box>
         </form>
       </Box>
-      {/* )} */}
     </Container>
   );
 };
