@@ -37,7 +37,6 @@ const PrefectureDailyInfention:FC = () => {
       setValue((event.target as HTMLInputElement).value);
     };
     const target_prefecture:PrefectureData[] = prefecture_daily_infection.data.filter((el:any) => el.pref_code == prefecture)
-    console.log(target_prefecture);
     
   return (
     <>

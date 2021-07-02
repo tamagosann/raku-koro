@@ -103,6 +103,13 @@ const PcrPositiveRate:FC = () => {
             />
         </ComposedChart>
       </ResponsiveContainer>    
+        <a
+            href="https://www.mhlw.go.jp/stf/covid-19/open-data.html"
+            target="_blank"
+            rel="noopener"
+          >
+              PCR検査数と陽性者数の情報提供：厚生労働省オープンデータ
+          </a>
         </Inner>
         
       )}
