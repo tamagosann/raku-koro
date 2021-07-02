@@ -1,35 +1,36 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import Router from "./Router";
-import { auth } from "./firebase";
-import { useAppSelector } from "./app/hooks";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import Router from './Router';
+import { auth } from './firebase';
+import { useAppSelector } from './app/hooks';
 
 //コンポーネント
-import { Header } from "./components/header";
-import { fetchDailyCoronaAsync } from "./features/graphs/dailyCoronaSlice";
-import { InformationCorona } from "./templates/informationCorona";
+import { Header } from './components/header';
+import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
+import { InformationCorona } from './templates/informationCorona';
+import { Footer } from './components/atoms/Footer';
 
-import { LoadingPage } from "./components/atoms";
-import { PrefectureData } from "./pages/PrefectureData";
+import { LoadingPage } from './components/atoms';
+import { PrefectureData } from './pages/PrefectureData';
 
 // slice
-import { fetchDailyInfectionAsync } from "./features/graphs/dailyInfectionSlice";
-import { fetchDailyDeadAsync } from "./features/graphs/dailyDeadSlice";
-import { fetchTotalCoronaAsync } from "./features/graphs/totalCoronaSlice";
-import { fetchTotalDethAsync } from "./features/graphs/totalDethSlice";
-import { fetchBedOccupancyRateAsync } from "./features/graphs/bedOccupancyRateSlice";
+import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
+import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
+import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
+import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
+import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSlice';
 import {
   unSetUser,
   selectUserStatus,
   selectUser,
   fetchUserDataAsync,
-} from "./features/user/userSlice";
+} from './features/user/userSlice';
 import {
   fetchThreadAsync,
   selectThreadStatus,
-} from "./features/thread/threadSlice";
+} from './features/thread/threadSlice';
 
-import { BedOccupancyRate } from "./templates/BedOccupancyRate";
+import { BedOccupancyRate } from './templates/BedOccupancyRate';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -59,11 +60,12 @@ const App = () => {
     <>
       <Header />
       {/* ここの条件分岐に書くグラフのデータ取得ステータスを追加してください */}
-      {userStatus === "loading" && threadStatus === "loading" ? (
+      {userStatus === 'loading' && threadStatus === 'loading' ? (
         <LoadingPage />
       ) : (
         <Router />
       )}
+      <Footer />
     </>
   );
 };
