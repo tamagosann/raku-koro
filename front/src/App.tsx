@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import Router from "./Router";
 import { auth } from "./firebase";
 import { useAppSelector } from "./app/hooks";
-import { InformationCorona } from "./templates/informationCorona";
 
 //コンポーネント
 import { Header } from "./components/header";
@@ -17,8 +16,6 @@ import { fetchTotalCoronaAsync } from "./features/graphs/totalCoronaSlice";
 import { fetchTotalDethAsync } from "./features/graphs/totalDethSlice";
 import { fetchBedOccupancyRateAsync } from "./features/graphs/bedOccupancyRateSlice";
 import { fetchDailyPositiveAsync } from "./features/graphs/dailyPositiveSlice";
-
-import PcrPositiveRate from "./templates/PcrPositiveRate";
 
 import {
   unSetUser,

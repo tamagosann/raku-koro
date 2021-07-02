@@ -15,19 +15,11 @@ const PrefectureDailyInfention = () => {
   const [value, setValue] = useState<string>('0');
 
   const prefecture_daily_infection = useAppSelector(selectDailyInfection)
-
-    console.log('items',prefecture_daily_infection);
+  
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValue((event.target as HTMLInputElement).value);
     };
-
     const target_prefecture = prefecture_daily_infection.data.filter((el:any) => el.pref_code == prefecture)
-    console.log(target_prefecture);
-
-    // const select_prefecture = (e:any) => setPrefecture(e.target.value)
-    // const dayOrTotal = (e:any) => setSelector(e.target.value)
-    
-
   return (
     <>
       {prefecture_daily_infection.status === 'loading' ? 
