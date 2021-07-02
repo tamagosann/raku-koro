@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import Router from "./Router";
 import { auth } from "./apis/firebase";
 import { useAppSelector } from "./app/hooks";
@@ -49,6 +50,7 @@ import {
 
 const App = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const userStatus = useAppSelector(selectUserStatus);
   const threadStatus = useAppSelector(selectThreadStatus);
   const bedOcuStatus = useAppSelector(selectBedOccupancyRateStatus);
@@ -63,14 +65,15 @@ const App = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         if (!userData) {
-          dispatch(fetchThreadAsync());
           dispatch(fetchUserDataAsync({ uid: user.uid }));
+          dispatch(fetchThreadAsync());
         }
       } else {
         dispatch(unSetUser());
-        dispatch(unSetThread());
+        history.push("/");
       }
     });
+    dispatch(fetchThreadAsync());
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchDailyDeadAsync());
     dispatch(fetchTotalCoronaAsync());

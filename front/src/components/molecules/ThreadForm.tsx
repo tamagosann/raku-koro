@@ -65,7 +65,7 @@ const ThreadForm = () => {
     history.push("/threads");
   };
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" style={{ padding: "5px 0 25px 0" }}>
       <Box mt={3} textAlign="center">
         <h2>投稿内容</h2>
         <form onSubmit={handleSubmit(doUpdate)}>

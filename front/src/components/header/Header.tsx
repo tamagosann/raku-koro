@@ -11,6 +11,7 @@ import { selectUser } from "../../features/user/userSlice";
 import { IconButtonSelect } from "../atoms/IconButtonSelect";
 import ClosableDrawer from "./ClosableDrawer";
 import { icon } from "../atoms/IconButtonSelect";
+import logo from "../../assets/img/logo.png";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme: Theme) =>
     userName: {
       "&:hover": {
         color: "red",
+      },
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
       },
     },
   })
@@ -88,15 +92,30 @@ const Header: React.FC = () => {
         icon: "BarGrph1",
         method: () => history.push("/pcr-rate"),
       },
+      {
+        text: "掲示板",
+        icon: "Asign",
+        method: () => history.push("/threads"),
+      },
     ],
   };
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ background: "#fd7e00" }}>
+      <AppBar position="fixed" style={{ background: "#fd7e00" }}>
         <Container maxWidth="lg">
           <Toolbar>
-            <Typography variant="h6" noWrap onClick={() => history.push("/")}>
-              ラクラクコロナ
+            <Typography
+              variant="h6"
+              noWrap
+              onClick={() => history.push("/")}
+              style={{ cursor: "pointer" }}
+            >
+              <img
+                src={logo}
+                alt="logo"
+                width="60px"
+                style={{ verticalAlign: "middle" }}
+              />
             </Typography>
             <div className={classes.grow} />
             <>
@@ -124,6 +143,7 @@ const Header: React.FC = () => {
             <Typography
               className={classes.userName}
               onClick={() => history.push("/about")}
+              style={{ cursor: "pointer" }}
             >
               {" "}
               About

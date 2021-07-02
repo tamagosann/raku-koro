@@ -14,6 +14,7 @@ import {
 import { prefectures } from "../common/prefecture";
 import { FormLayout } from "../components/organisms";
 import { selectThread } from "../features/thread/threadSlice";
+import { selectUid } from "../features/user/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +48,7 @@ const Threads: FC = () => {
   const threadsData = useAppSelector(selectThread);
   const [prefectureToRefineList, setPrefectureToRefineList] =
     useState<string>("");
+  const uid = useAppSelector(selectUid);
 
   const refinedThreadsData = useMemo(() => {
     if (threadsData) {
@@ -72,7 +74,7 @@ const Threads: FC = () => {
     <>
       <Inner>
         <Typography align="center" variant="h5">
-          2ちゃんねる
+          コロナ関連情報掲示板
         </Typography>
         <div style={{ textAlign: "center", marginBottom: 20 }}>
           <FormControl className={classes.formControl}>
@@ -88,9 +90,9 @@ const Threads: FC = () => {
           </FormControl>
         </div>
         {refinedThreadsData && (
-          <CommentList label={"コメント一覧"} rows={refinedThreadsData} />
+          <CommentList label={"投稿一覧"} rows={refinedThreadsData} />
         )}
-        <FormLayout type="createcomment" />
+        {uid && <FormLayout type="createcomment" />}
       </Inner>
     </>
   );

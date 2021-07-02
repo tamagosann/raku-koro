@@ -17,6 +17,8 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import MultilineChartIcon from "@material-ui/icons/MultilineChart";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
+import InfoIcon from '@material-ui/icons/Info';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 export type icon =
   | "Menu"
@@ -69,6 +71,8 @@ export const IconButtonSelect: FC<Props> = ({
       {icon === "LineGrph2" && <MultilineChartIcon color={color} />}
       {icon === "LineGrph3" && <ShowChartIcon color={color} />}
       {icon === "CircleGrph" && <DonutLargeIcon color={color} />}
+      {icon === "About" && <InfoIcon color={color} />}
+      {icon === "Asign" && <AssignmentIcon color={color} />}
     </IconButton>
   );
 };

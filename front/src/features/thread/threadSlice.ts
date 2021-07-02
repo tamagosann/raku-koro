@@ -22,7 +22,7 @@ export interface ThreadState {
 
 //初期値
 const initialState: ThreadState = {
-  value: null,
+  value: [],
   status: "idle",
 };
 
