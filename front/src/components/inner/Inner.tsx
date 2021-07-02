@@ -7,7 +7,7 @@ const Inner: FC = ({ children }) => {
       <Paper
         variant="outlined"
         component="div"
-        style={{ padding: 20, marginTop: 90 }}
+        style={{ padding: 20, marginTop: 90, borderColor: "#fd7e00", borderWidth: "2px" }}
       >
         {children}
       </Paper>

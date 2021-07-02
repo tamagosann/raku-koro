@@ -2,7 +2,6 @@ import {
   createAsyncThunk,
   createSlice,
   PayloadAction,
-  current,
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import axios from "axios";
@@ -13,7 +12,7 @@ export interface Data {
   adpatients: number;
 }
 export interface GraphState {
-  data: Array<Data>;
+  data: Data[];
   status: "success" | "loading" | "failed";
 }
 
@@ -29,21 +28,21 @@ const initialState: GraphState = {
 };
 
 //非同期処理はこの形で処理<>内の型は
-export const fetchTotalCoronaAsync = createAsyncThunk(
-  "totalCorona/fetchTotalCorona",
-  async () => {
-    let fetchData: GraphState = { ...initialState };
-    await axios
-      .get(
-        "https://data.corona.go.jp/converted-json/covid19japan-npatients.json"
-      )
-      .then((response) => {
-        const fetch_total_corona = response;
-        // 取得したデータだけを取り出す
-        const fetch_total_corona_data = fetch_total_corona.data as Array<Data>;
-        // 取り出したデータを格納する
-        fetchData.data = fetch_total_corona_data;
-      });
+export const fetchTotalCoronaAsync = createAsyncThunk<
+  GraphState,
+  void,
+  { state: RootState }
+>("totalCorona/fetchTotalCorona", async () => {
+  let fetchData: GraphState = { ...initialState };
+  await axios
+    .get("https://data.corona.go.jp/converted-json/covid19japan-npatients.json")
+    .then((response) => {
+      const fetch_total_corona = response;
+      // 取得したデータだけを取り出す
+      const fetch_total_corona_data = fetch_total_corona.data;
+      // 取り出したデータを格納する
+      fetchData.data = fetch_total_corona_data;
+    });
     return fetchData;
   }
 );
@@ -58,7 +57,7 @@ export const totalCoronaSlice = createSlice({
     builder
       // loadingを実現するためのstatusを「loading」変更
       .addCase(fetchTotalCoronaAsync.pending, (state) => {
-        const clonedState = { ...state };
+        const clonedState: GraphState = { ...state };
         clonedState.status = "loading";
         return clonedState;
       })
