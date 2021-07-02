@@ -67,6 +67,7 @@ const PcrPositiveRate = () => {
       <Inner><p>Loading...</p></Inner>
       : (
         <Inner>
+            <h1>PCR検査数と陽性者数の推移</h1>
             <ResponsiveContainer width="100%" height={400}>
         <ComposedChart
           width={500}
