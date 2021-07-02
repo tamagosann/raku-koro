@@ -117,5 +117,6 @@ export const dailyInfectionSlice = createSlice({
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectDailyInfection = (state: RootState) => state.dailyInfection;
+export const selectDailyInfectionStatus = (state: RootState) => state.dailyInfection.status;
 
 export default dailyInfectionSlice.reducer;

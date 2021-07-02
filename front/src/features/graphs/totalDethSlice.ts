@@ -79,5 +79,6 @@ export const totalDethSlice = createSlice({
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectTotalDeth = (state: RootState) => state.totalDeth;
+export const selectTotalDethStatus = (state: RootState) => state.totalDeth.status;
 
 export default totalDethSlice.reducer;

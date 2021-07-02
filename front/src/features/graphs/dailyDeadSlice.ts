@@ -117,6 +117,7 @@ import {
   
   //useAppSelectorで呼び出したいデーターをここで定義
   export const selectDailyDead = (state: RootState) => state.dailyDead;
+  export const selectDailyDeadStatus = (state: RootState) => state.dailyDead.status;
   
   export default dailyDeadSlice.reducer;
   

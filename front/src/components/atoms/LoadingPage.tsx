@@ -1,11 +1,22 @@
 import { FC } from "react";
-import { Container } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import { Inner } from "../inner";
 
 const LoadingPage: FC = () => {
   return (
-    <Container>
-      <h2>now Loading ....</h2>
-    </Container>
+    <Inner>
+      <Grid container alignItems="center" direction="column">
+        <Grid item>
+          <img
+            src={`${process.env.PUBLIC_URL}/img/loading.gif`}
+            alt="ローディング"
+          />
+        </Grid>
+        <Grid item>
+          <h2>now Loading ....</h2>
+        </Grid>
+      </Grid>
+    </Inner>
   );
 };
 
