@@ -49,7 +49,7 @@ const PrefectureDailyInfention:FC = () => {
             都道府県別感染者数
           </TypographyTitle>
           <Prefecture prefecture={prefecture} setPrefecture={setPrefecture} />
-          <DailyTotalRadio handleChange={handleChange} value={value} />
+          <DailyTotalRadio handleChange={handleChange} value={value}/>
           {value === '0' ? (
             <ReChart
               targetPrefecture={target_prefecture}

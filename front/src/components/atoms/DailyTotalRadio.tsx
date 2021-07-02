@@ -6,8 +6,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import orange from '@material-ui/core/colors/orange';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -67,9 +65,6 @@ export const DailyTotalRadio = ({ value, handleChange }: Props) => {
             label="日別"
           />
         </RadioGroup>
-        <FormHelperText className={classes.labelAlignCenter}>
-          累計 / 日別を選択してください。
-        </FormHelperText>
       </FormControl>
     </MuiThemeProvider>
   );
