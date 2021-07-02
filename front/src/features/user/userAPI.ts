@@ -1,7 +1,7 @@
-import { CollectionsOutlined } from "@material-ui/icons";
 import axios from "axios";
-import { auth, sessionPersistance } from "../../firebase";
+import { auth, sessionPersistance } from "../../apis/firebase";
 import { UserDataType } from "./userSlice";
+import { SERVER_URI, USERS_TABLE_URI } from "../../apis/mongoDB";
 
 //ログイン
 export const login = (
@@ -65,7 +65,7 @@ export const registerUserData = (
 ): Promise<UserDataType | null> => {
   const user = { uid: uid, username: username, prefecture: prefecture };
   return axios
-    .post("http://localhost:3001/users/create-user", { user })
+    .post(`${SERVER_URI + USERS_TABLE_URI}/create-user`, { user })
     .then((res) => {
       return res.data;
     })
@@ -89,7 +89,7 @@ export const updateUserData = (
     prefecture: prefecture,
   };
   return axios
-    .post("http://localhost:3001/users/update-user", { updatedUser })
+    .post(`${SERVER_URI + USERS_TABLE_URI}/update-user`, { updatedUser })
     .then((res) => {
       return res.data.updatedUser;
     })
@@ -102,7 +102,7 @@ export const updateUserData = (
 //mongoDBからユーザー情報取得
 export const fetchUserData = (uid: string): Promise<UserDataType | null> => {
   return axios
-    .post("http://localhost:3001/users/fetch-user", { uid })
+    .post(`${SERVER_URI + USERS_TABLE_URI}/fetch-user`, { uid })
     .then((res) => {
       if (res) {
         return res.data;

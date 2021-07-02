@@ -117,5 +117,7 @@ export const bedOccupancyRateSlice = createSlice({
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectBedOccupancyRate = (state: RootState) =>
   state.bedOccupancyRate;
+export const selectBedOccupancyRateStatus = (state: RootState) =>
+  state.bedOccupancyRate.status;
 
 export default bedOccupancyRateSlice.reducer;
