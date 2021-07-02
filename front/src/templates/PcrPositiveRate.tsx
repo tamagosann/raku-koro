@@ -97,8 +97,8 @@ const PcrPositiveRate = () => {
               className="TimeLineChart-brush"
               dataKey="date"
               stroke="#fd7e00"
-              startIndex={tranceData.length - 31}
-              endIndex={tranceData.length - 1}
+              startIndex={0}
+              endIndex={0}
             />
         </ComposedChart>
       </ResponsiveContainer>    
