@@ -45,7 +45,7 @@ const initialState: GraphState = {
 export const fetchBedOccupancyRateAsync = createAsyncThunk<
   GraphState,
   void,
-  {}
+  { state: RootState }
 >('bedOccupancyRate/fetchBedOccupancyRate', async () => {
   let fetchData: GraphState = { ...initialState };
   await axios

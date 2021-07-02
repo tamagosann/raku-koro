@@ -33,52 +33,53 @@ const initialState: GraphState = {
 };
 
 //非同期処理はこの形で処理<>内の型は
-export const fetchDailyDeadAsync = createAsyncThunk<GraphState, void, {}>(
-  'Dead/fetchDead',
-  async () => {
-    let fetchData: GraphState = { ...initialState };
-    await axios
-      .get(
-        'https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv'
-      )
-      .then((response) => {
-        const fetch_daily_dead = Papa.parse(response.data, {
-          // csvヘッダーをプロパティに変更
-          header: true,
-          // 文字列を数値に変換
-          dynamicTyping: true,
-          // 文字化け防止
-          encoding: 'Shift-JIS',
-          // エラーを取り除く
-          skipEmptyLines: true,
-          transformHeader: function (header: string): string {
-            if (header === '各地の感染者数_1日ごとの発表数') {
-              return 'daily_infection';
-            } else if (header === '各地の感染者数_累計') {
-              return 'total_infection';
-            } else if (header === '各地の死者数_1日ごとの発表数') {
-              return 'daily_dead';
-            } else if (header === '各地の死者数_累計') {
-              return 'total_dead';
-            } else if (header === '日付') {
-              return 'date';
-            } else if (header === '都道府県コード') {
-              return 'pref_code';
-            } else if (header === '都道府県名') {
-              return 'pref_name';
-            } else {
-              return 'default';
-            }
-          },
-        });
-        // 取得したデータだけを取り出す
-        const fetch_daily_dead_data: Data[] = fetch_daily_dead.data;
-        // 取り出したデータを格納する
-        fetchData.data = fetch_daily_dead_data;
+export const fetchDailyDeadAsync = createAsyncThunk<
+  GraphState,
+  void,
+  { state: RootState }
+>('Dead/fetchDead', async () => {
+  let fetchData: GraphState = { ...initialState };
+  await axios
+    .get(
+      'https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv'
+    )
+    .then((response) => {
+      const fetch_daily_dead = Papa.parse(response.data, {
+        // csvヘッダーをプロパティに変更
+        header: true,
+        // 文字列を数値に変換
+        dynamicTyping: true,
+        // 文字化け防止
+        encoding: 'Shift-JIS',
+        // エラーを取り除く
+        skipEmptyLines: true,
+        transformHeader: function (header: string): string {
+          if (header === '各地の感染者数_1日ごとの発表数') {
+            return 'daily_infection';
+          } else if (header === '各地の感染者数_累計') {
+            return 'total_infection';
+          } else if (header === '各地の死者数_1日ごとの発表数') {
+            return 'daily_dead';
+          } else if (header === '各地の死者数_累計') {
+            return 'total_dead';
+          } else if (header === '日付') {
+            return 'date';
+          } else if (header === '都道府県コード') {
+            return 'pref_code';
+          } else if (header === '都道府県名') {
+            return 'pref_name';
+          } else {
+            return 'default';
+          }
+        },
       });
-    return fetchData;
-  }
-);
+      // 取得したデータだけを取り出す
+      const fetch_daily_dead_data: Data[] = fetch_daily_dead.data;
+      // 取り出したデータを格納する
+      fetchData.data = fetch_daily_dead_data;
+    });
+  return fetchData;
+});
 
 export const dailyDeadSlice = createSlice({
   name: 'dailyDead',
