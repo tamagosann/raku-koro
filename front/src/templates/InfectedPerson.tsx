@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Inner } from "../components/inner";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
@@ -8,16 +8,16 @@ import { OrangeButton, ReferenceDataLink } from "../components/atoms";
 import { Button, Typography } from "@material-ui/core";
 import { AreaReChart, LineReChart } from "../components/organisms";
 
-interface Data {
+interface InfectedData {
   date: string;
   npatients: number;
   adpatients : number;
 }
 
-const InfectedPerson = () => {
+const InfectedPerson: FC = () => {
   const totalCorona = useAppSelector(selectTotalCorona)
-  const cumulativeInfectedPerson: Array<Data> = totalCorona.data
-  const [dayInfectedPerson, setDayInfectedPerson] = useState<Array<Data>>([])
+  const cumulativeInfectedPerson: InfectedData[] = totalCorona.data
+  const [dayInfectedPerson, setDayInfectedPerson] = useState<InfectedData[]>([])
   const [toggle, setToggle] = useState<boolean>(true)
 
   // 累計への切り替え
@@ -27,16 +27,16 @@ const InfectedPerson = () => {
 
   // 日別への切り替え
   const changeDay = (): void => {
-    let daysData: Array<Data> = []
+    let daysData: InfectedData[] = []
     let count:number = 0
-    let infectedPersonDay:Data = {
+    let infectedPersonDay: InfectedData = {
       date: '',
       npatients: 0,
       adpatients: 0
     }
     cumulativeInfectedPerson.forEach((data, index) => {
       count = data.npatients - infectedPersonDay.npatients
-      let pushData:Data = {
+      let pushData: InfectedData = {
         date: data.date,
         npatients: count,
         adpatients: 0

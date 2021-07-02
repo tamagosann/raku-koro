@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 // コンポーネント
 import { PrefectureDailyDead } from '../templates/PrefectureDailyDead';
@@ -7,7 +7,7 @@ import PrefectureDailyInfention from '../templates/PrefectureDailyInfection';
 // マテリアルUI
 import Grid from '@material-ui/core/Grid';
 
-export const PrefectureData = () => {
+export const PrefectureData: FC = () => {
   return (
     <>
       <Grid container spacing={3}>

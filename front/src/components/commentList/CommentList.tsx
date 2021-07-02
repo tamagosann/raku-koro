@@ -15,6 +15,13 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useHistory } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
+import { selectUid } from "../../features/user/userSlice";
+import {
+  deleteThreadAsync,
+  ThreadDataType,
+} from "../../features/thread/threadSlice";
+import { useDispatch } from "react-redux";
 
 export interface Data {
   _id: string;
@@ -168,19 +175,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type CommentListProps = {
   label: string;
-  rows: Data[];
+  rows: ThreadDataType[];
 };
 
-const CommentList: FC<CommentListProps> = ({label, rows}) => {
+const CommentList: FC<CommentListProps> = ({ label, rows }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("date");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const history = useHistory();
-
-  //ここをuseAppselectorに変える
-  const uid = "aaa";
+  const uid = useAppSelector(selectUid);
+  const dispatch = useDispatch();
 
   //ソートボタンが押された時の処理
   const handleRequestSort = (
@@ -195,9 +201,12 @@ const CommentList: FC<CommentListProps> = ({label, rows}) => {
 
   //rowがクリックされた時の処理
   //ここに編集ページへのルーティングを書く
-  const handleClick = useCallback((_id: string): void => {
-    history.push(`/comment/${_id}`)
-  },[history]);
+  const handleClick = useCallback(
+    (_id: string): void => {
+      history.push(`/threads/${_id}`);
+    },
+    [history]
+  );
 
   //ページネーション
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -212,80 +221,86 @@ const CommentList: FC<CommentListProps> = ({label, rows}) => {
     setPage(0);
   };
 
-  const deleteThreadClicked = useCallback((_id: string): void => {
-    if (!window.confirm("本当に消去しますか？")) {
-      return;
-    }
-    console.log("消去実行")
-
-    //ここにdeleteasyncのコードを書く、引数は_id
-  }, []);
+  const deleteThreadClicked = useCallback(
+    (e: React.MouseEvent<SVGSVGElement, MouseEvent>, _id: string): void => {
+      e.stopPropagation();
+      if (!window.confirm("本当に消去しますか？")) {
+        return;
+      }
+      dispatch(deleteThreadAsync(_id));
+    },
+    []
+  );
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Typography
-          variant="h6"
-          id="tableTitle"
-          component="div"
-          className={classes.marginTooltip}
-        >
-          {label}
-        </Typography>
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={"medium"}
-            aria-label="enhanced table"
+      {rows.length !== 0 ? (
+        <Paper className={classes.paper}>
+          <Typography
+            variant="h6"
+            id="tableTitle"
+            component="div"
+            className={classes.marginTooltip}
           >
-            <EnhancedTableHead
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={() => handleClick(row._id)}
-                      tabIndex={-1}
-                      key={row._id}
-                    >
-                      <TableCell align="right">{row.date}</TableCell>
-                      <TableCell align="right">{row.prefecture}</TableCell>
-                      <TableCell align="right">{row.username}</TableCell>
-                      <TableCell align="right">{row.comment}</TableCell>
-                      <TableCell align="right">
-                        {uid === row.uid ? (
-                          <IconButton>
-                            <DeleteIcon
-                              onClick={() => deleteThreadClicked(row._id)}
-                            />
-                          </IconButton>
-                        ) : null}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+            {label}
+          </Typography>
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={"medium"}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort<any>(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    return (
+                      <TableRow
+                        hover
+                        onClick={() => handleClick(row._id)}
+                        tabIndex={-1}
+                        key={row._id}
+                      >
+                        <TableCell align="right">{row.date}</TableCell>
+                        <TableCell align="right">{row.prefecture}</TableCell>
+                        <TableCell align="right">{row.username}</TableCell>
+                        <TableCell align="right">{row.comment}</TableCell>
+                        <TableCell align="right">
+                          {uid === row.uid ? (
+                            <IconButton>
+                              <DeleteIcon
+                                onClick={(e) => deleteThreadClicked(e, row._id)}
+                              />
+                            </IconButton>
+                          ) : null}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+      ) : (
+        <h3>投稿がありません</h3>
+      )}
     </div>
   );
 };

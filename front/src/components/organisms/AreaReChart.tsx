@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Legend,
   AreaChart,
@@ -16,13 +16,13 @@ import { Data } from '../../features/graphs/totalCoronaSlice';
 import { DethData } from '../../features/graphs/totalDethSlice';
 
 interface Props {
-  data: Array<Data> | Array<DethData>;
+  data: Data[] | DethData[];
   xDataKey: string;
   areaDataKey: string;
   areaName: string;
 }
 
-const AreaReChart = ({ data, xDataKey, areaDataKey, areaName }: Props) => {
+const AreaReChart: FC<Props> = ({ data, xDataKey, areaDataKey, areaName }) => {
   return (
     <ResponsiveContainer width="100%" height="100%" minHeight={400}>
     <AreaChart data={data}>

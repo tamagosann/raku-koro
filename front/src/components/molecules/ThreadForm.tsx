@@ -5,19 +5,23 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Container, Box } from "@material-ui/core";
 import { UserNameInput } from "../atoms/UserNameInput";
 import { PrefectureSelectBox } from "../atoms/PrefectureSelectBox";
-import { selectUser} from "../../features/user/userSlice";
+import { selectUser } from "../../features/user/userSlice";
 import { useAppSelector } from "../../app/hooks";
 import { PrimaryButton } from "../UIKit";
 import { TextFieldInput } from "../atoms/TextFieldInput";
-import { selectThread, ThreadDataType } from "../../features/thread/threadSlice";
+import {
+  selectThread,
+  ThreadDataType,
+} from "../../features/thread/threadSlice";
 import { updateThreadAsync } from "../../features/thread/threadSlice";
+import { datetimeToString } from "../../common/functions";
 
 const ThreadForm = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useAppSelector(selectUser);
   const thread = useAppSelector(selectThread);
-  const [disable, setDisable] = useState(false); //後でtrueに変える
+  const [disable, setDisable] = useState(true);
   const { thread_id }: { thread_id: string } = useParams();
 
   const {
@@ -29,6 +33,7 @@ const ThreadForm = () => {
     mode: "onBlur",
     defaultValues: {
       _id: "",
+      date: "",
       uid: "",
       username: "",
       prefecture: "",
@@ -54,12 +59,13 @@ const ThreadForm = () => {
   }, [thread, user]);
 
   const doUpdate: SubmitHandler<ThreadDataType> = (data) => {
-    console.log(data);
+    let date = new Date();
+    data.date = datetimeToString(date);
     dispatch(updateThreadAsync(data));
+    history.push("/threads");
   };
   return (
     <Container maxWidth="sm">
-      {/* {threadData !== undefined && ( */}
       <Box mt={3} textAlign="center">
         <h2>投稿内容</h2>
         <form onSubmit={handleSubmit(doUpdate)}>
@@ -93,7 +99,6 @@ const ThreadForm = () => {
           </Box>
         </form>
       </Box>
-      {/* )} */}
     </Container>
   );
 };
