@@ -14,7 +14,7 @@ import { selectDailyPositive } from "../features/graphs/dailyPositiveSlice";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "#ff8080",
+    backgroundColor: "#fd7e00",
   },
   paper: {
     padding: theme.spacing(4),
