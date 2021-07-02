@@ -2,7 +2,6 @@ import {
   createAsyncThunk,
   createSlice,
   PayloadAction,
-  current,
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import axios from "axios";
@@ -12,7 +11,7 @@ export interface DethData {
   ndeaths: number;
 }
 export interface GraphState {
-  data: Array<DethData>;
+  data: DethData[];
   status: 'success' | 'loading' | 'failed';
 }
 
@@ -27,24 +26,24 @@ const initialState: GraphState = {
 };
 
 //非同期処理はこの形で処理<>内の型は
-export const fetchTotalDethAsync = createAsyncThunk(
-  "totalDeth/fetchTotalDeth",
-  async () => {
-    let fetchData: GraphState = { ...initialState };
-    await axios
-      .get("https://data.corona.go.jp/converted-json/covid19japan-ndeaths.json")
-      .then((response) => {
-        const fetch_total_deth = response
-          // 取得したデータだけを取り出す
-        const fetch_total_deth_data =
-        fetch_total_deth.data as Array<DethData>;
-        // console.log('トータル死亡者')
-        // console.log(fetch_total_deth_data)
-        // 取り出したデータを格納する
-        fetchData.data = fetch_total_deth_data;
-        // console.log(fetchData.data);
-      });
-    return fetchData;
+export const fetchTotalDethAsync = createAsyncThunk<
+  GraphState,
+  void,
+  { state: RootState }
+>("totalDeth/fetchTotalDeth", async () => {
+  let fetchData: GraphState = { ...initialState };
+  await axios
+    .get("https://data.corona.go.jp/converted-json/covid19japan-ndeaths.json")
+    .then((response) => {
+      const fetch_total_deth = response
+        // 取得したデータだけを取り出す
+      const fetch_total_deth_data =
+      fetch_total_deth.data;
+      // 取り出したデータを格納する
+      fetchData.data = fetch_total_deth_data;
+      // console.log(fetchData.data);
+    });
+  return fetchData;
   }
 );
 
@@ -58,7 +57,7 @@ export const totalDethSlice = createSlice({
     builder
       // loadingを実現するためのstatusを「loading」変更
       .addCase(fetchTotalDethAsync.pending, (state) => {
-        const clonedState = { ...state };
+        const clonedState: GraphState = { ...state };
         clonedState.status = "loading";
         return clonedState;
       })
@@ -68,7 +67,7 @@ export const totalDethSlice = createSlice({
         (state, action: PayloadAction<GraphState>) => {
           const clonedState: GraphState = { ...state };
           clonedState.status = 'success';
-          clonedState.data = action.payload.data as Array<DethData>;
+          clonedState.data = action.payload.data;
           return clonedState;
         }
       );
