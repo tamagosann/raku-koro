@@ -63,14 +63,14 @@ const App = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         if (!userData) {
-          dispatch(fetchThreadAsync());
           dispatch(fetchUserDataAsync({ uid: user.uid }));
+          dispatch(fetchThreadAsync());
         }
       } else {
         dispatch(unSetUser());
-        dispatch(unSetThread());
       }
     });
+    dispatch(fetchThreadAsync());
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchDailyDeadAsync());
     dispatch(fetchTotalCoronaAsync());

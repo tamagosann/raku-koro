@@ -47,7 +47,7 @@ const CreateCommentForm = () => {
     setValue("comment", "");
   };
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" style={{ padding: "5px 0 25px 0" }}>
       <Box mt={3} textAlign="center">
         <form onSubmit={handleSubmit(doCreate)}>
           <Box mt={3} textAlign="center">

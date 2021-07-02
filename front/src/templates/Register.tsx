@@ -10,8 +10,9 @@ import { registerAsync } from "../features/user/userSlice";
 import { RegisterType } from "../features/user/userSlice";
 import { PrefectureSelectBox } from "../components/atoms/PrefectureSelectBox";
 import { FC } from "react";
+import { Inner } from "../components/inner";
 
-const Register:FC = () => {
+const Register: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const {
@@ -32,7 +33,7 @@ const Register:FC = () => {
     history.push("/");
   };
   return (
-    <Container maxWidth="sm">
+    <Inner>
       <Box mt={3} textAlign="center">
         <h2>新規登録</h2>
         <form onSubmit={handleSubmit(doRegister)}>
@@ -53,7 +54,7 @@ const Register:FC = () => {
           </Box>
         </form>
       </Box>
-    </Container>
+    </Inner>
   );
 };
 

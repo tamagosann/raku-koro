@@ -12,6 +12,7 @@ import { useAppSelector } from "../../app/hooks";
 import { selectUser } from "../../features/user/userSlice";
 import { IconButtonSelect } from "../atoms/IconButtonSelect";
 import { headerItems } from "./Header";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   container: {
@@ -32,6 +33,7 @@ interface Props {
 const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
   const classes = useStyles();
   const user = useAppSelector(selectUser);
+  const history = useHistory()
   const closeToggle = useCallback(
     (e) => {
       if (e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
@@ -97,6 +99,17 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
               <Divider />
             </div>
           ))}
+          <ListItem button onClick={() => history.push('about')}>
+            <ListItemIcon>
+              <IconButtonSelect
+                icon={'About'}
+                disabled={true}
+                color={"action"}
+              />
+            </ListItemIcon>
+            <ListItemText primary={'ABOUT'} />
+          </ListItem>
+          <Divider />
         </List>
       </div>
     </Drawer>
