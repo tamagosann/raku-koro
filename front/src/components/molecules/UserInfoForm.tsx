@@ -30,7 +30,10 @@ const UserInfoForm = () => {
     dispatch(updateUserAsync(data));
   };
   return (
-    <Container maxWidth="sm">
+    <Container
+      maxWidth="sm"
+      style={{ padding: "5px 0 25px 0", marginBottom: 25 }}
+    >
       {user !== null && (
         <Box mt={3} textAlign="center">
           <h2>ユーザー情報</h2>

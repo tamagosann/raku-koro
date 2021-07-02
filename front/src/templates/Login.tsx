@@ -7,13 +7,14 @@ import { login } from "../features/user/userAPI";
 import { EmailInput } from "../components/atoms/EmailInput";
 import { PasswordInput } from "../components/atoms/PasswordInput";
 import PrimaryButton from "../components/UIKit/PrimaryButton";
+import { Inner } from "../components/inner";
 
 interface LoginInfoType {
   email?: string;
   password?: string;
 }
 
-const Login:FC = () => {
+const Login: FC = () => {
   const [error, setError] = useState("");
   const history = useHistory();
   const {
@@ -43,7 +44,7 @@ const Login:FC = () => {
       });
   };
   return (
-    <Container maxWidth="sm">
+    <Inner>
       <Box mt={3} textAlign="center">
         <h2>ログイン</h2>
         {error !== "" && <span style={{ color: "red" }}>{error}</span>}
@@ -62,7 +63,7 @@ const Login:FC = () => {
           <Link to="/register">ユーザー登録はこちら</Link>
         </Box>
       </Box>
-    </Container>
+    </Inner>
   );
 };
 
