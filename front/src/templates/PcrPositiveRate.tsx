@@ -1,4 +1,4 @@
-
+import {FC} from "react";
 import { Inner } from "../components/inner";
 // import {useSelector} from 'react-redux'
 import {selectDailyPositive} from '../features/graphs/dailyPositiveSlice'
@@ -23,7 +23,7 @@ import {
   }
 
 
-const PcrPositiveRate = () => {
+const PcrPositiveRate:FC = () => {
 
 
   const PcrPositiveRate = useAppSelector(selectDailyPositive)
@@ -67,7 +67,7 @@ const PcrPositiveRate = () => {
       <Inner><p>Loading...</p></Inner>
       : (
         <Inner>
-            <h1>PCR検査数と陽性者数の推移</h1>
+            <h1 style={{textAlign: 'center'}}>PCR検査数と陽性者数の推移</h1>
             <ResponsiveContainer width="100%" height={400}>
         <ComposedChart
           width={500}
@@ -89,7 +89,7 @@ const PcrPositiveRate = () => {
             
           }}
           />
-          <Legend />
+          <Legend verticalAlign="top"/>
           <Area type="monotone" dataKey="daily_pcr" fill="#ffe2b2" stroke="#fd7e00" name="PCR検査人数" />
           <Bar dataKey="daily_positive" barSize={20} fill="#fd7e00" name="陽性者数" />
           {/* <Line type="monotone" dataKey="daily_pcr" stroke="#ff7300" /> */}
