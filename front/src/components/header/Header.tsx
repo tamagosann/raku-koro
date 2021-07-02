@@ -71,7 +71,7 @@ const Header: React.FC = () => {
       {
         text: "全国",
         icon: "LineGrph1",
-        method: () => history.push("/infected-person"),
+        method: () => history.push("/nationwide"),
       },
       {
         text: "都道府県",
@@ -82,6 +82,11 @@ const Header: React.FC = () => {
         text: "病床使用率",
         icon: "CircleGrph",
         method: () => history.push("/bed-usage-rate"),
+      },
+      {
+        text: "PCR検査",
+        icon: "CircleGrph",
+        method: () => history.push("/pcr-rate"),
       },
     ],
   };

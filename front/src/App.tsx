@@ -7,11 +7,8 @@ import { useAppSelector } from './app/hooks';
 //コンポーネント
 import { Header } from './components/header';
 import { fetchDailyCoronaAsync } from './features/graphs/dailyCoronaSlice';
-import { InformationCorona } from './templates/informationCorona';
-import { Footer } from './components/atoms/Footer';
-
 import { LoadingPage } from './components/atoms';
-import { PrefectureData } from './pages/PrefectureData';
+import { Footer } from './components/atoms/Footer';
 
 // slice
 import { fetchDailyInfectionAsync } from './features/graphs/dailyInfectionSlice';
@@ -19,6 +16,8 @@ import { fetchDailyDeadAsync } from './features/graphs/dailyDeadSlice';
 import { fetchTotalCoronaAsync } from './features/graphs/totalCoronaSlice';
 import { fetchTotalDethAsync } from './features/graphs/totalDethSlice';
 import { fetchBedOccupancyRateAsync } from './features/graphs/bedOccupancyRateSlice';
+import { fetchDailyPositiveAsync } from './features/graphs/dailyPositiveSlice';
+
 import {
   unSetUser,
   selectUserStatus,
@@ -29,8 +28,6 @@ import {
   fetchThreadAsync,
   selectThreadStatus,
 } from './features/thread/threadSlice';
-
-import { BedOccupancyRate } from './templates/BedOccupancyRate';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -54,6 +51,7 @@ const App = () => {
     dispatch(fetchTotalCoronaAsync());
     dispatch(fetchTotalDethAsync());
     dispatch(fetchBedOccupancyRateAsync());
+    dispatch(fetchDailyPositiveAsync());
   }, []);
 
   return (
@@ -63,7 +61,9 @@ const App = () => {
       {userStatus === 'loading' && threadStatus === 'loading' ? (
         <LoadingPage />
       ) : (
-        <Router />
+        <>
+          <Router />
+        </>
       )}
       <Footer />
     </>

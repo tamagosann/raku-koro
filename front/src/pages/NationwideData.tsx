@@ -1,23 +1,24 @@
 import React from 'react';
 
 // コンポーネント
-import { PrefectureDailyDead } from '../templates/PrefectureDailyDead';
-import PrefectureDailyInfention from '../templates/PrefectureDailyInfection';
+import {
+  InfectedPerson,
+  DeceasedPerson
+} from '../templates';
 
-// マテリアルUI
 import Grid from '@material-ui/core/Grid';
 
-export const PrefectureData = () => {
+export const NationwideData = () => {
   return (
     <>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-          <PrefectureDailyDead />
+          <InfectedPerson />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-          <PrefectureDailyInfention />
+          <DeceasedPerson />
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+} 

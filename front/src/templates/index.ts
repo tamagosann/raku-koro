@@ -7,4 +7,4 @@ export { default as DeceasedPerson } from "./DeceasedPerson";
 export { default as UserInfo } from "./UserInfo";
 export { default as ThreadInfo } from "./ThreadInfo";
 export { default as BedOccupancyRate } from "./BedOccupancyRate";
-export { default as PrefectureDailyInfention } from "./Prefecture_daily_infection";
+export { default as PrefectureDailyInfention } from "./PrefectureDailyInfection";

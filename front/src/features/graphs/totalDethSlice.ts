@@ -7,13 +7,13 @@ import {
 import { RootState } from "../../app/store";
 import axios from "axios";
 
-interface Data {
+export interface DethData {
   date: string;
   ndeaths: number;
 }
 export interface GraphState {
-  data: Array<Data>;
-  status: "success" | "loading" | "failed";
+  data: Array<DethData>;
+  status: 'success' | 'loading' | 'failed';
 }
 
 const initialState: GraphState = {
@@ -34,10 +34,12 @@ export const fetchTotalDethAsync = createAsyncThunk(
     await axios
       .get("https://data.corona.go.jp/converted-json/covid19japan-ndeaths.json")
       .then((response) => {
-        // console.log(response);
-        const fetch_total_deth = response;
-        // 取得したデータだけを取り出す
-        const fetch_total_deth_data = fetch_total_deth.data as Array<Data>;
+        const fetch_total_deth = response
+          // 取得したデータだけを取り出す
+        const fetch_total_deth_data =
+        fetch_total_deth.data as Array<DethData>;
+        // console.log('トータル死亡者')
+        // console.log(fetch_total_deth_data)
         // 取り出したデータを格納する
         fetchData.data = fetch_total_deth_data;
         // console.log(fetchData.data);
@@ -65,8 +67,8 @@ export const totalDethSlice = createSlice({
         fetchTotalDethAsync.fulfilled,
         (state, action: PayloadAction<GraphState>) => {
           const clonedState: GraphState = { ...state };
-          clonedState.status = "success";
-          clonedState.data = action.payload.data as Array<Data>;
+          clonedState.status = 'success';
+          clonedState.data = action.payload.data as Array<DethData>;
           return clonedState;
         }
       );
