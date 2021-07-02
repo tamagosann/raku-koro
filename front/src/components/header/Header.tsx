@@ -71,7 +71,7 @@ const Header: React.FC = () => {
       {
         text: "全国",
         icon: "LineGrph1",
-        method: () => history.push("/infected-person"),
+        method: () => history.push("/nationwide"),
       },
       {
         text: "都道府県",
@@ -83,11 +83,16 @@ const Header: React.FC = () => {
         icon: "CircleGrph",
         method: () => history.push("/bed-usage-rate"),
       },
+      {
+        text: "PCR検査",
+        icon: "BarGrph1",
+        method: () => history.push("/pcr-rate"),
+      },
     ],
   };
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{background: "#fd7e00"}}>
         <Container maxWidth="lg">
           <Toolbar>
             <Typography variant="h6" noWrap onClick={() => history.push("/")}>
