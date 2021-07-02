@@ -1,21 +1,10 @@
 import React, { useState } from "react";
-import {
-  Brush,
-  CartesianGrid,
-  Legend,
-  Area,
-  AreaChart,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip
-} from "recharts";
 import { Inner } from "../components/inner";
 import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalDeth } from '../features/graphs/totalDethSlice';
+import { AreaReChart, LineReChart } from "../components/organisms";
+import { OrangeButton, ReferenceDataLink } from "../components/atoms";
 
 interface Data {
   date: string;
@@ -59,59 +48,35 @@ const DeceasedPerson = () => {
 
   return (
     <Inner>
-      <Typography>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeToggle}>累計</Button>
-        <Button variant="contained" style={{color: "#000"}} onClick={changeDay}>日別</Button>
-      </Typography>
+      <OrangeButton label={"累計"} onClick={changeToggle} />
+      <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ? 
       <>
         <Typography variant="h5" align="center">死亡者数推移（累計）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-          <AreaChart data={dethPerson}>
-            <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Legend verticalAlign="top"/>
-            <Area
-              type="monotone"
-              dataKey="ndeaths"
-              name="死亡者数"
-              stroke="#8884d8"
-              fill="#8884b8"
-              strokeWidth={3}
-            />
-            <Brush dataKey="date" stroke="#8884d8" />
-          </AreaChart>
-        </ResponsiveContainer>
+        <AreaReChart 
+          data={dethPerson}
+          xDataKey={"date"}
+          areaDataKey={"ndeaths"}
+          areaName={"死亡者数"}
+        />
       </>
       :
       <>
         <Typography variant="h5" align="center">死亡者数推移（日別）</Typography>
-        <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-        <LineChart data={dayDethPerson}>
-          <XAxis dataKey="date" tick={{ fontSize: '.6rem' }}/>
-          <YAxis />
-          <Tooltip />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Legend verticalAlign="top"/>
-          <Line
-            dataKey="ndeaths"
-            name="死亡者数"
-            stroke="#8884d8"
-            fill="#8884b8"
-            strokeWidth={3}
-          />
-          <Brush
-            dataKey="date"
-            stroke="#8884d8"
-            startIndex={dayDethPerson.length - 31}
-            endIndex={dayDethPerson.length - 1}
-          />
-          </LineChart>
-        </ResponsiveContainer>
+        <LineReChart 
+          data={dayDethPerson}
+          xDataKey={"date"}
+          lineDataKey={"ndeaths"}
+          lineName={"死亡者数"}
+          startIndex={dayDethPerson.length - 31}
+          endIndex={dayDethPerson.length - 1}
+        />
       </>
       }
+      <ReferenceDataLink
+        label={"新型コロナウイルス感染症対策"}
+        href={"https://corona.go.jp/dashboard/"}
+      />
     </Inner>
   );
 };

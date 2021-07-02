@@ -65,8 +65,6 @@ const App = () => {
       ) : (
         <>
           <Router />
-          <PcrPositiveRate />
-          <InformationCorona />
         </>
       )}
     </>
