@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{ FC } from 'react';
+
 
 // 型
 import { Data } from '../../features/graphs/bedOccupancyRateSlice';
@@ -15,7 +16,7 @@ interface Props {
     }[];
   }
 
-export const ModalPreview = ({ element, data }: Props) => {
+export const ModalPreview: FC<Props> = ({ element, data }: Props) => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
   
     function openModal() {
