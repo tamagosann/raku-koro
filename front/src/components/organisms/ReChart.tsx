@@ -23,6 +23,7 @@ interface Props {
   startIndex: number;
   endIndex: number;
   value: string;
+  date:string;
 }
 
 export const ReChart = ({
@@ -32,6 +33,7 @@ export const ReChart = ({
   startIndex,
   endIndex,
   value,
+  date
 }: Props) => {
   return (
     <>
@@ -56,7 +58,7 @@ export const ReChart = ({
   />
   <Brush
     className="TimeLineChart-brush"
-    dataKey={dataKey}
+    dataKey={date}
     stroke="#fd7e00"
     startIndex={startIndex}
     endIndex={endIndex}
@@ -92,7 +94,7 @@ export const ReChart = ({
             />
             <Brush
               className="TimeLineChart-brush"
-              dataKey={dataKey}
+              dataKey={date}
               stroke="#fd7e00"
               startIndex={startIndex}
               endIndex={endIndex}
