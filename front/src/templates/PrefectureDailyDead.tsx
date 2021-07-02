@@ -9,8 +9,9 @@ import { selectDailyInfection } from '../features/graphs/dailyInfectionSlice';
 import Inner from '../components/inner/Inner';
 import { DailyTotalRadio } from '../components/atoms/DailyTotalRadio';
 import { ReChart } from '../components/organisms/ReChart';
+import { TypographyTitle } from '../components/atoms/index';
 
-export const PrefectureDailyDead  = () => {
+export const PrefectureDailyDead = () => {
   const prefecture_dead = useAppSelector(selectDailyInfection);
   // ラジオボタンの初期値（日別）
   const [value, setValue] = useState<string>('0');
@@ -30,19 +31,12 @@ export const PrefectureDailyDead  = () => {
     <>
       {prefecture_dead.status === 'loading' ? null : (
         <Inner>
+          <TypographyTitle variant={'h5'} align={'center'}>
+            都道府県別死者数
+          </TypographyTitle>
           <Prefecture prefecture={prefecture} setPrefecture={setPrefecture} />
           <DailyTotalRadio handleChange={handleChange} value={value} />
           {value === '0' ? (
-            <ReChart
-              targetPrefecture={targetPrefecture}
-              dataKey="daily_dead"
-              startIndex={targetPrefecture.length - 31}
-              endIndex={targetPrefecture.length - 1}
-              value={value}
-            >
-              日別死者数
-            </ReChart>
-          ) : (
             <ReChart
               targetPrefecture={targetPrefecture}
               dataKey="total_dead"
@@ -52,14 +46,24 @@ export const PrefectureDailyDead  = () => {
             >
               累計死者数
             </ReChart>
+          ) : (
+            <ReChart
+              targetPrefecture={targetPrefecture}
+              dataKey="daily_dead"
+              startIndex={targetPrefecture.length - 31}
+              endIndex={targetPrefecture.length - 1}
+              value={value}
+            >
+              日別死者数
+            </ReChart>
           )}
           <a
-           href="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/"
-           target="_blank"
-           rel="noopener"
-            >
-           都道府県ごとの死者数の推移情報提供:NHK
-             </a>
+            href="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/"
+            target="_blank"
+            rel="noopener"
+          >
+            都道府県ごとの死者数の推移情報提供:NHK
+          </a>
         </Inner>
       )}
     </>

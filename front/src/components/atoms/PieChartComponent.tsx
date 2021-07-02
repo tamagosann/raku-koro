@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ FC} from 'react';
 import {
     PieChart,
     Pie,
@@ -47,7 +47,7 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
   }
 
 
-export const PieChartComponent = ({ element, data }: Props) => {
+export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
     return(
         <ResponsiveContainer width="99%" height={400}>
             <PieChart style={{ margin: '0 auto' }}>
