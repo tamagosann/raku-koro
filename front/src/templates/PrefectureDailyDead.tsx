@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,FC } from 'react';
 import { useAppSelector } from '../app/hooks';
 import { Prefecture } from '../components/atoms/Prefecture';
 
@@ -11,7 +11,7 @@ import { DailyTotalRadio } from '../components/atoms/DailyTotalRadio';
 import { ReChart } from '../components/organisms/ReChart';
 import { TypographyTitle } from '../components/atoms/index';
 
-export const PrefectureDailyDead = () => {
+export const PrefectureDailyDead : FC= () => {
   const prefecture_dead = useAppSelector(selectDailyInfection);
   // ラジオボタンの初期値（日別）
   const [value, setValue] = useState<string>('0');

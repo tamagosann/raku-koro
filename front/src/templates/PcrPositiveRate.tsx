@@ -1,4 +1,4 @@
-
+import {FC} from "react";
 import { Inner } from "../components/inner";
 // import {useSelector} from 'react-redux'
 import {selectDailyPositive} from '../features/graphs/dailyPositiveSlice'
@@ -23,7 +23,7 @@ import {
   }
 
 
-const PcrPositiveRate = () => {
+const PcrPositiveRate:FC = () => {
 
 
   const PcrPositiveRate = useAppSelector(selectDailyPositive)
