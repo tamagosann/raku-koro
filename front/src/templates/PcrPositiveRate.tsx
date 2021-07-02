@@ -54,7 +54,6 @@ const PcrPositiveRate = () => {
         tranceData.push(trance)
     })
 
-    console.log(tranceData);
     
 
 
@@ -87,7 +86,6 @@ const PcrPositiveRate = () => {
           <YAxis />
           <Tooltip
           formatter={(value: any) => {
-            console.log(value);
               return `${value.toLocaleString()} 人`;
             
           }}

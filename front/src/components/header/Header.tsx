@@ -83,6 +83,11 @@ const Header: React.FC = () => {
         icon: "CircleGrph",
         method: () => history.push("/bed-usage-rate"),
       },
+      {
+        text: "PCR検査",
+        icon: "CircleGrph",
+        method: () => history.push("/pcr-rate"),
+      },
     ],
   };
   return (
