@@ -1,12 +1,12 @@
 import { Container } from "@material-ui/core";
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { FormLayout } from "../components/organisms";
 import { CommentList } from "../components/commentList";
 import { selectThread, ThreadDataType } from "../features/thread/threadSlice";
 import { useAppSelector } from "../app/hooks";
 import { selectUid } from "../features/user/userSlice";
 
-const UserInfo = () => {
+const UserInfo:FC = () => {
   const threadsData = useAppSelector(selectThread);
   const uid = useAppSelector(selectUid);
 

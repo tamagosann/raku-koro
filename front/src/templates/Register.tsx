@@ -9,8 +9,9 @@ import { PrimaryButton } from "../components/UIKit";
 import { registerAsync } from "../features/user/userSlice";
 import { RegisterType } from "../features/user/userSlice";
 import { PrefectureSelectBox } from "../components/atoms/PrefectureSelectBox";
+import { FC } from "react";
 
-const Register = () => {
+const Register:FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const {

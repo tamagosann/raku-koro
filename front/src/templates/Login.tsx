@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
@@ -13,7 +13,7 @@ interface LoginInfoType {
   password?: string;
 }
 
-const Login = () => {
+const Login:FC = () => {
   const [error, setError] = useState("");
   const history = useHistory();
   const {
