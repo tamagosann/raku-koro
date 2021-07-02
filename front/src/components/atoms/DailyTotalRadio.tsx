@@ -49,13 +49,6 @@ export const DailyTotalRadio = ({ value, handleChange }: Props) => {
   return (
     <MuiThemeProvider theme={theme}>
       <FormControl className={classes.wrapper} component="fieldset">
-        <FormLabel
-          className={classes.marginAlign}
-          component="legend"
-          color="secondary"
-        >
-          日別 / 累計
-        </FormLabel>
         <RadioGroup
           className={classes.flex}
           aria-label="corona"
@@ -66,16 +59,16 @@ export const DailyTotalRadio = ({ value, handleChange }: Props) => {
           <FormControlLabel
             value="0"
             control={<Radio color="primary" />}
-            label="日別"
+            label="累計"
           />
           <FormControlLabel
             value="1"
             control={<Radio color="primary" />}
-            label="累計"
+            label="日別"
           />
         </RadioGroup>
         <FormHelperText className={classes.labelAlignCenter}>
-          日別 / 累計を選択してください。
+          累計 / 日別を選択してください。
         </FormHelperText>
       </FormControl>
     </MuiThemeProvider>

@@ -75,6 +75,7 @@ export const InformationCorona = () => {
       totalDeth.data[index6].ndeaths) as number;
   }
   // コロナ陽性者数算出
+  
   if (positivRate.status === "success") {
     let positivRateIndex1 = positivRate.data.length - 1;
     let positivRateIndex2 = positivRate.data.length - 2;
