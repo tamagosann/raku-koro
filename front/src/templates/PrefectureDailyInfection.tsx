@@ -47,22 +47,22 @@ const PrefectureDailyInfention:FC = () => {
           {value === '0' ? (
             <ReChart
               targetPrefecture={target_prefecture}
-              dataKey="daily_infection"
-              startIndex={target_prefecture.length - 31}
-              endIndex={target_prefecture.length - 1}
-              value={value}
-            >
-              日別感染者数
-            </ReChart>
-          ) : (
-            <ReChart
-              targetPrefecture={target_prefecture}
               dataKey="total_infection"
               startIndex={0}
               endIndex={0}
               value={value}
             >
               累計感染者数
+            </ReChart>
+          ) : (
+            <ReChart
+              targetPrefecture={target_prefecture}
+              dataKey="daily_infection"
+              startIndex={target_prefecture.length - 31}
+              endIndex={target_prefecture.length - 1}
+              value={value}
+            >
+              日別感染者数
             </ReChart>
           )}
           <a

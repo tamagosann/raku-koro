@@ -35,22 +35,22 @@ export const PrefectureDailyDead  = () => {
           {value === '0' ? (
             <ReChart
               targetPrefecture={targetPrefecture}
-              dataKey="daily_dead"
-              startIndex={targetPrefecture.length - 31}
-              endIndex={targetPrefecture.length - 1}
-              value={value}
-            >
-              日別死者数
-            </ReChart>
-          ) : (
-            <ReChart
-              targetPrefecture={targetPrefecture}
               dataKey="total_dead"
               startIndex={0}
               endIndex={0}
               value={value}
             >
               累計死者数
+            </ReChart>
+          ) : (
+            <ReChart
+              targetPrefecture={targetPrefecture}
+              dataKey="daily_dead"
+              startIndex={targetPrefecture.length - 31}
+              endIndex={targetPrefecture.length - 1}
+              value={value}
+            >
+              日別死者数
             </ReChart>
           )}
           <a
