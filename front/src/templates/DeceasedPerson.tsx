@@ -4,7 +4,7 @@ import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalDeth } from '../features/graphs/totalDethSlice';
 import { AreaReChart, LineReChart } from "../components/organisms";
-import { OrangeButton, ReferenceDataLink } from "../components/atoms";
+import { OrangeButton, ReferenceDataLink, TypographyTitle } from "../components/atoms";
 
 interface DeceasedData {
   date: string;
@@ -52,7 +52,12 @@ const DeceasedPerson: FC = () => {
       <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ? 
       <>
-        <Typography variant="h5" align="center">死亡者数推移（累計）</Typography>
+        <TypographyTitle
+          variant={"h5"}
+          align="center"
+        >
+          感染者数推移（累計）
+        </TypographyTitle>
         <AreaReChart 
           data={dethPerson}
           xDataKey={"date"}
@@ -62,7 +67,12 @@ const DeceasedPerson: FC = () => {
       </>
       :
       <>
-        <Typography variant="h5" align="center">死亡者数推移（日別）</Typography>
+        <TypographyTitle
+          variant={"h5"}
+          align="center"
+        >
+          感染者数推移（日別）
+        </TypographyTitle>
         <LineReChart 
           data={dayDethPerson}
           xDataKey={"date"}

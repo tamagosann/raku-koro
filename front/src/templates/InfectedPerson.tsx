@@ -2,10 +2,9 @@ import React, { useState, FC } from "react";
 import { Inner } from "../components/inner";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
-import { OrangeButton, ReferenceDataLink } from "../components/atoms";
+import { OrangeButton, ReferenceDataLink, TypographyTitle } from "../components/atoms";
 
 // マテリアルUI
-import { Button, Typography } from "@material-ui/core";
 import { AreaReChart, LineReChart } from "../components/organisms";
 
 interface InfectedData {
@@ -58,7 +57,12 @@ const InfectedPerson: FC = () => {
       <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ?
       <>
-        <Typography variant="h5" align="center">感染者数推移（累計）</Typography>
+        <TypographyTitle
+          variant={"h5"}
+          align="center"
+        >
+          感染者数推移（累計）
+        </TypographyTitle>
         <AreaReChart 
           data={cumulativeInfectedPerson}
           xDataKey={"date"}
@@ -68,7 +72,12 @@ const InfectedPerson: FC = () => {
       </>
       :
       <>
-        <Typography variant="h5" align="center">感染者数推移（日別）</Typography>
+        <TypographyTitle
+          variant={"h5"}
+          align="center"
+        >
+          感染者数推移（日別）
+        </TypographyTitle>
         <LineReChart 
           data={dayInfectedPerson}
           xDataKey={"date"}
