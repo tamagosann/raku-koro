@@ -1,6 +1,5 @@
 import React, { useState, FC } from "react";
 import { Inner } from "../components/inner";
-import { Button, Typography } from "@material-ui/core";
 import { useAppSelector } from '../app/hooks';
 import { selectTotalDeth } from '../features/graphs/totalDethSlice';
 import { AreaReChart, LineReChart } from "../components/organisms";
