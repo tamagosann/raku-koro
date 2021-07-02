@@ -12,6 +12,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { prefectures } from "../common/prefecture";
+import { FormLayout } from "../components/organisms";
+import { selectThread } from "../features/thread/threadSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,77 +44,21 @@ const getPrefectureListOfMenuItem = (): any[] => {
 
 const Threads: FC = () => {
   const classes = useStyles();
-  const [prefectureToRefineList, setPrefectureToRefineList] = useState<string>("");
-
-  //本番ではthreadsDataは↓これで呼び出す
-  // const threadsData: Data[] = useAppSelector(selectThreads)
-
-  const threadsData: Data[] = [
-    {
-      _id: "0001",
-      uid: "aaa",
-      date: "2020-06-10",
-      prefecture: "東京",
-      username: "田中",
-      comment: "全然大丈夫です",
-      delete: "×",
-    },
-    {
-      _id: "0002",
-      uid: "bbb",
-      date: "2020-06-20",
-      prefecture: "神奈川",
-      username: "中田",
-      comment: "ちょっとやばいです",
-      delete: "×",
-    },
-    {
-      _id: "0003",
-      uid: "ccc",
-      date: "2020-06-30",
-      prefecture: "下北沢",
-      username: "落合",
-      comment: "やばいです",
-      delete: "×",
-    },
-    {
-      _id: "0004",
-      uid: "ddd",
-      date: "2020-06-21",
-      prefecture: "埼玉",
-      username: "鈴木",
-      comment: "全然大丈夫です",
-      delete: "×",
-    },
-    {
-      _id: "0005",
-      uid: "eee",
-      date: "2020-06-24",
-      prefecture: "秋田",
-      username: "村田",
-      comment: "全然大丈夫です",
-      delete: "×",
-    },
-    {
-      _id: "0006",
-      uid: "fff",
-      date: "2020-06-26",
-      prefecture: "神奈川県",
-      username: "田中",
-      comment: "全然大丈夫です",
-      delete: "×",
-    },
-  ];
+  const threadsData = useAppSelector(selectThread);
+  const [prefectureToRefineList, setPrefectureToRefineList] =
+    useState<string>("");
 
   const refinedThreadsData = useMemo(() => {
-    if (prefectureToRefineList === "全て") {
-      return threadsData;
+    if (threadsData) {
+      if (prefectureToRefineList === "全て") {
+        return threadsData;
+      }
+      const filteredPrefectureData = threadsData.filter((thread) => {
+        return thread.prefecture === prefectureToRefineList;
+      });
+      return filteredPrefectureData;
     }
-    const filteredPrefectureData = threadsData.filter((thread) => {
-      return thread.prefecture === prefectureToRefineList;
-    });
-    return filteredPrefectureData;
-  }, [prefectureToRefineList]);
+  }, [prefectureToRefineList, threadsData]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPrefectureToRefineList(event.target.value as string);
@@ -141,7 +87,10 @@ const Threads: FC = () => {
             </Select>
           </FormControl>
         </div>
-        <CommentList label={"コメント一覧"} rows={refinedThreadsData} />
+        {refinedThreadsData && (
+          <CommentList label={"コメント一覧"} rows={refinedThreadsData} />
+        )}
+        <FormLayout type="createcomment" />
       </Inner>
     </>
   );

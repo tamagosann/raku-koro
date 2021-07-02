@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Legend,
   LineChart,
@@ -16,7 +16,7 @@ import { Data } from '../../features/graphs/totalCoronaSlice';
 import { DethData } from '../../features/graphs/totalDethSlice';
 
 interface Props {
-  data: Array<Data> | Array<DethData>;
+  data: Data[] | DethData[];
   xDataKey: string;
   lineDataKey: string;
   lineName: string;
@@ -24,7 +24,7 @@ interface Props {
   endIndex: number;
 }
 
-const LineReChart = ({ data, xDataKey, lineDataKey, lineName, startIndex, endIndex}: Props) => {
+const LineReChart: FC<Props> = ({ data, xDataKey, lineDataKey, lineName, startIndex, endIndex}) => {
   return (
     <ResponsiveContainer width="100%" height="100%" minHeight={400}>
     <LineChart data={data}>
