@@ -33,7 +33,7 @@ export const register = (
   password: string,
   username: string,
   prefecture: string
-): Promise<UserDataType | null> => {
+): Promise<UserDataType | null |"userexist"> => {
   return new Promise((resolve, reject) => {
     auth.setPersistence(sessionPersistance).then(() => {
       auth
@@ -45,13 +45,12 @@ export const register = (
             if (data) {
               resolve(data);
             } else {
-              reject(null);
+              resolve(null);
             }
           }
         })
         .catch((e) => {
-          console.error(e);
-          reject(null);
+          resolve("userexist");
         });
     });
   });

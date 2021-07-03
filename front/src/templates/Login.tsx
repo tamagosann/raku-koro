@@ -1,13 +1,14 @@
 import { FC, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { Container, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../features/user/userAPI";
 import { EmailInput } from "../components/atoms/EmailInput";
 import { PasswordInput } from "../components/atoms/PasswordInput";
 import PrimaryButton from "../components/UIKit/PrimaryButton";
 import { Inner } from "../components/inner";
+import { showAuthErrorMsg } from "../common/functions";
 
 interface LoginInfoType {
   email?: string;
@@ -36,7 +37,8 @@ const Login: FC = () => {
         history.push("/");
       })
       .catch((error) => {
-        setError(error);
+        let errMsg = showAuthErrorMsg(error);
+        setError(errMsg);
         reset({
           email: "",
           password: "",

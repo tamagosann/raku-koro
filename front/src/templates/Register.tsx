@@ -29,7 +29,7 @@ const Register: FC = () => {
     },
   });
   const doRegister: SubmitHandler<RegisterType> = (data) => {
-    dispatch(registerAsync(data));
+    dispatch(registerAsync(data))
     history.push("/");
   };
   return (

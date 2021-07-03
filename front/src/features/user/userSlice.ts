@@ -8,6 +8,7 @@ import {
   logout,
   updateUserData,
 } from "./userAPI";
+import { SERVER_URI, USERS_TABLE_URI } from "../../apis/mongoDB";
 export interface UserDataType {
   _id?: string;
   uid: string | null;
@@ -57,9 +58,11 @@ export const registerAsync = createAsyncThunk<
   RegisterType
 >("user/register", async ({ username, email, password, prefecture }) => {
   try {
-    let server = await axios.get("http://localhost:3001/users").then((res) => {
-      return res;
-    });
+    let server = await axios
+      .get(`${SERVER_URI + USERS_TABLE_URI}`)
+      .then((res) => {
+        return res;
+      });
     if (server.data.status !== "OK") {
       throw new Error("サーバーへの接続に失敗しました");
     } else {
@@ -69,10 +72,12 @@ export const registerAsync = createAsyncThunk<
         username!,
         prefecture!
       );
-      if (userData) {
+      if (userData !== "userexist" && userData !== null) {
         return userData;
+      } else if (userData === "userexist") {
+        throw new Error("すでに登録があります");
       } else {
-        throw new Error("サーバーへの接続に失敗しました");
+        throw new Error("登録データがありません");
       }
     }
   } catch (e) {
@@ -119,10 +124,12 @@ export const userSlice = createSlice({
     });
     builder.addCase(registerAsync.pending, (state) => {
       state.status = "loading";
+      console.log(state.value);
     });
     builder.addCase(registerAsync.fulfilled, (state, action) => {
       state.status = "idle";
       state.value = action.payload;
+      console.log(state.value);
     });
     builder.addCase(updateUserAsync.pending, (state) => {
       state.status = "loading";

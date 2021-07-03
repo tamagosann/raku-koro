@@ -1,10 +1,10 @@
-import { Container } from "@material-ui/core";
 import { FC, useMemo } from "react";
 import { FormLayout } from "../components/organisms";
 import { CommentList } from "../components/commentList";
 import { selectThread, ThreadDataType } from "../features/thread/threadSlice";
 import { useAppSelector } from "../app/hooks";
 import { selectUid } from "../features/user/userSlice";
+import { Inner } from "../components/inner";
 
 const UserInfo:FC = () => {
   const threadsData = useAppSelector(selectThread);
@@ -19,14 +19,14 @@ const UserInfo:FC = () => {
   }, [threadsData, uid]);
 
   return (
-    <Container maxWidth="md">
+    <Inner>
       <FormLayout type={"userinfo"} />
       {userThreadsData.length !== 0 ? (
         <CommentList label={"ユーザー投稿一覧"} rows={userThreadsData} />
       ) : (
         <h3>投稿がありません</h3>
       )}
-    </Container>
+    </Inner>
   );
 };
 export default UserInfo;

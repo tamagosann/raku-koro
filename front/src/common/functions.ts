@@ -14,3 +14,15 @@ export const datetimeToString = (date: Date): string => {
     ("00" + date.getSeconds()).slice(-2)
   );
 };
+
+export const showAuthErrorMsg = (error: string) => {
+  let passerr: number = error.indexOf("password");
+  let emailerr: number = error.indexOf("no user");
+  if (0 <= passerr) {
+    return "パスワードが間違っています";
+  } else if (0 <= emailerr) {
+    return "そのメールアドレスの登録はありません";
+  } else {
+    return "ログインに失敗しました";
+  }
+};
