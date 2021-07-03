@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 import { RootState } from "../../app/store";
 import {
   login,
@@ -7,17 +6,16 @@ import {
   register,
   logout,
   updateUserData,
+  connectionTest,
+  registerUserData,
 } from "./userAPI";
-import { SERVER_URI, USERS_TABLE_URI } from "../../apis/mongoDB";
+import { translateErrorMsg } from "../../common/functions";
+
 export interface UserDataType {
   _id?: string;
   uid: string | null;
   username: string | null;
   prefecture: string | null;
-}
-export interface UserState {
-  value: UserDataType | null;
-  status: "idle" | "loading" | "failed";
 }
 export interface RegisterType {
   username?: string;
@@ -25,84 +23,96 @@ export interface RegisterType {
   password?: string;
   prefecture?: string;
 }
-
+export interface UserState {
+  value: UserDataType | null;
+  status: "idle" | "loading" | "failed";
+  errorMsg: string | null;
+}
+interface ThunkConfig {
+  state: RootState;
+  rejectValue: {
+    errorMsg: string;
+  };
+}
 //初期値
 const initialState: UserState = {
   value: null,
   status: "idle",
+  errorMsg: null,
 };
 
 //ログイン
-export const fetchUserDataAsync = createAsyncThunk<
-  UserDataType | null,
-  { uid: string },
-  any
->("user/fetchUserData", async ({ uid }) => {
+export const loginAsync = createAsyncThunk<
+  undefined,
+  { email: string; password: string },
+  ThunkConfig
+>("user/login", async ({ email, password }, { rejectWithValue, dispatch }) => {
   try {
-    const userData = await fetchUserData(uid);
-    if (userData) {
-      return userData;
-    } else {
-      throw new Error("サーバーへの接続に失敗しました");
-    }
+    await login(email, password);
+    dispatch(unSetErrorMsg());
   } catch (e) {
-    alert(e.message);
+    if (e) {
+      return rejectWithValue({ errorMsg: e.message });
+    }
+  }
+});
+
+//DBからユーザー情報の取得
+export const fetchUserDataAsync = createAsyncThunk<
+  UserDataType,
+  { uid: string },
+  ThunkConfig
+>("user/fetchUserData", async ({ uid }, { rejectWithValue, dispatch }) => {
+  try {
+    let userData = await fetchUserData(uid);
+    dispatch(unSetErrorMsg());
+    return userData;
+  } catch (e) {
     logout();
-    return null;
+    return rejectWithValue({ errorMsg: e.message });
   }
 });
 
 //新規登録
 export const registerAsync = createAsyncThunk<
-  UserDataType | null,
-  RegisterType
->("user/register", async ({ username, email, password, prefecture }) => {
-  try {
-    let server = await axios
-      .get(`${SERVER_URI + USERS_TABLE_URI}`)
-      .then((res) => {
-        return res;
-      });
-    if (server.data.status !== "OK") {
-      throw new Error("サーバーへの接続に失敗しました");
-    } else {
-      const userData = await register(
-        email!,
-        password!,
-        username!,
-        prefecture!
-      );
-      if (userData !== "userexist" && userData !== null) {
-        return userData;
-      } else if (userData === "userexist") {
-        throw new Error("すでに登録があります");
-      } else {
-        throw new Error("登録データがありません");
-      }
+  UserDataType,
+  RegisterType,
+  ThunkConfig
+>(
+  "user/register",
+  async (
+    { username, email, password, prefecture },
+    { rejectWithValue, dispatch }
+  ) => {
+    try {
+      await connectionTest();
+      let uid = await register(email!, password!);
+      let userData = await registerUserData(uid, username!, prefecture!);
+      dispatch(unSetErrorMsg());
+      return userData;
+    } catch (e) {
+      return rejectWithValue({ errorMsg: e.message });
     }
-  } catch (e) {
-    alert(e.message);
-    return null;
   }
-});
+);
 
 //ユーザー情報更新処理
 export const updateUserAsync = createAsyncThunk<
-  UserDataType | null,
-  UserDataType
->("user/update", async ({ _id, uid, username, prefecture }) => {
-  try {
-    const userData = await updateUserData(_id!, uid!, username!, prefecture!);
-    if (userData) {
+  UserDataType,
+  UserDataType,
+  ThunkConfig
+>(
+  "user/update",
+  async ({ _id, uid, username, prefecture }, { rejectWithValue, dispatch }) => {
+    try {
+      let userData = await updateUserData(_id!, uid!, username!, prefecture!);
+      dispatch(unSetErrorMsg());
       return userData;
-    } else {
-      throw new Error("サーバーへの接続に失敗しました");
+    } catch (e) {
+      return rejectWithValue({ errorMsg: e.message });
     }
-  } catch (e) {
-    alert(e.message);
-    return null;
   }
-});
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -112,25 +122,57 @@ export const userSlice = createSlice({
     unSetUser: (state) => {
       return (state = initialState);
     },
+    unSetErrorMsg: (state) => {
+      state.errorMsg = null;
+      return state;
+    },
   },
   //　非同期ありReducer
   extraReducers: (builder) => {
+    //ログイン
+    builder.addCase(loginAsync.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(loginAsync.fulfilled, (state) => {
+      state.status = "loading";
+      state.errorMsg = null;
+    });
+    builder.addCase(loginAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
+      }
+    });
+    //ユーザーデータ取得
     builder.addCase(fetchUserDataAsync.pending, (state) => {
       state.status = "loading";
     });
     builder.addCase(fetchUserDataAsync.fulfilled, (state, action) => {
       state.status = "idle";
+      state.errorMsg = null;
       state.value = action.payload;
     });
+    builder.addCase(fetchUserDataAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
+      }
+    });
+    //新規登録
     builder.addCase(registerAsync.pending, (state) => {
       state.status = "loading";
-      console.log(state.value);
     });
     builder.addCase(registerAsync.fulfilled, (state, action) => {
       state.status = "idle";
       state.value = action.payload;
-      console.log(state.value);
     });
+    builder.addCase(registerAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
+      }
+    });
+    //ユーザー情報更新
     builder.addCase(updateUserAsync.pending, (state) => {
       state.status = "loading";
     });
@@ -138,14 +180,21 @@ export const userSlice = createSlice({
       state.status = "idle";
       state.value = action.payload;
     });
+    builder.addCase(updateUserAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
+      }
+    });
   },
 });
 
-export const { unSetUser } = userSlice.actions;
+export const { unSetUser, unSetErrorMsg } = userSlice.actions;
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectUser = (state: RootState) => state.user.value;
 export const selectUid = (state: RootState) => state.user.value?.uid;
 export const selectUserStatus = (state: RootState) => state.user.status;
+export const selectUserErrorMsg = (state: RootState) => state.user.errorMsg;
 
 export default userSlice.reducer;

@@ -13,7 +13,10 @@ import {
 } from "@material-ui/core";
 import { prefectures } from "../common/prefecture";
 import { FormLayout } from "../components/organisms";
-import { selectThread } from "../features/thread/threadSlice";
+import {
+  selectThread,
+  selectThreadErrorMsg,
+} from "../features/thread/threadSlice";
 import { selectUid } from "../features/user/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,6 +52,7 @@ const Threads: FC = () => {
   const [prefectureToRefineList, setPrefectureToRefineList] =
     useState<string>("");
   const uid = useAppSelector(selectUid);
+  const errorMsg = useAppSelector(selectThreadErrorMsg);
 
   const refinedThreadsData = useMemo(() => {
     if (threadsData) {
@@ -76,23 +80,27 @@ const Threads: FC = () => {
         <Typography align="center" variant="h5">
           コロナ関連情報掲示板
         </Typography>
-        <div style={{ textAlign: "center", marginBottom: 20 }}>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">都道府県</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={prefectureToRefineList}
-              onChange={handleChange}
-            >
-              {getPrefectureListOfMenuItem()}
-            </Select>
-          </FormControl>
-        </div>
-        {refinedThreadsData && (
-          <CommentList label={"投稿一覧"} rows={refinedThreadsData} />
+        {errorMsg ? (
+          <p style={{ color: "red" }}>{errorMsg}</p>
+        ) : (
+          <div style={{ textAlign: "center", marginBottom: 20 }}>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">都道府県</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={prefectureToRefineList}
+                onChange={handleChange}
+              >
+                {getPrefectureListOfMenuItem()}
+              </Select>
+            </FormControl>
+            {refinedThreadsData && (
+              <CommentList label={"投稿一覧"} rows={refinedThreadsData} />
+            )}
+            {uid && <FormLayout type="createcomment" />}
+          </div>
         )}
-        {uid && <FormLayout type="createcomment" />}
       </Inner>
     </>
   );

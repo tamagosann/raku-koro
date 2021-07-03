@@ -6,15 +6,18 @@ import { UserNameInput } from "../components/atoms/UserNameInput";
 import { EmailInput } from "../components/atoms/EmailInput";
 import { PasswordInput } from "../components/atoms/PasswordInput";
 import { PrimaryButton } from "../components/UIKit";
-import { registerAsync } from "../features/user/userSlice";
+import { registerAsync, selectUser,selectUserErrorMsg } from "../features/user/userSlice";
 import { RegisterType } from "../features/user/userSlice";
 import { PrefectureSelectBox } from "../components/atoms/PrefectureSelectBox";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Inner } from "../components/inner";
+import { useAppSelector } from "../app/hooks";
 
 const Register: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const errorMsg = useAppSelector(selectUserErrorMsg);
+  const user = useAppSelector(selectUser);
   const {
     control,
     handleSubmit,
@@ -28,14 +31,20 @@ const Register: FC = () => {
       prefecture: "東京都",
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      history.push("/");
+    }
+  }, [user, history]);
   const doRegister: SubmitHandler<RegisterType> = (data) => {
-    dispatch(registerAsync(data))
-    history.push("/");
+    dispatch(registerAsync(data));
   };
   return (
     <Inner>
       <Box mt={3} textAlign="center">
         <h2>新規登録</h2>
+        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         <form onSubmit={handleSubmit(doRegister)}>
           <Box mt={3} textAlign="center">
             <UserNameInput control={control} error={errors.username!} />
