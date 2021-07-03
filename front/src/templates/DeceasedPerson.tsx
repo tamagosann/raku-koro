@@ -47,8 +47,6 @@ const DeceasedPerson: FC = () => {
 
   return (
     <Inner>
-      <OrangeButton label={"累計"} onClick={changeToggle} />
-      <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ? 
       <>
         <TypographyTitle
@@ -57,6 +55,8 @@ const DeceasedPerson: FC = () => {
         >
           死亡者数推移（累計）
         </TypographyTitle>
+        <OrangeButton label={"累計"} onClick={changeToggle} />
+        <OrangeButton label={"日別"} onClick={changeDay} />
         <AreaReChart 
           data={dethPerson}
           xDataKey={"date"}
@@ -72,6 +72,8 @@ const DeceasedPerson: FC = () => {
         >
           死亡者数推移（日別）
         </TypographyTitle>
+        <OrangeButton label={"累計"} onClick={changeToggle} />
+        <OrangeButton label={"日別"} onClick={changeDay} />
         <LineReChart 
           data={dayDethPerson}
           xDataKey={"date"}
