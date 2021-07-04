@@ -39,7 +39,6 @@ export const PrefectureDailyDead: FC = () => {
   const targetPrefecture = prefecture_dead.data.filter(
     (element) => element.pref_code === Number(prefecture)
   );
-  console.log(targetPrefecture);
   
 
   return (
