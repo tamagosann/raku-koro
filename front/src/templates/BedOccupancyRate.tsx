@@ -105,7 +105,7 @@ export const BedOccupancyRate: FC = () => {
           </div>
           <div>
             <a
-              href="https://www.mhlw.go.jp/stf/seisakunitsuite/newpage_00023.html/"
+              href="https://www.mhlw.go.jp/stf/seisakunitsuite/newpage_00023.html"
               target="_blank"
               rel="noopener noreferrer"
             >
