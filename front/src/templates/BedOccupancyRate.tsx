@@ -1,4 +1,4 @@
-import React,{FC} from 'react';
+import React, { FC } from 'react';
 import { useAppSelector } from '../app/hooks';
 import Inner from '../components/inner/Inner';
 import { TypographyTitle } from '../components/atoms';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export const BedOccupancyRate:FC = () => {
+export const BedOccupancyRate: FC = () => {
   const classes = useStyles();
   const BedOccupancyRates = useAppSelector(selectBedOccupancyRate);
 
@@ -98,16 +98,16 @@ export const BedOccupancyRate:FC = () => {
             <a
               href="https://www.stopcovid19.jp/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
             >
               療養状況等及び入院患者受入病床数等に関する調査についてのJSONデータ情報提供:新型コロナウイルス対策ダッシュボード
             </a>
           </div>
           <div>
             <a
-              href="https://www.mhlw.go.jp/stf/seisakunitsuite/newpage_00023.html/"
+              href="https://www.mhlw.go.jp/stf/seisakunitsuite/newpage_00023.html"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
             >
               療養状況等及び入院患者受入病床数等に関する調査についての元データ情報提供:厚生労働省
             </a>

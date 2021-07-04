@@ -27,7 +27,7 @@ const AreaReChart: FC<Props> = ({ data, xDataKey, areaDataKey, areaName }) => {
     <ResponsiveContainer width="100%" height="100%" minHeight={400}>
     <AreaChart data={data}>
       <XAxis dataKey={xDataKey} tick={{ fontSize: '.6rem' }}/>
-      <YAxis />
+      <YAxis tick={{ fontSize: '.6rem' }}/>
       <Tooltip />
       <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
       <Legend verticalAlign="top" stroke="#fd7e00"/>
