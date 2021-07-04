@@ -53,8 +53,6 @@ const InfectedPerson: FC = () => {
 
   return (
     <Inner>
-      <OrangeButton label={"累計"} onClick={changeToggle} />
-      <OrangeButton label={"日別"} onClick={changeDay} />
       {toggle ?
       <>
         <TypographyTitle
@@ -63,6 +61,8 @@ const InfectedPerson: FC = () => {
         >
           感染者数推移（累計）
         </TypographyTitle>
+        <OrangeButton label={"累計"} onClick={changeToggle} />
+        <OrangeButton label={"日別"} onClick={changeDay} />
         <AreaReChart 
           data={cumulativeInfectedPerson}
           xDataKey={"date"}
@@ -78,6 +78,8 @@ const InfectedPerson: FC = () => {
         >
           感染者数推移（日別）
         </TypographyTitle>
+        <OrangeButton label={"累計"} onClick={changeToggle} />
+        <OrangeButton label={"日別"} onClick={changeDay} />
         <LineReChart 
           data={dayInfectedPerson}
           xDataKey={"date"}
