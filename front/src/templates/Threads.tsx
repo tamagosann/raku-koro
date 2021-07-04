@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Inner } from "../components/inner";
 import { CommentList } from "../components/commentList";
 import { Data } from "../components/commentList/CommentList";
@@ -16,6 +17,7 @@ import { FormLayout } from "../components/organisms";
 import {
   selectThread,
   selectThreadErrorMsg,
+  unSetThreadErrorMsg,
 } from "../features/thread/threadSlice";
 import { selectUid } from "../features/user/userSlice";
 
@@ -53,6 +55,7 @@ const Threads: FC = () => {
     useState<string>("");
   const uid = useAppSelector(selectUid);
   const errorMsg = useAppSelector(selectThreadErrorMsg);
+  const dispatch = useDispatch();
 
   const refinedThreadsData = useMemo(() => {
     if (threadsData) {
@@ -72,7 +75,10 @@ const Threads: FC = () => {
 
   useEffect(() => {
     setPrefectureToRefineList("全て");
-  }, []);
+    return () => {
+      dispatch(unSetThreadErrorMsg());
+    };
+  }, [dispatch]);
 
   return (
     <>

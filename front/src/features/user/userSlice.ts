@@ -49,7 +49,7 @@ export const loginAsync = createAsyncThunk<
 >("user/login", async ({ email, password }, { rejectWithValue, dispatch }) => {
   try {
     await login(email, password);
-    dispatch(unSetErrorMsg());
+    dispatch(unSetUserErrorMsg());
   } catch (e) {
     if (e) {
       return rejectWithValue({ errorMsg: e.message });
@@ -65,7 +65,7 @@ export const fetchUserDataAsync = createAsyncThunk<
 >("user/fetchUserData", async ({ uid }, { rejectWithValue, dispatch }) => {
   try {
     let userData = await fetchUserData(uid);
-    dispatch(unSetErrorMsg());
+    dispatch(unSetUserErrorMsg());
     return userData;
   } catch (e) {
     logout();
@@ -88,7 +88,7 @@ export const registerAsync = createAsyncThunk<
       await connectionTest();
       let uid = await register(email!, password!);
       let userData = await registerUserData(uid, username!, prefecture!);
-      dispatch(unSetErrorMsg());
+      dispatch(unSetUserErrorMsg());
       return userData;
     } catch (e) {
       return rejectWithValue({ errorMsg: e.message });
@@ -106,7 +106,7 @@ export const updateUserAsync = createAsyncThunk<
   async ({ _id, uid, username, prefecture }, { rejectWithValue, dispatch }) => {
     try {
       let userData = await updateUserData(_id!, uid!, username!, prefecture!);
-      dispatch(unSetErrorMsg());
+      dispatch(unSetUserErrorMsg());
       return userData;
     } catch (e) {
       return rejectWithValue({ errorMsg: e.message });
@@ -122,7 +122,7 @@ export const userSlice = createSlice({
     unSetUser: (state) => {
       return (state = initialState);
     },
-    unSetErrorMsg: (state) => {
+    unSetUserErrorMsg: (state) => {
       state.errorMsg = null;
       return state;
     },
@@ -189,7 +189,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { unSetUser, unSetErrorMsg } = userSlice.actions;
+export const { unSetUser, unSetUserErrorMsg } = userSlice.actions;
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectUser = (state: RootState) => state.user.value;

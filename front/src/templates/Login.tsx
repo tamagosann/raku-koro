@@ -1,6 +1,5 @@
-import { FC,useEffect } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { FC, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box } from "@material-ui/core";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -8,9 +7,13 @@ import { EmailInput } from "../components/atoms/EmailInput";
 import { PasswordInput } from "../components/atoms/PasswordInput";
 import PrimaryButton from "../components/UIKit/PrimaryButton";
 import { Inner } from "../components/inner";
-// import { showAuthErrorMsg } from "../common/functions";
 import { useAppSelector } from "../app/hooks";
-import { loginAsync, selectUserErrorMsg,selectUser } from "../features/user/userSlice";
+import {
+  loginAsync,
+  selectUid,
+  selectUserErrorMsg,
+  unSetUserErrorMsg,
+} from "../features/user/userSlice";
 
 interface LoginInfoType {
   email?: string;
@@ -19,9 +22,9 @@ interface LoginInfoType {
 
 const Login: FC = () => {
   const errorMsg = useAppSelector(selectUserErrorMsg);
-  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useAppSelector(selectUser)
+  const uid = useAppSelector(selectUid);
+  const history = useHistory();
   const {
     control,
     handleSubmit,
@@ -34,11 +37,14 @@ const Login: FC = () => {
     },
   });
   useEffect(() => {
-    if (user) {
-      history.push("/")
+    if (uid) {
+      history.push("/");
     }
-  }, [user, history])
-  
+    return () => {
+      dispatch(unSetUserErrorMsg());
+    };
+  }, [uid, history, dispatch]);
+
   const doLogin: SubmitHandler<LoginInfoType> = (data) => {
     dispatch(loginAsync({ email: data.email!, password: data.password! }));
   };

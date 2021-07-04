@@ -40,9 +40,10 @@ export const fetchThreadAsync = createAsyncThunk<
   ThreadDataType[],
   {},
   ThunkConfig
->("thread/fetchdata", async ({}, { rejectWithValue }) => {
+>("thread/fetchdata", async ({}, { rejectWithValue, dispatch }) => {
   try {
     const thread = await fetchThread();
+    dispatch(unSetThreadErrorMsg());
     return thread;
   } catch (e) {
     return rejectWithValue({ errorMsg: e.message });
@@ -54,9 +55,10 @@ export const createThreadAsync = createAsyncThunk<
   ThreadDataType,
   ThreadDataType,
   ThunkConfig
->("thread/create", async (data, { rejectWithValue }) => {
+>("thread/create", async (data, { rejectWithValue,dispatch }) => {
   try {
     const threadData = await createThread(data);
+    dispatch(unSetThreadErrorMsg());
     return threadData;
   } catch (e) {
     return rejectWithValue({ errorMsg: e.message });
@@ -68,9 +70,10 @@ export const updateThreadAsync = createAsyncThunk<
   ThreadDataType,
   ThreadDataType,
   ThunkConfig
->("thread/update", async (data, { rejectWithValue }) => {
+>("thread/update", async (data, { rejectWithValue,dispatch }) => {
   try {
     const threadData = await updateThread(data);
+    dispatch(unSetThreadErrorMsg());
     return threadData;
   } catch (e) {
     return rejectWithValue({ errorMsg: e.message });
@@ -80,9 +83,10 @@ export const updateThreadAsync = createAsyncThunk<
 //投稿内容削除処理
 export const deleteThreadAsync = createAsyncThunk<string, string, ThunkConfig>(
   "thread/delete",
-  async (_id, { rejectWithValue }) => {
+  async (_id, { rejectWithValue,dispatch }) => {
     try {
       await deleteThread(_id);
+      dispatch(unSetThreadErrorMsg());
       return _id;
     } catch (e) {
       return rejectWithValue({ errorMsg: e.message });
@@ -97,6 +101,10 @@ export const threadSlice = createSlice({
   reducers: {
     unSetThread: (state) => {
       return (state = initialState);
+    },
+    unSetThreadErrorMsg: (state) => {
+      state.errorMsg = null;
+      return state;
     },
   },
   //　非同期処理を行うreducerはこっち　fulfilledを使う
@@ -175,7 +183,7 @@ export const threadSlice = createSlice({
   },
 });
 
-export const { unSetThread } = threadSlice.actions;
+export const { unSetThread, unSetThreadErrorMsg } = threadSlice.actions;
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectThread = (state: RootState) => state.thread.value;

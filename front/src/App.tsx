@@ -65,6 +65,7 @@ const App = () => {
       if (user) {
         if (!userData) {
           dispatch(fetchUserDataAsync({ uid: user.uid }));
+          dispatch(fetchThreadAsync({}));
         }
       } else {
         dispatch(unSetUser());
