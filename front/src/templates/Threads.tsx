@@ -1,7 +1,6 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { Inner } from "../components/inner";
 import { CommentList } from "../components/commentList";
-import { Data } from "../components/commentList/CommentList";
 import { useAppSelector } from "../app/hooks";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
@@ -28,17 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const getPrefectureListOfMenuItem = (): any[] => {
-  //MenuItemの型がよくわからないためanyで回避by秋山
-  const prefectureList: any[] = [];
+const getPrefectureListOfMenuItem = (): string[] => {
+  const prefectureList: string[] = [];
   const _prefectures = prefectures;
-  prefectureList.push(<MenuItem value={"全て"}>全て</MenuItem>);
+  prefectureList.push("全て");
   for (let i = 0; i < _prefectures.length; i++) {
-    prefectureList.push(
-      <MenuItem value={_prefectures[i].prefName}>
-        {_prefectures[i].prefName}
-      </MenuItem>
-    );
+    prefectureList.push(_prefectures[i].prefName);
   }
   return prefectureList;
 };
@@ -47,28 +41,27 @@ const Threads: FC = () => {
   const classes = useStyles();
   const threadsData = useAppSelector(selectThread);
   const [prefectureToRefineList, setPrefectureToRefineList] =
-    useState<string>("");
+    useState<string>("全て");
   const uid = useAppSelector(selectUid);
+  const prefectureList: string[] = getPrefectureListOfMenuItem();
 
   const refinedThreadsData = useMemo(() => {
     if (threadsData) {
       if (prefectureToRefineList === "全て") {
-        return threadsData;
+        return threadsData
+      } else {
+        const filteredPrefectureData = threadsData.filter((thread) => {
+          return thread.prefecture === prefectureToRefineList;
+        });
+        return filteredPrefectureData
       }
-      const filteredPrefectureData = threadsData.filter((thread) => {
-        return thread.prefecture === prefectureToRefineList;
-      });
-      return filteredPrefectureData;
     }
   }, [prefectureToRefineList, threadsData]);
+  console.log(refinedThreadsData)
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPrefectureToRefineList(event.target.value as string);
   };
-
-  useEffect(() => {
-    setPrefectureToRefineList("全て");
-  }, []);
 
   return (
     <>
@@ -85,7 +78,9 @@ const Threads: FC = () => {
               value={prefectureToRefineList}
               onChange={handleChange}
             >
-              {getPrefectureListOfMenuItem()}
+              {prefectureList.map((prefecture) => {
+                return <MenuItem key={prefecture} value={prefecture}>{prefecture}</MenuItem>;
+              })}
             </Select>
           </FormControl>
         </div>

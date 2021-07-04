@@ -1,7 +1,6 @@
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
-  IconButton,
   Paper,
   Typography,
   TableSortLabel,
@@ -13,17 +12,11 @@ import {
   TableBody,
   Table,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { useHistory } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
-import { selectUid } from "../../features/user/userSlice";
-import {
-  deleteThreadAsync,
-  ThreadDataType,
-} from "../../features/thread/threadSlice";
-import { useDispatch } from "react-redux";
+import CommentListRow from '../molecules/CommentListRow'
+import { getComparator } from '../../common/functions'
+import { ThreadDataType } from "../../features/thread/threadSlice";
 
-export interface Data {
+export interface CommentListEachDataType {
   _id: string;
   uid: string;
   date: string;
@@ -33,29 +26,7 @@ export interface Data {
   delete: string;
 }
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
+export type CommentListOrder = "asc" | "desc";
 
 function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
@@ -69,7 +40,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof Data;
+  id: keyof CommentListEachDataType;
   label: string;
   numeric: boolean;
 }
@@ -101,9 +72,9 @@ interface EnhancedTableProps {
   classes: ReturnType<typeof useStyles>;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof Data
+    property: keyof CommentListEachDataType
   ) => void;
-  order: Order;
+  order: CommentListOrder;
   orderBy: string;
   rowCount: number;
 }
@@ -111,7 +82,7 @@ interface EnhancedTableProps {
 function EnhancedTableHead(props: EnhancedTableProps) {
   const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler =
-    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof CommentListEachDataType) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -173,40 +144,28 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type CommentListProps = {
+export type CommentListProps = {
   label: string;
   rows: ThreadDataType[];
 };
 
 const CommentList: FC<CommentListProps> = ({ label, rows }) => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("date");
+  const [order, setOrder] = React.useState<CommentListOrder>("desc");
+  const [orderBy, setOrderBy] = React.useState<keyof CommentListEachDataType>("date");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const history = useHistory();
-  const uid = useAppSelector(selectUid);
-  const dispatch = useDispatch();
 
   //ソートボタンが押された時の処理
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data
+    property: keyof CommentListEachDataType
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
     setPage(0);
   };
-
-  //rowがクリックされた時の処理
-  //ここに編集ページへのルーティングを書く
-  const handleClick = useCallback(
-    (_id: string): void => {
-      history.push(`/threads/${_id}`);
-    },
-    [history]
-  );
 
   //ページネーション
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -220,17 +179,6 @@ const CommentList: FC<CommentListProps> = ({ label, rows }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const deleteThreadClicked = useCallback(
-    (e: React.MouseEvent<SVGSVGElement, MouseEvent>, _id: string): void => {
-      e.stopPropagation();
-      if (!window.confirm("本当に消去しますか？")) {
-        return;
-      }
-      dispatch(deleteThreadAsync(_id));
-    },
-    []
-  );
 
   return (
     <div className={classes.root}>
@@ -261,28 +209,9 @@ const CommentList: FC<CommentListProps> = ({ label, rows }) => {
               <TableBody>
                 {stableSort<any>(rows, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
+                  .map((row: ThreadDataType) => {
                     return (
-                      <TableRow
-                        hover
-                        onClick={() => handleClick(row._id)}
-                        tabIndex={-1}
-                        key={row._id}
-                      >
-                        <TableCell align="right">{row.date}</TableCell>
-                        <TableCell align="right">{row.prefecture}</TableCell>
-                        <TableCell align="right">{row.username}</TableCell>
-                        <TableCell align="right">{row.comment}</TableCell>
-                        <TableCell align="right">
-                          {uid === row.uid ? (
-                            <IconButton>
-                              <DeleteIcon
-                                onClick={(e) => deleteThreadClicked(e, row._id)}
-                              />
-                            </IconButton>
-                          ) : null}
-                        </TableCell>
-                      </TableRow>
+                      <CommentListRow key={row._id} row={row} />
                     );
                   })}
               </TableBody>

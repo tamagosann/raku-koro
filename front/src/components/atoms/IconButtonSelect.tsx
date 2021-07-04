@@ -19,6 +19,7 @@ import MultilineChartIcon from "@material-ui/icons/MultilineChart";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import InfoIcon from '@material-ui/icons/Info';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import DeleteIcon from '@material-ui/icons/Delete'
 
 export type icon =
   | "Menu"
