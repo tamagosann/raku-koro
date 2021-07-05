@@ -1,13 +1,19 @@
-import { FC, useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
-import { Container, Box } from "@material-ui/core";
+import { FC, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Box } from "@material-ui/core";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { login } from "../features/user/userAPI";
 import { EmailInput } from "../components/atoms/EmailInput";
 import { PasswordInput } from "../components/atoms/PasswordInput";
 import PrimaryButton from "../components/UIKit/PrimaryButton";
 import { Inner } from "../components/inner";
+import { useAppSelector } from "../app/hooks";
+import {
+  loginAsync,
+  selectUid,
+  selectUserErrorMsg,
+  unSetUserErrorMsg,
+} from "../features/user/userSlice";
 
 interface LoginInfoType {
   email?: string;
@@ -15,13 +21,14 @@ interface LoginInfoType {
 }
 
 const Login: FC = () => {
-  const [error, setError] = useState("");
+  const errorMsg = useAppSelector(selectUserErrorMsg);
+  const dispatch = useDispatch();
+  const uid = useAppSelector(selectUid);
   const history = useHistory();
   const {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<LoginInfoType>({
     mode: "onBlur",
     defaultValues: {
@@ -29,25 +36,23 @@ const Login: FC = () => {
       password: "",
     },
   });
+  useEffect(() => {
+    if (uid) {
+      history.push("/");
+    }
+    return () => {
+      dispatch(unSetUserErrorMsg());
+    };
+  }, [uid, history, dispatch]);
 
   const doLogin: SubmitHandler<LoginInfoType> = (data) => {
-    login(data.email!, data.password!)
-      .then(() => {
-        history.push("/");
-      })
-      .catch((error) => {
-        setError(error);
-        reset({
-          email: "",
-          password: "",
-        });
-      });
+    dispatch(loginAsync({ email: data.email!, password: data.password! }));
   };
   return (
     <Inner>
       <Box mt={3} textAlign="center">
         <h2>ログイン</h2>
-        {error !== "" && <span style={{ color: "red" }}>{error}</span>}
+        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         <form onSubmit={handleSubmit(doLogin)}>
           <Box mt={3}>
             <EmailInput control={control} error={errors.email!} />

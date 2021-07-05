@@ -17,7 +17,7 @@ export const PasswordInput: FC<Props> = ({ control, error }) => {
           required: true,
           minLength: 8,
           maxLength: 10,
-          // pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])$/,
+          pattern: /^[a-zA-Z0-9!#$%&()*+,.:;=?@[\]^_{}-]+$/,
         }}
         render={({ field }) => (
           <TextField label="パスワード" type="password" {...field} />
@@ -30,8 +30,8 @@ export const PasswordInput: FC<Props> = ({ control, error }) => {
             "パスワードは8文字以上10文字以内で入力して下さい"}
           {error.type === "maxLength" &&
             "パスワードは8文字以上10文字以内で入力して下さい"}
-          {/* {errors.password?.type === "pattern" &&
-                "大文字小文字半角英数字のみ使用可能です"} */}
+          {error.type === "pattern" &&
+            "パスワードは半角英数字と記号「!@#$%^&*()_+-=[]{};:?,.」のみ使用可能です"}
         </p>
       )}
     </>

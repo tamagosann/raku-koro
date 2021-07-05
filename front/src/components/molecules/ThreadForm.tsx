@@ -11,6 +11,7 @@ import { PrimaryButton } from "../UIKit";
 import { TextFieldInput } from "../atoms/TextFieldInput";
 import {
   selectThread,
+  selectThreadErrorMsg,
   ThreadDataType,
 } from "../../features/thread/threadSlice";
 import { updateThreadAsync } from "../../features/thread/threadSlice";
@@ -21,6 +22,7 @@ const ThreadForm = () => {
   const history = useHistory();
   const user = useAppSelector(selectUser);
   const thread = useAppSelector(selectThread);
+  const errorMsg = useAppSelector(selectThreadErrorMsg);
   const [disable, setDisable] = useState(true);
   const { thread_id }: { thread_id: string } = useParams();
 
@@ -56,7 +58,7 @@ const ThreadForm = () => {
         }
       });
     }
-  }, [thread, user]);
+  }, [thread, user,thread_id]);
 
   const doUpdate: SubmitHandler<ThreadDataType> = (data) => {
     let date = new Date();
@@ -68,6 +70,7 @@ const ThreadForm = () => {
     <Container maxWidth="sm" style={{ padding: "5px 0 25px 0" }}>
       <Box mt={3} textAlign="center">
         <h2>投稿内容</h2>
+        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         <form onSubmit={handleSubmit(doUpdate)}>
           <Box mt={3} textAlign="center">
             <UserNameInput

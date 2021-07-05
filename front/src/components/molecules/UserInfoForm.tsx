@@ -1,18 +1,21 @@
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Container, Box } from "@material-ui/core";
 import { UserNameInput } from "../atoms/UserNameInput";
 import { PrefectureSelectBox } from "../atoms/PrefectureSelectBox";
-import { UserDataType } from "../../features/user/userSlice";
+import {
+  selectUserErrorMsg,
+  UserDataType,
+  selectUser,
+  updateUserAsync,
+} from "../../features/user/userSlice";
 import { useAppSelector } from "../../app/hooks";
-import { selectUser, updateUserAsync } from "../../features/user/userSlice";
 import { PrimaryButton } from "../UIKit";
 
 const UserInfoForm = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
+  const errorMsg = useAppSelector(selectUserErrorMsg);
   const {
     control,
     handleSubmit,
@@ -37,6 +40,7 @@ const UserInfoForm = () => {
       {user !== null && (
         <Box mt={3} textAlign="center">
           <h2>ユーザー情報</h2>
+          {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
           <form onSubmit={handleSubmit(doUpdate)}>
             <Box mt={3} textAlign="center">
               <UserNameInput control={control} error={errors.username!} />
