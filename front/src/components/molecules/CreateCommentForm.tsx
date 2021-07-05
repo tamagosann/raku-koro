@@ -8,13 +8,14 @@ import { selectUser } from "../../features/user/userSlice";
 import { useAppSelector } from "../../app/hooks";
 import { PrimaryButton } from "../UIKit";
 import { TextFieldInput } from "../atoms/TextFieldInput";
-import { ThreadDataType } from "../../features/thread/threadSlice";
+import { selectThreadErrorMsg, ThreadDataType } from "../../features/thread/threadSlice";
 import { createThreadAsync } from "../../features/thread/threadSlice";
 import { datetimeToString } from "../../common/functions";
 
 const CreateCommentForm = () => {
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
+  const errorMsg = useAppSelector(selectThreadErrorMsg)
   const {
     control,
     handleSubmit,
@@ -49,6 +50,7 @@ const CreateCommentForm = () => {
   return (
     <Container maxWidth="sm" style={{ padding: "5px 0 25px 0" }}>
       <Box mt={3} textAlign="center">
+        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         <form onSubmit={handleSubmit(doCreate)}>
           <Box mt={3} textAlign="center">
             <UserNameInput control={control} error={errors.username!} />

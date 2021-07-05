@@ -1,4 +1,5 @@
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Inner } from "../components/inner";
 import { CommentList } from "../components/commentList";
 import { useAppSelector } from "../app/hooks";
@@ -12,7 +13,11 @@ import {
 } from "@material-ui/core";
 import { prefectures } from "../common/prefecture";
 import { FormLayout } from "../components/organisms";
-import { selectThread } from "../features/thread/threadSlice";
+import {
+  selectThread,
+  selectThreadErrorMsg,
+  unSetThreadErrorMsg,
+} from "../features/thread/threadSlice";
 import { selectUid } from "../features/user/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -43,6 +48,8 @@ const Threads: FC = () => {
   const [prefectureToRefineList, setPrefectureToRefineList] =
     useState<string>("全て");
   const uid = useAppSelector(selectUid);
+  const errorMsg = useAppSelector(selectThreadErrorMsg);
+  const dispatch = useDispatch();
   const prefectureList: string[] = getPrefectureListOfMenuItem();
 
   const refinedThreadsData = useMemo(() => {
@@ -63,31 +70,46 @@ const Threads: FC = () => {
     setPrefectureToRefineList(event.target.value as string);
   };
 
+  useEffect(() => {
+    setPrefectureToRefineList("全て");
+    return () => {
+      dispatch(unSetThreadErrorMsg());
+    };
+  }, [dispatch]);
+
   return (
     <>
       <Inner>
         <Typography align="center" variant="h5">
           コロナ関連情報掲示板
         </Typography>
-        <div style={{ textAlign: "center", marginBottom: 20 }}>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">都道府県</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={prefectureToRefineList}
-              onChange={handleChange}
-            >
-              {prefectureList.map((prefecture) => {
-                return <MenuItem key={prefecture} value={prefecture}>{prefecture}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
-        </div>
-        {refinedThreadsData && (
-          <CommentList label={"投稿一覧"} rows={refinedThreadsData} />
+        {errorMsg ? (
+          <p style={{ color: "red" }}>{errorMsg}</p>
+        ) : (
+          <div style={{ textAlign: "center", marginBottom: 20 }}>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">都道府県</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={prefectureToRefineList}
+                onChange={handleChange}
+              >
+                {prefectureList.map((prefecture) => {
+                  return (
+                    <MenuItem key={prefecture} value={prefecture}>
+                      {prefecture}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+            {refinedThreadsData && (
+              <CommentList label={"投稿一覧"} rows={refinedThreadsData} />
+            )}
+            {uid && <FormLayout type="createcomment" />}
+          </div>
         )}
-        {uid && <FormLayout type="createcomment" />}
       </Inner>
     </>
   );

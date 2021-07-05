@@ -45,7 +45,6 @@ import {
 import {
   fetchThreadAsync,
   selectThreadStatus,
-  unSetThread,
 } from "./features/thread/threadSlice";
 
 const App = () => {
@@ -66,14 +65,13 @@ const App = () => {
       if (user) {
         if (!userData) {
           dispatch(fetchUserDataAsync({ uid: user.uid }));
-          dispatch(fetchThreadAsync());
+          dispatch(fetchThreadAsync({}));
         }
       } else {
         dispatch(unSetUser());
-        history.push("/");
       }
     });
-    dispatch(fetchThreadAsync());
+    dispatch(fetchThreadAsync({}));
     dispatch(fetchDailyInfectionAsync());
     dispatch(fetchDailyDeadAsync());
     dispatch(fetchTotalCoronaAsync());

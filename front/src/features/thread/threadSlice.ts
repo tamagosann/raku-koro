@@ -6,6 +6,7 @@ import {
   createThread,
   deleteThread,
 } from "./threadAPI";
+import { translateErrorMsg } from "../../common/functions";
 
 export interface ThreadDataType {
   _id: string;
@@ -18,83 +19,77 @@ export interface ThreadDataType {
 export interface ThreadState {
   value: ThreadDataType[] | null;
   status: "idle" | "loading" | "failed";
+  errorMsg: string | null;
+}
+interface ThunkConfig {
+  state: RootState;
+  rejectValue: {
+    errorMsg: string;
+  };
 }
 
 //初期値
 const initialState: ThreadState = {
   value: [],
   status: "idle",
+  errorMsg: null,
 };
 
 //掲示板全ての取得処理
-export const fetchThreadAsync = createAsyncThunk<ThreadDataType[] | null>(
-  "thread/fetchdata",
-  async () => {
-    try {
-      const thread = await fetchThread();
-      if (thread) {
-        return thread;
-      } else {
-        throw new Error("サーバーへの接続に失敗しました");
-      }
-    } catch (e) {
-      alert(e.message);
-      return null;
-    }
+export const fetchThreadAsync = createAsyncThunk<
+  ThreadDataType[],
+  {},
+  ThunkConfig
+>("thread/fetchdata", async ({}, { rejectWithValue, dispatch }) => {
+  try {
+    const thread = await fetchThread();
+    dispatch(unSetThreadErrorMsg());
+    return thread;
+  } catch (e) {
+    return rejectWithValue({ errorMsg: e.message });
   }
-);
+});
 
 //新規投稿処理
 export const createThreadAsync = createAsyncThunk<
-  ThreadDataType | null,
-  ThreadDataType
->("thread/create", async (data) => {
+  ThreadDataType,
+  ThreadDataType,
+  ThunkConfig
+>("thread/create", async (data, { rejectWithValue,dispatch }) => {
   try {
     const threadData = await createThread(data);
-    if (threadData) {
-      return threadData;
-    } else {
-      throw new Error("サーバーへの接続に失敗しました");
-    }
+    dispatch(unSetThreadErrorMsg());
+    return threadData;
   } catch (e) {
-    alert(e.message);
-    return null;
+    return rejectWithValue({ errorMsg: e.message });
   }
 });
 
 //投稿内容更新処理
 export const updateThreadAsync = createAsyncThunk<
-  ThreadDataType | null,
-  ThreadDataType
->("thread/update", async (data) => {
+  ThreadDataType,
+  ThreadDataType,
+  ThunkConfig
+>("thread/update", async (data, { rejectWithValue,dispatch }) => {
   try {
     const threadData = await updateThread(data);
-    if (threadData) {
-      return threadData;
-    } else {
-      throw new Error("サーバーへの接続に失敗しました");
-    }
+    dispatch(unSetThreadErrorMsg());
+    return threadData;
   } catch (e) {
-    alert(e.message);
-    return null;
+    return rejectWithValue({ errorMsg: e.message });
   }
 });
 
 //投稿内容削除処理
-export const deleteThreadAsync = createAsyncThunk<string | null, string>(
+export const deleteThreadAsync = createAsyncThunk<string, string, ThunkConfig>(
   "thread/delete",
-  async (_id) => {
+  async (_id, { rejectWithValue,dispatch }) => {
     try {
-      const threadData = await deleteThread(_id);
-      if (threadData?._id === _id) {
-        console.log(threadData);
-        return _id;
-      } else {
-        throw new Error("サーバーへの接続に失敗しました");
-      }
+      await deleteThread(_id);
+      dispatch(unSetThreadErrorMsg());
+      return _id;
     } catch (e) {
-      alert(e.message);
-      return null;
+      return rejectWithValue({ errorMsg: e.message });
     }
   }
 );
@@ -107,16 +102,26 @@ export const threadSlice = createSlice({
     unSetThread: (state) => {
       return (state = initialState);
     },
+    unSetThreadErrorMsg: (state) => {
+      state.errorMsg = null;
+      return state;
+    },
   },
   //　非同期処理を行うreducerはこっち　fulfilledを使う
   extraReducers: (builder) => {
-    //取得
+    //掲示板データ取得
     builder.addCase(fetchThreadAsync.pending, (state) => {
       state.status = "loading";
     });
     builder.addCase(fetchThreadAsync.fulfilled, (state, action) => {
       state.status = "idle";
       state.value = action.payload;
+    });
+    builder.addCase(fetchThreadAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
+      }
     });
     //追加
     builder.addCase(createThreadAsync.pending, (state) => {
@@ -127,6 +132,12 @@ export const threadSlice = createSlice({
       if (state.value && action.payload) {
         let newState = [...state.value, action.payload];
         state.value = newState;
+      }
+    });
+    builder.addCase(createThreadAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
       }
     });
     //更新
@@ -146,6 +157,12 @@ export const threadSlice = createSlice({
         state.value = newState;
       }
     });
+    builder.addCase(updateThreadAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
+      }
+    });
     //削除
     builder.addCase(deleteThreadAsync.pending, (state) => {
       state.status = "loading";
@@ -157,13 +174,20 @@ export const threadSlice = createSlice({
         state.value = newState;
       }
     });
+    builder.addCase(deleteThreadAsync.rejected, (state, action) => {
+      state.status = "idle";
+      if (action.payload) {
+        state.errorMsg = translateErrorMsg(action.payload.errorMsg);
+      }
+    });
   },
 });
 
-export const { unSetThread } = threadSlice.actions;
+export const { unSetThread, unSetThreadErrorMsg } = threadSlice.actions;
 
 //useAppSelectorで呼び出したいデーターをここで定義
 export const selectThread = (state: RootState) => state.thread.value;
 export const selectThreadStatus = (state: RootState) => state.thread.status;
+export const selectThreadErrorMsg = (state: RootState) => state.thread.errorMsg;
 
 export default threadSlice.reducer;

@@ -1,20 +1,28 @@
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 import { Container, Box } from "@material-ui/core";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { UserNameInput } from "../components/atoms/UserNameInput";
 import { EmailInput } from "../components/atoms/EmailInput";
 import { PasswordInput } from "../components/atoms/PasswordInput";
 import { PrimaryButton } from "../components/UIKit";
-import { registerAsync } from "../features/user/userSlice";
+import {
+  registerAsync,
+  selectUid,
+  selectUserErrorMsg,
+  unSetUserErrorMsg,
+} from "../features/user/userSlice";
 import { RegisterType } from "../features/user/userSlice";
 import { PrefectureSelectBox } from "../components/atoms/PrefectureSelectBox";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Inner } from "../components/inner";
+import { useAppSelector } from "../app/hooks";
 
 const Register: FC = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
+  const errorMsg = useAppSelector(selectUserErrorMsg);
+  const uid = useAppSelector(selectUid);
+  const history = useHistory();
   const {
     control,
     handleSubmit,
@@ -28,14 +36,23 @@ const Register: FC = () => {
       prefecture: "東京都",
     },
   });
+
+  useEffect(() => {
+    if (uid) {
+      history.push("/");
+    }
+    return () => {
+      dispatch(unSetUserErrorMsg());
+    };
+  }, [uid, history, dispatch]);
   const doRegister: SubmitHandler<RegisterType> = (data) => {
     dispatch(registerAsync(data));
-    history.push("/");
   };
   return (
     <Inner>
       <Box mt={3} textAlign="center">
         <h2>新規登録</h2>
+        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         <form onSubmit={handleSubmit(doRegister)}>
           <Box mt={3} textAlign="center">
             <UserNameInput control={control} error={errors.username!} />

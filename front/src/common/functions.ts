@@ -17,6 +17,23 @@ export const datetimeToString = (date: Date): string => {
   );
 };
 
+export const translateErrorMsg = (error: string): string => {
+  if (0 <= error.indexOf("password")) {
+    return "パスワードが間違っています。";
+  } else if (0 <= error.indexOf("no user")) {
+    return "そのメールアドレスの登録はありません。";
+  } else if (0 <= error.indexOf("Network")) {
+    return "ネットワークエラー：管理者にお問い合わせください";
+  } else if (
+    0 <=
+    error.indexOf("The email address")
+  ) {
+    return "そのメールアドレスは既に登録されています。";
+  } else {
+    console.log(error);
+    return "エラーが発生しました。もう一度お試しください。";
+  }
+};
 
 ///////////////////////
 //ここからCommentList用//

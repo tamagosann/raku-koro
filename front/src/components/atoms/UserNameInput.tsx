@@ -14,7 +14,10 @@ export const UserNameInput: FC<Props> = ({ control, error, disabled }) => {
       <Controller
         name="username"
         control={control}
-        rules={{ required: true }}
+        rules={{
+          required: true,
+          pattern: /[^\s　]/,
+        }}
         render={({ field }) => (
           <TextField label="ユーザー名" disabled={disabled} {...field} />
         )}
@@ -22,6 +25,7 @@ export const UserNameInput: FC<Props> = ({ control, error, disabled }) => {
       {error !== undefined && (
         <p style={{ color: "red" }}>
           {error.type === "required" && "ユーザー名を入力してください"}
+          {error.type === "pattern" && "空白を含めないでください"}
         </p>
       )}
     </>
