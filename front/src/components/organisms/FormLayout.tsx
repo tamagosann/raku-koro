@@ -18,7 +18,7 @@ interface Props {
 const FormLayout: FC<Props> = ({ type }) => {
   const classes = useStyles();
   return (
-    <Container maxWidth={"sm"} component={Paper} className={classes.formlayout}>
+    <Container maxWidth={"md"} component={Paper} className={classes.formlayout}>
       {type === "userinfo" && <UserInfoForm />}
       {type === "threadinfo" && <ThreadForm />}
       {type === "createcomment" && <CreateCommentForm />}

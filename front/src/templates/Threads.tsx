@@ -55,16 +55,18 @@ const Threads: FC = () => {
   const refinedThreadsData = useMemo(() => {
     if (threadsData) {
       if (prefectureToRefineList === "全て") {
-        return threadsData
+        return threadsData;
       } else {
         const filteredPrefectureData = threadsData.filter((thread) => {
           return thread.prefecture === prefectureToRefineList;
         });
-        return filteredPrefectureData
+        return filteredPrefectureData;
       }
+    } else {
+      return [];
     }
   }, [prefectureToRefineList, threadsData]);
-  console.log(refinedThreadsData)
+  console.log(refinedThreadsData);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPrefectureToRefineList(event.target.value as string);
