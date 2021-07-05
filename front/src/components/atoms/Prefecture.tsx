@@ -52,7 +52,11 @@ export const Prefecture = ({ prefecture, setPrefecture }: Props) => {
       <FormControl
         className={classes.formControl + ' ' + classes.contentCenter}
       >
-        <InputLabel color="secondary" id="demo-simple-select-helper-label">
+        <InputLabel
+          data-testid="select-input"
+          color="secondary"
+          id="demo-simple-select-helper-label"
+        >
           都道府県
         </InputLabel>
         <Select
