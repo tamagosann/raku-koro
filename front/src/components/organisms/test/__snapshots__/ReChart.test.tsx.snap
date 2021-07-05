@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypographyTitleコンポーネント jest renderer test render correctly 1`] = `
+<div
+  className="recharts-responsive-container"
+  style={
+    Object {
+      "height": "100%",
+      "maxHeight": undefined,
+      "minHeight": 600,
+      "minWidth": undefined,
+      "width": "100%",
+    }
+  }
+/>
+`;

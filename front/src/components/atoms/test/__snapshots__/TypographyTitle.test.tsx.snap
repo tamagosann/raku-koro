@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypographyTitleコンポーネント jest renderer test render correctly 1`] = `
+<h1
+  className="MuiTypography-root testClass MuiTypography-h1 MuiTypography-alignCenter"
+  style={
+    Object {
+      "marginBottom": "40px",
+    }
+  }
+>
+  テスト
+</h1>
+`;
