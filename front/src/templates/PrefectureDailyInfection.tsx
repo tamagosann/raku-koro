@@ -39,7 +39,7 @@ const PrefectureDailyInfention: FC = () => {
   };
   const target_prefecture: PrefectureData[] =
     prefecture_daily_infection.data.filter(
-      (el: any) => el.pref_code == prefecture
+      (el: any) => el.pref_code === Number(prefecture)
     );
 
   useEffect(() => {
