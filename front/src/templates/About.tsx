@@ -2,6 +2,7 @@ import React from "react";
 import { Inner } from "../components/inner";
 import { TypographyTitle } from "../components/atoms";
 import { createStyles, makeStyles, Typography } from "@material-ui/core";
+import { FC } from "react";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -14,7 +15,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const About = () => {
+const About: FC = () => {
   const classes = useStyles();
   return (
     <>
