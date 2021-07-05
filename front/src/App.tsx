@@ -97,7 +97,7 @@ const App = () => {
         <LoadingPage />
       ) : (
         <>
-          <Router />
+          <Router/>
         </>
       )}
       <Footer />
