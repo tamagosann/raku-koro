@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import CommentTableCell from "./CommentTableCell";
+import CommentTableCell from "../CommentTableCell";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 

@@ -54,11 +54,13 @@ const ThreadForm = () => {
           setValue("comment", thr.comment);
           if (user !== null && thr.uid === user.uid) {
             setDisable(false);
+          } else {
+            setDisable(true);
           }
         }
       });
     }
-  }, [thread, user,thread_id]);
+  }, [thread, user, thread_id]);
 
   const doUpdate: SubmitHandler<ThreadDataType> = (data) => {
     let date = new Date();
@@ -93,13 +95,15 @@ const ThreadForm = () => {
               disabled={disable}
             />
           </Box>
-          <Box mt={1} textAlign="center">
-            <PrimaryButton
-              label={"更新"}
-              onClick={handleSubmit(doUpdate)}
-              disabled={disable}
-            />
-          </Box>
+          {!disable &&
+            <Box mt={1} textAlign="center">
+              <PrimaryButton
+                label={"更新"}
+                onClick={handleSubmit(doUpdate)}
+                disabled={disable}
+              />
+            </Box>
+          }
         </form>
       </Box>
     </Container>

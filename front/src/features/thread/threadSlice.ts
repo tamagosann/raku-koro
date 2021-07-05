@@ -55,7 +55,7 @@ export const createThreadAsync = createAsyncThunk<
   ThreadDataType,
   ThreadDataType,
   ThunkConfig
->("thread/create", async (data, { rejectWithValue,dispatch }) => {
+>("thread/create", async (data, { rejectWithValue, dispatch }) => {
   try {
     const threadData = await createThread(data);
     dispatch(unSetThreadErrorMsg());
@@ -70,7 +70,7 @@ export const updateThreadAsync = createAsyncThunk<
   ThreadDataType,
   ThreadDataType,
   ThunkConfig
->("thread/update", async (data, { rejectWithValue,dispatch }) => {
+>("thread/update", async (data, { rejectWithValue, dispatch }) => {
   try {
     const threadData = await updateThread(data);
     dispatch(unSetThreadErrorMsg());
@@ -83,7 +83,7 @@ export const updateThreadAsync = createAsyncThunk<
 //投稿内容削除処理
 export const deleteThreadAsync = createAsyncThunk<string, string, ThunkConfig>(
   "thread/delete",
-  async (_id, { rejectWithValue,dispatch }) => {
+  async (_id, { rejectWithValue, dispatch }) => {
     try {
       await deleteThread(_id);
       dispatch(unSetThreadErrorMsg());
@@ -125,7 +125,8 @@ export const threadSlice = createSlice({
     });
     //追加
     builder.addCase(createThreadAsync.pending, (state) => {
-      state.status = "loading";
+      //statusをidleにすることで都道府県のフィルタが解除されるのを防ぐ
+      state.status = "idle";
     });
     builder.addCase(createThreadAsync.fulfilled, (state, action) => {
       state.status = "idle";
@@ -165,7 +166,8 @@ export const threadSlice = createSlice({
     });
     //削除
     builder.addCase(deleteThreadAsync.pending, (state) => {
-      state.status = "loading";
+      //statusをidleにすることで都道府県のフィルタが解除されるのを防ぐ
+      state.status = "idle";
     });
     builder.addCase(deleteThreadAsync.fulfilled, (state, action) => {
       state.status = "idle";

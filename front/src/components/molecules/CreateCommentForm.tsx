@@ -49,7 +49,7 @@ const CreateCommentForm = () => {
   };
   return (
     <Container maxWidth="sm" style={{ padding: "5px 0 25px 0" }}>
-      <Box mt={3} textAlign="center">
+      <Box textAlign="center">
         {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         <form onSubmit={handleSubmit(doCreate)}>
           <Box mt={3} textAlign="center">

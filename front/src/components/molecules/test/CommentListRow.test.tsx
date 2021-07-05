@@ -2,9 +2,9 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { BrowserRouter } from "react-router-dom";
-import { store } from "../../app/store";
-import { ThreadDataType } from "../../features/thread/threadSlice";
-import CommentListRow, { CommentListRowType } from "./CommentListRow";
+import { store } from "../../../app/store";
+import { ThreadDataType } from "../../../features/thread/threadSlice";
+import CommentListRow, { CommentListRowType } from "../CommentListRow";
 import { Provider } from "react-redux";
 
 

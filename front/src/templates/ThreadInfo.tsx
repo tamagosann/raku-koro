@@ -1,11 +1,11 @@
-import { Container } from "@material-ui/core";
+import { Inner } from "../components/inner";
 import { FC } from "react";
 import { FormLayout } from "../components/organisms";
 const ThreadInfo:FC = () => {
     return (
-      <Container maxWidth="md">
+      <Inner>
         <FormLayout type={"threadinfo"} />
-      </Container>
+      </Inner>
     );
 };
 export default ThreadInfo;
