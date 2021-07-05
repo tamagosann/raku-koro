@@ -95,7 +95,13 @@ const Threads: FC = () => {
                 value={prefectureToRefineList}
                 onChange={handleChange}
               >
-                {getPrefectureListOfMenuItem()}
+                {prefectureList.map((prefecture) => {
+                  return (
+                    <MenuItem key={prefecture} value={prefecture}>
+                      {prefecture}
+                    </MenuItem>
+                  );
+                })}
               </Select>
             </FormControl>
             {refinedThreadsData && (
