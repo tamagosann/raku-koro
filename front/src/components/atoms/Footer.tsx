@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import MediaQuery from 'react-responsive';
 
@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Footer = () => {
+export const Footer: FC = () => {
   const classes = useStyles();
   return (
-    <footer id="footer" className={classes.footer}>
+    <footer id="footer" className={classes.footer} data-testid="footer-tag">
       <MediaQuery query="(min-width: 600px)">
         <div className={classes.flexContainer}>
           <p>&copy;{new Date().getFullYear()} Rakuraku Corona</p>

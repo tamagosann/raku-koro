@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footerコンポーネント jest renderer test render correctly 1`] = `
+<footer
+  className="makeStyles-footer-1"
+  data-testid="footer-tag"
+  id="footer"
+/>
+`;
