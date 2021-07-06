@@ -1,23 +1,22 @@
-import React from "react";
-import { cleanup, render } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { store } from "../../app/store";
-import { BrowserRouter } from "react-router-dom";
-import { PrefectureDailyDead } from "../index";
+import React from 'react';
+import { cleanup, render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from '../../app/store';
+import { BrowserRouter } from 'react-router-dom';
+import { PrefectureDailyDead } from '../index';
 
-describe("DeceasedPerson", () => {
+describe('DeceasedPerson', () => {
   //毎回レンダリング画面を空にする
   afterEach(() => {
     cleanup();
   });
 
-  test("renders learn react link", () => {
+  test('renders learn react link', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <PrefectureDailyDead />
-        </BrowserRouter>
+        <PrefectureDailyDead />
       </Provider>
     );
+    screen.debug();
   });
 });

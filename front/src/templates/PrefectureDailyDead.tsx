@@ -43,43 +43,49 @@ const PrefectureDailyDead: FC = () => {
   return (
     <>
       {prefecture_dead.status === 'loading' ? null : (
-        <Inner>
-          <TypographyTitle variant={'h5'} align={'center'}>
-            都道府県別死者数
-          </TypographyTitle>
-          <Prefecture prefecture={prefecture} setPrefecture={setPrefecture} />
-          <DailyTotalRadio handleChange={handleChange} value={value} />
-          {value === '0' ? (
-            <ReChart
-              targetPrefecture={targetPrefecture}
-              dataKey="total_dead"
-              startIndex={0}
-              endIndex={0}
-              value={value}
-              date={'date'}
+        <>
+          <Inner>
+            <TypographyTitle variant={'h5'} align={'center'}>
+              都道府県別死者数
+            </TypographyTitle>
+            <Prefecture prefecture={prefecture} setPrefecture={setPrefecture} />
+            <DailyTotalRadio handleChange={handleChange} value={value} />
+            {value === '0' ? (
+              <>
+                <ReChart
+                  targetPrefecture={targetPrefecture}
+                  dataKey="total_dead"
+                  startIndex={0}
+                  endIndex={0}
+                  value={value}
+                  date={'date'}
+                >
+                  累計死者数
+                </ReChart>
+              </>
+            ) : (
+              <>
+                <ReChart
+                  targetPrefecture={targetPrefecture}
+                  dataKey="daily_dead"
+                  startIndex={targetPrefecture.length - 31}
+                  endIndex={targetPrefecture.length - 1}
+                  value={value}
+                  date={'date'}
+                >
+                  日別死者数
+                </ReChart>
+              </>
+            )}
+            <a
+              href="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              累計死者数
-            </ReChart>
-          ) : (
-            <ReChart
-              targetPrefecture={targetPrefecture}
-              dataKey="daily_dead"
-              startIndex={targetPrefecture.length - 31}
-              endIndex={targetPrefecture.length - 1}
-              value={value}
-              date={'date'}
-            >
-              日別死者数
-            </ReChart>
-          )}
-          <a
-            href="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            都道府県ごとの死者数の推移情報提供:NHK
-          </a>
-        </Inner>
+              都道府県ごとの死者数の推移情報提供:NHK
+            </a>
+          </Inner>
+        </>
       )}
     </>
   );
