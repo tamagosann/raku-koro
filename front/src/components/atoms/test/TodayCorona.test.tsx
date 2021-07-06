@@ -64,11 +64,6 @@ describe('TodayCorona', () => {
       '前々日比：＋200人'
     );
     screen.debug();
-    // screen.debug(screen.getAllByRole('heading')[1]);
-    // screen.debug();
-    // screen.getByRole('');
-    // expect(screen.getByText(''));
-    // expect(screen.getByText('500人')).toBeInTheDocument();
   });
   test(`renders TodayCorona component`, () => {
     render(
@@ -76,10 +71,5 @@ describe('TodayCorona', () => {
         <TodayCorona totalCorona={testData2} />
       </Provider>
     );
-    // screen.debug();
   });
-  // test(`totalCorona.status === 'success'`, () => {
-  //   const totalCorona = useAppSelector(selectTotalCorona);
-  //   let status = totalCorona.status;
-  // });
 });
