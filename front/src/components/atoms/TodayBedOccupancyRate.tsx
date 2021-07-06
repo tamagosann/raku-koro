@@ -1,6 +1,4 @@
 import React, { useEffect, useState, FC } from 'react';
-import { useAppSelector } from '../../app/hooks';
-import { selectBedOccupancyRate } from '../../features/graphs/bedOccupancyRateSlice';
 import { GraphState } from '../../features/graphs/bedOccupancyRateSlice';
 interface Data {
   pcr_positive: number;
