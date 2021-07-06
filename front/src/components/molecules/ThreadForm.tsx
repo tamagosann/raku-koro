@@ -1,30 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Container, Box } from "@material-ui/core";
 import { UserNameInput } from "../atoms/UserNameInput";
 import { PrefectureSelectBox } from "../atoms/PrefectureSelectBox";
-import { selectUser } from "../../features/user/userSlice";
-import { useAppSelector } from "../../app/hooks";
+import { UserDataType } from "../../features/user/userSlice";
 import { PrimaryButton } from "../UIKit";
 import { TextFieldInput } from "../atoms/TextFieldInput";
-import {
-  selectThread,
-  selectThreadErrorMsg,
-  ThreadDataType,
-} from "../../features/thread/threadSlice";
+import { ThreadDataType } from "../../features/thread/threadSlice";
 import { updateThreadAsync } from "../../features/thread/threadSlice";
 import { datetimeToString } from "../../common/functions";
 
-const ThreadForm = () => {
+interface Props {
+  user: UserDataType | null;
+  thread: ThreadDataType[] | null;
+  errorMsg: string | null;
+  threadId: string;
+}
+
+const ThreadForm: FC<Props> = ({ user, thread, errorMsg, threadId }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useAppSelector(selectUser);
-  const thread = useAppSelector(selectThread);
-  const errorMsg = useAppSelector(selectThreadErrorMsg);
   const [disable, setDisable] = useState(true);
-  const { thread_id }: { thread_id: string } = useParams();
 
   const {
     control,
@@ -46,7 +44,7 @@ const ThreadForm = () => {
   useEffect(() => {
     if (thread) {
       thread.forEach((thr) => {
-        if (thr._id === thread_id) {
+        if (thr._id === threadId) {
           setValue("_id", thr._id);
           setValue("uid", thr.uid);
           setValue("username", thr.username);
@@ -60,7 +58,7 @@ const ThreadForm = () => {
         }
       });
     }
-  }, [thread, user, thread_id]);
+  }, [thread, user, threadId, setDisable, setValue]);
 
   const doUpdate: SubmitHandler<ThreadDataType> = (data) => {
     let date = new Date();
@@ -95,7 +93,7 @@ const ThreadForm = () => {
               disabled={disable}
             />
           </Box>
-          {!disable &&
+          {!disable && (
             <Box mt={1} textAlign="center">
               <PrimaryButton
                 label={"更新"}
@@ -103,7 +101,7 @@ const ThreadForm = () => {
                 disabled={disable}
               />
             </Box>
-          }
+          )}
         </form>
       </Box>
     </Container>
