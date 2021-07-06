@@ -120,7 +120,6 @@ describe('TypographyTitleコンポーネント', () => {
         value: '0',
         date: '2021-07-05',
       };
-
       render(
         <Provider store={store}>
           <ReChart
@@ -134,6 +133,7 @@ describe('TypographyTitleコンポーネント', () => {
           />
         </Provider>
       );
+      screen.debug();
     });
     test('true（1）のケース', () => {
       const ReChartProps: ReChartPropsInterface = {
@@ -147,6 +147,15 @@ describe('TypographyTitleコンポーネント', () => {
             pref_code: 1,
             pref_name: '北海道',
           },
+          {
+            daily_infection: 10,
+            total_infection: 20,
+            daily_dead: 15,
+            total_dead: 25,
+            date: '2021-08-15',
+            pref_code: 1,
+            pref_name: '東京',
+          },
         ],
         children: 'テスト',
         dataKey: 'total_dead',
@@ -155,7 +164,6 @@ describe('TypographyTitleコンポーネント', () => {
         value: '1',
         date: '2021-07-05',
       };
-
       render(
         <Provider store={store}>
           <ReChart

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Legend,
   AreaChart,
@@ -26,7 +26,7 @@ interface Props {
   date: string;
 }
 
-export const ReChart = ({
+export const ReChart: FC<Props> = ({
   targetPrefecture,
   children,
   dataKey,
@@ -34,7 +34,7 @@ export const ReChart = ({
   endIndex,
   value,
   date,
-}: Props) => {
+}) => {
   return (
     <>
       {!Number(value) ? (
@@ -43,39 +43,44 @@ export const ReChart = ({
           minHeight={600}
           data-testid="area-chart-tag"
         >
-          <AreaChart
-            width={1200}
-            height={600}
-            data={targetPrefecture}
-            margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
-          >
-            {/* 第一引数が色のついている大きさ、第二引数が幅間 */}
-            <CartesianGrid strokeDasharray="30 5" stroke="#eee"></CartesianGrid>
-            <XAxis dataKey="date" tick={{ fontSize: '.7rem' }} />
-            <YAxis unit="人" />
-            <Tooltip />
-            <Legend
-              stroke="#fd7e00"
-              verticalAlign="top"
-              wrapperStyle={{ lineHeight: '40px' }}
-              fill="#fd7e00"
-            />
-            <Brush
-              className="TimeLineChart-brush"
-              dataKey={date}
-              stroke="#fd7e00"
-              startIndex={startIndex}
-              endIndex={endIndex}
-            />
-            <Area
-              dataKey={dataKey}
-              stroke="#fd7e00"
-              name={children}
-              strokeWidth={3}
-              unit="人"
-              fill="#fd7e00"
-            />
-          </AreaChart>
+          <>
+            <AreaChart
+              width={1200}
+              height={600}
+              data={targetPrefecture}
+              margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
+            >
+              {/* 第一引数が色のついている大きさ、第二引数が幅間 */}
+              <CartesianGrid
+                strokeDasharray="30 5"
+                stroke="#eee"
+              ></CartesianGrid>
+              <XAxis dataKey="date" tick={{ fontSize: '.7rem' }} />
+              <YAxis unit="人" />
+              <Tooltip />
+              <Legend
+                stroke="#fd7e00"
+                verticalAlign="top"
+                wrapperStyle={{ lineHeight: '40px' }}
+                fill="#fd7e00"
+              />
+              <Brush
+                className="TimeLineChart-brush"
+                dataKey={date}
+                stroke="#fd7e00"
+                startIndex={startIndex}
+                endIndex={endIndex}
+              />
+              <Area
+                dataKey={dataKey}
+                stroke="#fd7e00"
+                name={children}
+                strokeWidth={3}
+                unit="人"
+                fill="#fd7e00"
+              />
+            </AreaChart>
+          </>
         </ResponsiveContainer>
       ) : (
         <ResponsiveContainer
@@ -83,39 +88,44 @@ export const ReChart = ({
           minHeight={600}
           data-testid="line-chart-tag"
         >
-          <LineChart
-            width={1200}
-            height={600}
-            data={targetPrefecture}
-            margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
-          >
-            {/* 第一引数が色のついている大きさ、第二引数が幅間 */}
-            <CartesianGrid strokeDasharray="30 5" stroke="#eee"></CartesianGrid>
-            <XAxis dataKey="date" tick={{ fontSize: '.7rem' }} />
-            <YAxis unit="人" />
-            <Tooltip />
-            <Legend
-              stroke="#fd7e00"
-              verticalAlign="top"
-              wrapperStyle={{ lineHeight: '40px' }}
-              fill="#fd7e00"
-            />
-            <Brush
-              className="TimeLineChart-brush"
-              dataKey={date}
-              stroke="#fd7e00"
-              startIndex={startIndex}
-              endIndex={endIndex}
-            />
-            <Line
-              name={children}
-              dataKey={dataKey}
-              stroke="#fd7e00"
-              strokeWidth={3}
-              unit="人"
-              fill="#fd7e00"
-            />
-          </LineChart>
+          <>
+            <LineChart
+              width={1200}
+              height={600}
+              data={targetPrefecture}
+              margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
+            >
+              {/* 第一引数が色のついている大きさ、第二引数が幅間 */}
+              <CartesianGrid
+                strokeDasharray="30 5"
+                stroke="#eee"
+              ></CartesianGrid>
+              <XAxis dataKey="date" tick={{ fontSize: '.7rem' }} />
+              <YAxis unit="人" />
+              <Tooltip />
+              <Legend
+                stroke="#fd7e00"
+                verticalAlign="top"
+                wrapperStyle={{ lineHeight: '40px' }}
+                fill="#fd7e00"
+              />
+              <Brush
+                className="TimeLineChart-brush"
+                dataKey={date}
+                stroke="#fd7e00"
+                startIndex={startIndex}
+                endIndex={endIndex}
+              />
+              <Line
+                name={children}
+                dataKey={dataKey}
+                stroke="#fd7e00"
+                strokeWidth={3}
+                unit="人"
+                fill="#fd7e00"
+              />
+            </LineChart>
+          </>
         </ResponsiveContainer>
       )}
     </>
