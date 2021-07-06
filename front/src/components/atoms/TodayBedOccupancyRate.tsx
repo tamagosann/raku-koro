@@ -18,6 +18,23 @@ interface Props {
   bedOccupancyRate: GraphState;
 }
 
+const calcSumBed = (bedOccupancyRate: GraphState) => {
+  // 対策病床使用率を算出
+  // 入院者数*入院患者受入確保病床=入院患者病床使用率
+  let sumBed: number = 0;
+  bedOccupancyRate.data.forEach((todayBed: Data) => {
+    sumBed += todayBed.secure_bed;
+  });
+  return sumBed;
+};
+const calcSumInpatient = (bedOccupancyRate: GraphState) => {
+  let sumInpatient: number = 0;
+  bedOccupancyRate.data.forEach((todayInpatient: Data) => {
+    sumInpatient += todayInpatient.inpatient;
+  });
+  return sumInpatient;
+};
+
 const TodayBedOccupancyRate: FC<Props> = ({ bedOccupancyRate }) => {
   const [bedUsed, setBedUsed] = useState(bedOccupancyRate.data);
 
@@ -25,18 +42,8 @@ const TodayBedOccupancyRate: FC<Props> = ({ bedOccupancyRate }) => {
     setBedUsed(bedOccupancyRate.data);
   }, [bedOccupancyRate]);
 
-  // 対策病床使用率を算出
-  // 入院者数*入院患者受入確保病床=入院患者病床使用率
-  let sumBed: number = 0;
-  bedOccupancyRate.data.forEach((todayBed: Data) => {
-    sumBed += todayBed.secure_bed;
-  });
-
-  let sumInpatient: number = 0;
-  bedOccupancyRate.data.forEach((todayInpatient: Data) => {
-    sumInpatient += todayInpatient.inpatient;
-  });
-
+  const sumBed = calcSumBed(bedOccupancyRate);
+  const sumInpatient = calcSumInpatient(bedOccupancyRate);
   let totalBedUsed: string = ((sumInpatient / sumBed) * 100).toFixed(2);
 
   return (
