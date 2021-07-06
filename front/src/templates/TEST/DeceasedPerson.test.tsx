@@ -1,25 +1,23 @@
 import React from "react";
 import { cleanup, render } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
-import { BrowserRouter } from "react-router-dom"; 
-import App from "./App";
+import { store } from "../../app/store";
+import { BrowserRouter } from "react-router-dom";
+import { DeceasedPerson } from "../index";
 
-
-describe("App.tsx", () => {
+describe("DeceasedPerson", () => {
   //毎回レンダリング画面を空にする
   afterEach(() => {
-     cleanup();
+    cleanup();
   });
-  
-  test("render App.tsx", () => {
+
+  test("render DeceasedPerson", () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <DeceasedPerson />
         </BrowserRouter>
       </Provider>
     );
   });
-
 });

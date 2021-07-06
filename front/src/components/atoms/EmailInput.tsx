@@ -15,15 +15,8 @@ export const EmailInput: FC<Props> = ({ control, error }) => {
         control={control}
         rules={{
           required: true,
-          pattern: /.+@.+/,
-          // validate: (value): any => {
-          //   if (value.match(/[\s]/) === null) {
-          //     console.log(value.match(/[^\s　]/));
-          //     return false;
-          //   } else {
-          //     return true;
-          //   }
-          // },
+          pattern:
+            /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
         }}
         render={({ field }) => <TextField label="メールアドレス" {...field} />}
       />
@@ -31,7 +24,6 @@ export const EmailInput: FC<Props> = ({ control, error }) => {
         <p style={{ color: "red" }}>
           {error.type === "required" && "メールアドレスを入力してください"}
           {error.type === "pattern" && "形式が違います"}
-          {/* {error.type === "validate" && "空白を含めないでください"} */}
         </p>
       )}
     </>

@@ -30,7 +30,6 @@ export const translateErrorMsg = (error: string): string => {
   ) {
     return "そのメールアドレスは既に登録されています。";
   } else {
-    console.log(error);
     return "エラーが発生しました。もう一度お試しください。";
   }
 };
