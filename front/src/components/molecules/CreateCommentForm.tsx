@@ -1,21 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Container, Box } from "@material-ui/core";
 import { UserNameInput } from "../atoms/UserNameInput";
 import { PrefectureSelectBox } from "../atoms/PrefectureSelectBox";
-import { selectUser } from "../../features/user/userSlice";
-import { useAppSelector } from "../../app/hooks";
+import { UserDataType } from "../../features/user/userSlice";
 import { PrimaryButton } from "../UIKit";
 import { TextFieldInput } from "../atoms/TextFieldInput";
-import { selectThreadErrorMsg, ThreadDataType } from "../../features/thread/threadSlice";
+import { ThreadDataType } from "../../features/thread/threadSlice";
 import { createThreadAsync } from "../../features/thread/threadSlice";
 import { datetimeToString } from "../../common/functions";
 
-const CreateCommentForm = () => {
+interface Props {
+  user: UserDataType | null;
+  errorMsg: string | null;
+}
+const CreateCommentForm: FC<Props> = ({ user, errorMsg }) => {
   const dispatch = useDispatch();
-  const user = useAppSelector(selectUser);
-  const errorMsg = useAppSelector(selectThreadErrorMsg)
   const {
     control,
     handleSubmit,
@@ -39,7 +40,7 @@ const CreateCommentForm = () => {
       setValue("username", user.username);
       setValue("prefecture", user.prefecture);
     }
-  }, [user]);
+  }, [user, setValue]);
 
   const doCreate: SubmitHandler<ThreadDataType> = (data) => {
     let date = new Date();

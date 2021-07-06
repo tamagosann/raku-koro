@@ -5,11 +5,11 @@ import {
   makeStyles,
   createStyles,
   Theme,
+  FormControl
 } from "@material-ui/core";
 import { Controller, Control, FieldError } from "react-hook-form";
 import { InputLabel } from "@material-ui/core";
 import { prefectures } from "../../common/prefecture";
-import { classExpression } from "@babel/types";
 
 interface Props {
   control: Control;
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
       minWidth: 160,
-    },
+    }
   })
 );
 
@@ -33,27 +33,30 @@ export const PrefectureSelectBox: FC<Props> = ({
   const classes = useStyles();
   return (
     <>
-      <InputLabel shrink={true}>都道府県</InputLabel>
-      <Controller
-        name="prefecture"
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field }) => (
-          <Select
-            {...field}
-            disabled={disabled}
-            className={classes.formControl}
-          >
-            {prefectures.map((pref, index) => (
-              <MenuItem key={index} value={pref.prefName}>
-                {pref.prefName}
-              </MenuItem>
-            ))}
-          </Select>
-        )}
-      />
+      <FormControl
+        className={classes.formControl}
+      >
+        <InputLabel>都道府県</InputLabel>
+        <Controller
+          name="prefecture"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field }) => (
+            <Select
+              {...field}
+              disabled={disabled}
+            >
+              {prefectures.map((pref, index) => (
+                <MenuItem key={index} value={pref.prefName}>
+                  {pref.prefName}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
+      </FormControl>
       {error !== undefined && (
         <p style={{ color: "red" }}>
           {error.type === "required" && "都道府県を選択してください"}

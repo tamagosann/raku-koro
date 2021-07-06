@@ -1,21 +1,19 @@
 import { useDispatch } from "react-redux";
+import { FC } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Container, Box } from "@material-ui/core";
 import { UserNameInput } from "../atoms/UserNameInput";
 import { PrefectureSelectBox } from "../atoms/PrefectureSelectBox";
-import {
-  selectUserErrorMsg,
-  UserDataType,
-  selectUser,
-  updateUserAsync,
-} from "../../features/user/userSlice";
-import { useAppSelector } from "../../app/hooks";
+import { UserDataType, updateUserAsync } from "../../features/user/userSlice";
 import { PrimaryButton } from "../UIKit";
 
-const UserInfoForm = () => {
+interface Props {
+  user: UserDataType | null;
+  errorMsg: string | null;
+}
+
+const UserInfoForm: FC<Props> = ({ user, errorMsg }) => {
   const dispatch = useDispatch();
-  const user = useAppSelector(selectUser);
-  const errorMsg = useAppSelector(selectUserErrorMsg);
   const {
     control,
     handleSubmit,
