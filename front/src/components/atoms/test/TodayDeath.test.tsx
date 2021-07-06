@@ -64,6 +64,6 @@ describe(`TodayDeth`, () => {
         <TodayDeth totalCorona={testData2} />
       </Provider>
     );
-    // screen.debug();
+    screen.debug();
   });
 });
