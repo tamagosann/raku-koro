@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Footerコンポーネント jest renderer test render correctly 1`] = `
+exports[`DailyTotalRadioコンポーネント jest renderer test render correctly 1`] = `
 <fieldset
   className="MuiFormControl-root makeStyles-wrapper-1"
 >
