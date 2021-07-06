@@ -13,6 +13,49 @@ import ClosableDrawer from "./ClosableDrawer";
 import { icon } from "../atoms/IconButtonSelect";
 import logo from "../../assets/img/logo.png";
 
+const headers = {
+  logins: [
+    { text: "掲示板", icon: "List", link:"/threads" },
+    { text: "ログアウト", icon: "Logout", link: () => logout() },
+  ],
+  logouts: [
+    { text: "ログイン", icon: "Login", link:"/login"},
+    {
+      text: "新規登録",
+      icon: "NewAccount",
+      link: "/register",
+    },
+  ],
+  graphs: [
+    {
+      text: "全国",
+      icon: "LineGrph1",
+      link: "/nationwide",
+    },
+    {
+      text: "都道府県",
+      icon: "LineGrph1",
+      link: "/every_prefecture",
+    },
+    {
+      text: "病床使用率",
+      icon: "CircleGrph",
+      link: "/bed-usage-rate",
+    },
+    {
+      text: "PCR検査",
+      icon: "BarGrph1",
+      link: "/pcr-rate",
+    },
+    {
+      text: "掲示板",
+      icon: "Asign",
+      link: "/threads",
+    },
+  ],
+};
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     grow: {
@@ -50,7 +93,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface headerItems {
   text: string;
   icon: icon;
-  method: () => void;
+  // method: () => void;
+  link: string | void 
 }
 
 const Header: React.FC = () => {
@@ -58,47 +102,47 @@ const Header: React.FC = () => {
   const history = useHistory();
   const userData = useAppSelector(selectUser);
   const [toggle, setToggle] = useState(false);
-  const headers = {
-    logins: [
-      { text: "掲示板", icon: "List", method: () => history.push("/threads") },
-      { text: "ログアウト", icon: "Logout", method: () => logout() },
-    ],
-    logouts: [
-      { text: "ログイン", icon: "Login", method: () => history.push("/login") },
-      {
-        text: "新規登録",
-        icon: "NewAccount",
-        method: () => history.push("/register"),
-      },
-    ],
-    graphs: [
-      {
-        text: "全国",
-        icon: "LineGrph1",
-        method: () => history.push("/nationwide"),
-      },
-      {
-        text: "都道府県",
-        icon: "LineGrph1",
-        method: () => history.push("/every_prefecture"),
-      },
-      {
-        text: "病床使用率",
-        icon: "CircleGrph",
-        method: () => history.push("/bed-usage-rate"),
-      },
-      {
-        text: "PCR検査",
-        icon: "BarGrph1",
-        method: () => history.push("/pcr-rate"),
-      },
-      {
-        text: "掲示板",
-        icon: "Asign",
-        method: () => history.push("/threads"),
-      },
-    ],
-  };
+  // const headers = {
+  //   logins: [
+  //     { text: "掲示板", icon: "List", method: () => history.push("/threads") },
+  //     { text: "ログアウト", icon: "Logout", method: () => logout() },
+  //   ],
+  //   logouts: [
+  //     { text: "ログイン", icon: "Login", method: () => history.push("/login") },
+  //     {
+  //       text: "新規登録",
+  //       icon: "NewAccount",
+  //       method: () => history.push("/register"),
+  //     },
+  //   ],
+  //   graphs: [
+  //     {
+  //       text: "全国",
+  //       icon: "LineGrph1",
+  //       method: () => history.push("/nationwide"),
+  //     },
+  //     {
+  //       text: "都道府県",
+  //       icon: "LineGrph1",
+  //       method: () => history.push("/every_prefecture"),
+  //     },
+  //     {
+  //       text: "病床使用率",
+  //       icon: "CircleGrph",
+  //       method: () => history.push("/bed-usage-rate"),
+  //     },
+  //     {
+  //       text: "PCR検査",
+  //       icon: "BarGrph1",
+  //       method: () => history.push("/pcr-rate"),
+  //     },
+  //     {
+  //       text: "掲示板",
+  //       icon: "Asign",
+  //       method: () => history.push("/threads"),
+  //     },
+  //   ],
+  // };
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" style={{ background: "#fd7e00" }}>
