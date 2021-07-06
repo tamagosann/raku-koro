@@ -60,6 +60,7 @@ export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
                 outerRadius="80%"
                 fill="#8884d8"
                 dataKey="value"
+                data-testid="Pie-tag"
               >
                 {data.map((entry: any, index: number) => (
                   <Cell
@@ -85,8 +86,7 @@ export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
                 ]}
               />
               <Tooltip
-                formatter={(value: any, name: any, props: any) => {
-                  console.log(value, name, props);
+               formatter={(value: any, name: any, props: any) => {
                   if (name === '推定病床残数') {
                     return `${value} 床`;
                   } else {

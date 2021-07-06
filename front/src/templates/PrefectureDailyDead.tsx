@@ -76,7 +76,7 @@ const PrefectureDailyDead: FC = () => {
           <a
             href="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             都道府県ごとの死者数の推移情報提供:NHK
           </a>

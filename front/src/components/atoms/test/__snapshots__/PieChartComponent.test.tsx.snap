@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentList PCR存在する？ 1`] = `
+<div>
+  <div
+    class="recharts-responsive-container"
+    style="width: 99%; height: 400px;"
+  />
+</div>
+`;
