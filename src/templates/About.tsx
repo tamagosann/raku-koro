@@ -1,8 +1,6 @@
-import React from "react";
-import { TypographyTitle,Inner } from "../components/atoms";
+import React, { FC } from "react";
+import { TypographyTitle, List, Inner } from "../components/atoms";
 import { createStyles, makeStyles, Typography } from "@material-ui/core";
-import { FC } from "react";
-
 const useStyles = makeStyles(() =>
   createStyles({
     colorOrange: {
@@ -71,25 +69,63 @@ const About: FC = () => {
           本サイトで利用しているデータについて
         </Typography>
         <Typography className={classes.mb30}>
-          ここはわかってる型が追記お願いします。 <br/>※例<br/>
-          本サイトでは、ジャッグジャパン株式会社
-          様が提供されているデータを利用しています。
+          本サイトでは、以下一覧が提供されているデータを利用しています。
+          <br />
+          <ul>
+            <List url="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/">
+              日本放送協会（NHK） 提供: 都道府県ごとの感染者数の推移情報
+            </List>
+            <List url="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/">
+              日本放送協会（NHK） 提供: 都道府県ごとの死者数の推移情報
+            </List>
+            <List url="https://corona.go.jp/dashboard/">
+              新型コロナウイルス感染症対策提供:累積の要請者数情報
+            </List>
+            <List url="https://corona.go.jp/dashboard/">
+              新型コロナウイルス感染症対策提供:累積の死亡者数情報
+            </List>
+            <List url="https://corona.go.jp/dashboard/">
+              ※DATA:CC
+              BY/新型コロナウイルス対策ダッシュボード提供：対策病床使用率
+            </List>
+            <List url="https://corona.go.jp/dashboard/">
+              ※DATA:CC
+              BY/新型コロナウイルス対策ダッシュボード提供：PCR検査陽性率
+            </List>
+            <List url="https://www.stopcovid19.jp/">
+              ※DATA:CC
+              BY/新型コロナウイルス対策ダッシュボード提供：療養状況等及び入院患者受入病床数等に関する調査についてのJSONデータ
+            </List>
+            <List url="https://www.mhlw.go.jp/stf/covid-19/open-data.html">
+              厚生労働省提供：PCR検査数と陽性者数
+            </List>
+            <List url="https://www.mhlw.go.jp/stf/seisakunitsuite/newpage_00023.html">
+              厚生労働省提供：療養状況等及び入院患者受入病床数等に関する調査について
+            </List>
+          </ul>
+          <br />
           データについては、下記リンク先に記載の事項を確認した上で非営利目的で利用しています。
-          ジャッグジャパン株式会社 「新型コロナウイルス感染者数マップ」について
-          上記リンク先と重複する内容にはなりますが、データの取り扱いについては最新の注意を払っています。
           ただし当サイトでは、データの完全性についての保証及びデータの誤りにより生じた損害等に対して、一切の責任を負いません。
           また当サイト及び掲載している情報については、当サイトの一存により公開を停止する場合がございますがご了承ください。
+          <br />
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/deed.ja"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ※クリエイティブ・コモンズ
+          </a>
         </Typography>
       </Inner>
       <Inner>
-      <TypographyTitle
+        <TypographyTitle
           variant={"h4"}
           align={"center"}
           className={classes.colorOrange}
         >
           更新情報
         </TypographyTitle>
-      <Typography
+        <Typography
           variant={"h6"}
           align={"left"}
           style={{ marginBottom: 20, fontWeight: "bold" }}
@@ -97,10 +133,8 @@ const About: FC = () => {
         >
           2020-02-02
         </Typography>
-        <Typography className={classes.mb30}>
-          サイトを公開しました
-        </Typography>
-      <Typography
+        <Typography className={classes.mb30}>サイトを公開しました</Typography>
+        <Typography
           variant={"h6"}
           align={"left"}
           style={{ marginBottom: 20, fontWeight: "bold" }}
@@ -108,10 +142,8 @@ const About: FC = () => {
         >
           2020-02-02
         </Typography>
-        <Typography className={classes.mb30}>
-          サイトを公開しました
-        </Typography>
-      <Typography
+        <Typography className={classes.mb30}>サイトを公開しました</Typography>
+        <Typography
           variant={"h6"}
           align={"left"}
           style={{ marginBottom: 20, fontWeight: "bold" }}
@@ -119,9 +151,7 @@ const About: FC = () => {
         >
           2020-02-02
         </Typography>
-        <Typography className={classes.mb30}>
-          サイトを公開しました
-        </Typography>
+        <Typography className={classes.mb30}>サイトを公開しました</Typography>
       </Inner>
     </>
   );

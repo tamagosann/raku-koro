@@ -6,3 +6,4 @@ export { default as informetionTodayCorona } from "./InformetionTodayCorona";
 export { default as PrimaryButton } from "./PrimaryButton";
 export { default as DailyTotalRadio } from "./DailyTotalRadio";
 export { default as Prefecture } from "./Prefecture";
+export { default as List } from "./List";

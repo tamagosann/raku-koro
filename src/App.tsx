@@ -4,10 +4,8 @@ import Router from "./Router";
 import { useAppSelector } from "./app/hooks";
 
 //コンポーネント
-import { Header } from "./components/organisms";
+import { Header, Footer } from "./components/organisms";
 import { LoadingPage } from "./components/molecules";
-import { Footer } from "./components/atoms/Footer";
-
 // slice
 import {
   fetchDailyInfectionAsync,
@@ -50,8 +48,7 @@ const App = () => {
     dispatch(fetchTotalDethAsync());
     dispatch(fetchBedOccupancyRateAsync());
     dispatch(fetchDailyPositiveAsync());
-  }, []);
-
+  }, [dispatch]);
   return (
     <>
       <Header />
