@@ -51,9 +51,9 @@ describe("CommentListRow", () => {
       </Provider>
     );
 
-    screen.debug();
+    // screen.debug();
     userEvent.click(screen.getByRole("row"));
-    screen.debug();
+    // screen.debug();
     //【課題】【秋山】useHisotryのモック化が聞かなくてmockHistoryPushが呼び出されない。解決方法がわからないためコメントアウト
 
     // render(
@@ -97,7 +97,7 @@ describe("CommentListRow", () => {
     const input = screen.getByRole("button");
     userEvent.click(input);
 
-    screen.debug();
+    // screen.debug();
   });
 
   test(`click to delete when IconButton and cancel delete`, () => {
@@ -108,7 +108,7 @@ describe("CommentListRow", () => {
         </BrowserRouter>
       </Provider>
     );
-    screen.debug();
+    // screen.debug();
     
     //window.confirmのモック化
     window.confirm = (message?: string): boolean => false;
@@ -123,7 +123,7 @@ describe("CommentListRow", () => {
     // jest.fn()が呼び出されないのでコメントアウト
     // expect(mockDelete).toHaveBeenCalled();
     
-    screen.debug();
+    // screen.debug();
   });
 });
 
