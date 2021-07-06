@@ -13,7 +13,7 @@ describe(`TodayPcr`, () => {
         <TodayPcr />
       </Provider>
     );
-    screen.getByRole('');
-    // screen.debug();
+    // screen.getByRole('');
+    screen.debug();
   });
 });

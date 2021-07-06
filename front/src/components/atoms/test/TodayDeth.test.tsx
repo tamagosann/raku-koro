@@ -13,7 +13,7 @@ describe(`TodayDeth`, () => {
         <TodayDeth />
       </Provider>
     );
-    screen.getByRole('');
-    // screen.debug();
+    // screen.getByRole('');
+    screen.debug();
   });
 });
