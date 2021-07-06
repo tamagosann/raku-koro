@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
-import { PrimaryButton } from '../../atoms/index';
+import { PrimaryButton } from '..';
 
 describe('PrimaryButton test', () => {
 
@@ -12,7 +12,7 @@ describe('PrimaryButton test', () => {
   })
 
   test('render', () => {
-    const component = render(<PrimaryButton label={sampleText} onClick={() => MockFunc} />);
+    render(<PrimaryButton label={sampleText} onClick={() => MockFunc} />);
     const linkElement = screen.getByText(sampleText);
     expect(linkElement).toBeInTheDocument();
   });
