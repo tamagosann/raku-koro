@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 // コンポーネント
-import { PrefectureDailyDead } from '../templates/PrefectureDailyDead';
+import { PrefectureDailyDead } from '../templates/index';
 import PrefectureDailyInfention from '../templates/PrefectureDailyInfection';
 
 // マテリアルUI

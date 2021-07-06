@@ -1,5 +1,9 @@
 import { render, screen, cleanup } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { LineReChart } from '..';
+
+import { Provider } from 'react-redux';
+import { store } from '../../../app/store';
+
 
 interface Data {
   date: string;
@@ -26,13 +30,19 @@ describe('日別グラフチャートのテスト', () => {
       cleanup();
     });
 
-    test('テスト', () => {
+    test('日別グラフチャートの表示テスト', () => {
       const LineReChartProps: Props = {
-        data: [{
+        data: [
+          {
           date: "2021-07-05",
           npatients: 600,
           adpatients: 400
-        }
+          },
+          {
+            date: "2021-07-06",
+            npatients: 700,
+            adpatients: 300
+          }
         ],
         xDataKey: "date",
         lineDataKey: "npatients",
@@ -40,7 +50,18 @@ describe('日別グラフチャートのテスト', () => {
         startIndex: 1,
         endIndex: 30
       };
-      
+      render(
+        <Provider store={store}>
+          <LineReChart
+            data={LineReChartProps.data}
+            xDataKey= {LineReChartProps.xDataKey}
+            lineDataKey= {LineReChartProps.lineDataKey}
+            lineName= {LineReChartProps.lineName}
+            startIndex={LineReChartProps.startIndex}
+            endIndex={LineReChartProps.endIndex}
+          />
+        </Provider>
+      )
     })
 
     
