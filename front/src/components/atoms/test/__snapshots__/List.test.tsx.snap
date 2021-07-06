@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footerコンポーネント jest renderer test render correctly 1`] = `
+<li>
+  <a
+    href="https://www.mhlw.go.jp/stf/covid-19/open-data.html"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    テスト
+  </a>
+</li>
+`;

@@ -36,7 +36,11 @@ export const ModalPreview: FC<Props> = ({ element, data }: Props) => {
           {element.secure_bed.toLocaleString()}床
         </p>
       </div>
-      <Modal open={modalIsOpen} onClose={closeModal} styles={{ modalContainer:{marginTop: 100} } }>
+      <Modal
+        open={modalIsOpen}
+        onClose={closeModal}
+        styles={{ modalContainer: { marginTop: 60 } }}
+      >
         <h2 style={{ textAlign: 'center' }}>
           {element.prefecture} 病床使用率{' '}
           {((element.inpatient / element.secure_bed) * 100).toFixed(2)} % (参考)

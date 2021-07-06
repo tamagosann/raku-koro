@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footerコンポーネント jest renderer test render correctly 1`] = `
+<div
+  className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+>
+  <div
+    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-6"
+  />
+  <div
+    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-6"
+  >
+    <div
+      className="MuiContainer-root MuiContainer-maxWidthLg"
+    >
+      <div
+        className="MuiPaper-root MuiPaper-outlined MuiPaper-rounded"
+        style={
+          Object {
+            "borderColor": "#fd7e00",
+            "borderWidth": "2px",
+            "marginTop": 90,
+            "padding": 20,
+          }
+        }
+      >
+        <p>
+          Loading...
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
