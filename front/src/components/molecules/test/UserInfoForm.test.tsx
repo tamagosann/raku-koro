@@ -20,7 +20,7 @@ describe("UserInfoForm", () => {
         <UserInfoForm user={testUser} errorMsg={testErrorMsg} />
       </Provider>
     );
-    screen.debug();
+    // screen.debug();
     expect(screen.getByText("テストエラーメッセージ")).toBeInTheDocument();
     expect(screen.getByRole("textbox")).toHaveValue("テスト太郎")
     expect(screen.getAllByRole("button")[0].textContent).toBe("大阪府")
