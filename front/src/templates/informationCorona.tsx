@@ -35,6 +35,7 @@ export const InformationCorona: FC = () => {
   const totalDeth = useAppSelector(selectTotalDeth);
   const bedOccupancyRate = useAppSelector(selectBedOccupancyRate);
   const positivRate = useAppSelector(selectDailyPositive);
+  console.log('bedOccupancyRate', bedOccupancyRate);
 
   return (
     <div>
@@ -53,7 +54,9 @@ export const InformationCorona: FC = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <Paper className={classes.paper}>
-                    <TodayBedOccupancyRate />
+                    <TodayBedOccupancyRate
+                      bedOccupancyRate={bedOccupancyRate}
+                    />
                   </Paper>
                 </Grid>
 
