@@ -8,11 +8,11 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { useAppSelector } from "../../app/hooks";
-import { selectUser } from "../../features/user/userSlice";
+import { UserDataType } from "../../features/user/userSlice";
 import { IconButtonSelect } from "../atoms/IconButtonSelect";
 import { headerItems } from "./Header";
 import { useHistory } from "react-router-dom";
+import { logout } from "../../features/user/userAPI";
 
 const useStyles = makeStyles({
   container: {
@@ -28,35 +28,31 @@ interface Props {
     logouts: headerItems[];
     graphs: headerItems[];
   };
+  userData: UserDataType | null;
 }
 
-const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
+const ClosableDrawer: FC<Props> = ({
+  toggle,
+  setToggle,
+  headers,
+  userData,
+}) => {
   const classes = useStyles();
-  const user = useAppSelector(selectUser);
-  const history = useHistory()
-  const closeToggle = useCallback(
-    (e) => {
-      if (e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
-        return;
-      }
-      setToggle(!toggle);
-    },
-    [setToggle, toggle]
-  );
+  const history = useHistory();
   return (
     <Drawer
       variant="temporary"
       anchor="right"
       open={toggle}
-      onClose={(e) => closeToggle(e)}
+      onClose={() => setToggle(!toggle)}
       ModalProps={{ keepMounted: true }}
     >
       <div className={classes.container}>
         <List>
-          {user
+          {userData
             ? headers.logins.map((login, index) => (
                 <div key={index}>
-                  <ListItem button onClick={login.method}>
+                  <ListItem button onClick={() => logout()}>
                     <ListItemIcon>
                       <IconButtonSelect
                         icon={login.icon}
@@ -71,7 +67,10 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
               ))
             : headers.logouts.map((logout, index) => (
                 <div key={index}>
-                  <ListItem button onClick={logout.method}>
+                  <ListItem
+                    button
+                    onClick={() => history.push(logout.link as string)}
+                  >
                     <ListItemIcon>
                       <IconButtonSelect
                         icon={logout.icon}
@@ -86,7 +85,10 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
               ))}
           {headers.graphs.map((graph, index) => (
             <div key={index}>
-              <ListItem button onClick={graph.method}>
+              <ListItem
+                button
+                onClick={() => history.push(graph.link as string)}
+              >
                 <ListItemIcon>
                   <IconButtonSelect
                     icon={graph.icon}
@@ -99,15 +101,15 @@ const ClosableDrawer: FC<Props> = ({ toggle, setToggle, headers }) => {
               <Divider />
             </div>
           ))}
-          <ListItem button onClick={() => history.push('about')}>
+          <ListItem button onClick={() => history.push("about")}>
             <ListItemIcon>
               <IconButtonSelect
-                icon={'About'}
+                icon={"About"}
                 disabled={true}
                 color={"action"}
               />
             </ListItemIcon>
-            <ListItemText primary={'ABOUT'} />
+            <ListItemText primary={"ABOUT"} />
           </ListItem>
           <Divider />
         </List>
