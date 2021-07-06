@@ -13,7 +13,7 @@ import { TypographyTitle } from "../components/atoms/index";
 import { selectUser } from "../features/user/userSlice";
 import { prefectures } from "../common/prefecture";
 
-export const PrefectureDailyDead: FC = () => {
+const PrefectureDailyDead: FC = () => {
   const prefecture_dead = useAppSelector(selectDailyInfection);
   const user = useAppSelector(selectUser);
   // ラジオボタンの初期値（日別）
@@ -85,3 +85,5 @@ export const PrefectureDailyDead: FC = () => {
     </>
   );
 };
+
+export default PrefectureDailyDead

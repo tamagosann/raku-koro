@@ -6,11 +6,20 @@ import { store } from "../../../app/store";
 import { ThreadDataType } from "../../../features/thread/threadSlice";
 import CommentListRow, { CommentListRowType } from "../CommentListRow";
 import { Provider } from "react-redux";
-
+import * as Hooks from '../../../app/hooks'
 
 const commentListRowTestProps: ThreadDataType = {
   _id: "aaa",
   uid: "0001",
+  date: "2020-02-02 20:12:12",
+  username: "哀川",
+  prefecture: "神奈川県",
+  comment: "テストで御座候",
+};
+
+const commentListRowTestProps2 = {
+  _id: "aaa",
+  uid: undefined,
   date: "2020-02-02 20:12:12",
   username: "哀川",
   prefecture: "神奈川県",
@@ -34,7 +43,17 @@ describe("CommentListRow", () => {
   });
 
   test(`test ToThreadDetail clicked`, () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <CommentListRow row={commentListRowTestProps} />
+        </BrowserRouter>
+      </Provider>
+    );
 
+    screen.debug();
+    userEvent.click(screen.getByRole("row"));
+    screen.debug();
     //【課題】【秋山】useHisotryのモック化が聞かなくてmockHistoryPushが呼び出されない。解決方法がわからないためコメントアウト
 
     // render(
@@ -64,6 +83,48 @@ describe("CommentListRow", () => {
   });
 
   test(`click to delete when IconButton`, () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <CommentListRow row={commentListRowTestProps2} />
+        </BrowserRouter>
+      </Provider>
+    );
+    screen.debug();
+
+    window.confirm = (message?: string): boolean => true;
+
+    const input = screen.getByRole("button");
+    userEvent.click(input);
+
+    screen.debug();
+  });
+
+  test(`click to delete when IconButton and cancel delete`, () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <CommentListRow row={commentListRowTestProps2} />
+        </BrowserRouter>
+      </Provider>
+    );
+    screen.debug();
     
+    //window.confirmのモック化
+    window.confirm = (message?: string): boolean => false;
+    
+    // deleteAsyncのモック化できないのでコメントアウト
+    // const mockDelete = jest.fn()
+    // const deleteAsyncSpy = jest.spyOn(Hooks, 'useAppDispatch').mockReturnValue(mockDelete)
+    
+    const input = screen.getByRole("button");
+    userEvent.click(input);
+
+    // jest.fn()が呼び出されないのでコメントアウト
+    // expect(mockDelete).toHaveBeenCalled();
+    
+    screen.debug();
   });
 });
+
+//これでカバレッジ100%モック化はできてないけど

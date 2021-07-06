@@ -18,7 +18,7 @@ const commetListTestPropsArray: [string, number, any, null] = [
 describe("CommentList", () => {
   //毎回レンダリング画面を空にする
   afterEach(() => {
-    cleanup();
+     cleanup();
   });
 
   test(`render`, () => {
