@@ -1,13 +1,38 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { BrowserRouter } from "react-router-dom";
+import { cleanup, render } from "@testing-library/react";
 import { store } from "../../../app/store";
-import { ThreadDataType } from "../../../features/thread/threadSlice";
 import FormLayout from "../FormLayout";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+
 describe("FormLayout", () => {
-    //毎回レンダリング画面を空にする
-    afterEach(() => {
-        cleanup();
-    })
-}
+  afterEach(() => {
+    cleanup();
+  });
+  test("指定したコンポーネントが表示されていることを確認する", () => {
+    render(
+      <Provider store={store}>
+        <Router>
+          <FormLayout type={"userinfo"} />
+        </Router>
+      </Provider>
+    );
+  });
+  test("指定したコンポーネントが表示されていることを確認する", () => {
+    render(
+      <Provider store={store}>
+        <Router>
+          <FormLayout type={"threadinfo"} id={"sssss"}/>
+        </Router>
+      </Provider>
+    );
+  });
+  test("指定したコンポーネントが表示されていることを確認する", () => {
+    render(
+      <Provider store={store}>
+        <Router>
+          <FormLayout type={"createcomment"} />
+        </Router>
+      </Provider>
+    );
+  });
+});

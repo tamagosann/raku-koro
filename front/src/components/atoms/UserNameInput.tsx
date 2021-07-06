@@ -16,7 +16,7 @@ export const UserNameInput: FC<Props> = ({ control, error, disabled }) => {
         control={control}
         rules={{
           required: true,
-          pattern: /[^\s　]/,
+          pattern: /^(?!.*[ 　]).*$/,
         }}
         render={({ field }) => (
           <TextField label="ユーザー名" disabled={disabled} {...field} />
