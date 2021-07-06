@@ -1,8 +1,5 @@
-import React, { useEffect, useState, FC, useMemo } from 'react';
-import {
-  selectTotalCorona,
-  GraphState,
-} from '../../features/graphs/totalCoronaSlice';
+import React, { FC, useMemo } from 'react';
+import { GraphState } from '../../features/graphs/totalCoronaSlice';
 
 interface Props {
   totalCorona: GraphState;
