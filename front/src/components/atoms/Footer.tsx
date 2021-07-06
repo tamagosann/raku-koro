@@ -50,16 +50,16 @@ export const Footer: FC = () => {
             <h3 className={classes.displayDevelopers}>共同開発者</h3>
             <div>
               <div className={classes.flexItem}>
-                <p className={classes.nameMargin}>豊山政一</p>
-                <p>秋山太郎</p>
+                <p className={classes.nameMargin}>M.T</p>
+                <p>T.A</p>
               </div>
               <div className={classes.flexItem}>
-                <p className={classes.nameMargin}>工藤大輝</p>
-                <p>坂本篤弥</p>
+                <p className={classes.nameMargin}>D.K</p>
+                <p>A.S</p>
               </div>
               <div className={classes.flexItem}>
-                <p className={classes.nameMargin}>春日崇希</p>
-                <p>大谷走</p>
+                <p className={classes.nameMargin}>T.K</p>
+                <p>K.O</p>
               </div>
             </div>
           </div>
@@ -72,16 +72,16 @@ export const Footer: FC = () => {
             <h3 className={classes.displayDevelopers}>共同開発者</h3>
             <div>
               <div className={classes.flexItem}>
-                <p className={classes.nameMargin}>豊山政一</p>
-                <p>秋山太郎</p>
+                <p className={classes.nameMargin}>M.T</p>
+                <p>T.A</p>
               </div>
               <div className={classes.flexItem}>
-                <p className={classes.nameMargin}>工藤大輝</p>
-                <p>坂本篤弥</p>
+                <p className={classes.nameMargin}>D.K</p>
+                <p>A.S</p>
               </div>
               <div className={classes.flexItem}>
-                <p className={classes.nameMargin}>春日崇希</p>
-                <p>大谷走</p>
+                <p className={classes.nameMargin}>T.K</p>
+                <p>K.O</p>
               </div>
             </div>
           </div>
