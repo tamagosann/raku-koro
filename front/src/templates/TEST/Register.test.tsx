@@ -1,25 +1,22 @@
 import React from "react";
 import { cleanup, render } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
-import { BrowserRouter } from "react-router-dom"; 
-import App from "./App";
+import { store } from "../../app/store";
+import { BrowserRouter } from "react-router-dom";
+import { Register } from "../index";
 
-
-describe("App.tsx", () => {
+describe("DeceasedPerson", () => {
   //毎回レンダリング画面を空にする
   afterEach(() => {
-     cleanup();
+    cleanup();
   });
-  
-  test("render App.tsx", () => {
+  test("renders learn react link", () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <Register />
         </BrowserRouter>
       </Provider>
     );
   });
-
 });
