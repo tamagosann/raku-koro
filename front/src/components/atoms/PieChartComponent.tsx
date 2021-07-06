@@ -50,6 +50,7 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
 export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
     return(
         <ResponsiveContainer width="99%" height={400}>
+          <>
             <PieChart style={{ margin: '0 auto' }}>
               <Pie
                 startAngle={-270}
@@ -68,7 +69,7 @@ export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
                     fill={COLORS[index % COLORS.length]}
                   />
                 ))}
-              </Pie>
+              </Pie >
               <Legend
                 stroke="#fd7e00"
                 verticalAlign="top"
@@ -95,6 +96,7 @@ export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
                 }}
               />
             </PieChart>
+            </>
           </ResponsiveContainer>
     )
 }

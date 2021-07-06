@@ -7,7 +7,7 @@ import LoadingPage from '../components/atoms/LoadingPage';
 import Inner from '../components/inner/Inner';
 import InformetionTodayCorona from '../components/atoms/InformetionTodayCorona';
 import TodayCorona from '../components/atoms/TodayCorona';
-import TodayDeth from '../components/atoms/TodayDeth';
+import TodayDeth from '../components/atoms/TodayDeath';
 import TodayPcr from '../components/atoms/TodayPcr';
 import TodayBedOccupancyRate from '../components/atoms/TodayBedOccupancyRate';
 
@@ -59,12 +59,12 @@ export const InformationCorona: FC = () => {
 
                 <Grid item xs={12} md={6}>
                   <Paper className={classes.paper}>
-                    <TodayCorona />
+                    <TodayCorona totalCorona={totalCorona} />
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Paper className={classes.paper}>
-                    <TodayDeth />
+                    <TodayDeth totalCorona={totalDeth}  />
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
