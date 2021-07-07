@@ -26,7 +26,9 @@ export const login = (email: string, password: string): Promise<void> => {
 
 //ログアウト
 export const logout = () => {
-  auth.signOut();
+  auth.signOut().catch((e) => {
+    throw new Error(e.message);
+  });
 };
 
 //新規登録
