@@ -11,7 +11,7 @@ import {
 } from './templates';
 import { PrefectureData } from './pages/PrefectureData';
 import { NationwideData } from './pages/NationwideData';
-import { InformationCorona } from './templates/InformationCorona';
+import { InformationCorona } from './templates/informationCorona';
 import PcrPositiveRate from './templates/PcrPositiveRate';
 import { Auth } from './components/atoms';
 

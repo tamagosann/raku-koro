@@ -24,6 +24,7 @@ interface Data {
 
 const PcrPositiveRate: FC = () => {
   const PcrPositiveRate = useAppSelector(selectDailyPositive);
+  
 
   const tranceData = [] as Data[];
 
