@@ -1,17 +1,12 @@
 import React from "react";
-import { cleanup, render } from "@testing-library/react";
-import { Provider } from "react-redux";
+import { cleanup, render, screen } from "@testing-library/react";
+import { Provider, useSelector } from "react-redux";
 import { store } from "../../app/store";
 import { BrowserRouter } from "react-router-dom";
-import { Login } from "../index";
+import { Login } from "../";
 
 describe("Login", () => {
-  //毎回レンダリング画面を空にする
-  afterEach(() => {
-    cleanup();
-  });
-
-  test("render", () => {
+  it("render", () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
