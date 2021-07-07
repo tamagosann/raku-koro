@@ -8,7 +8,7 @@ import {
     Legend,
   } from 'recharts';
   // 型
-import { Data } from '../../features/graphs/bedOccupancyRateSlice';
+// import { Data } from '../../features/graphs/bedOccupancyRateSlice';
 
 
   const COLORS = ['#bdc3c7', '#ff2b2b'];
@@ -49,13 +49,13 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
     }[];
   }
 
-  const tooltip = (value:number,name:string) => {
-    if (name === '推定病床残数') {
-      return `${value} 床`;
-    } else {
-      return `${value} 人`;
-    }
-  }
+  // const tooltip = (value:number,name:string,props:any) => {
+  //   if (name === '推定病床残数') {
+  //     return `${value} 床`;
+  //   } else {
+  //     return `${value} 人`;
+  //   }
+  // }
 
 
 export const PieChartComponent: FC<Props>= ({ data }: Props) => {
@@ -98,13 +98,14 @@ export const PieChartComponent: FC<Props>= ({ data }: Props) => {
                 ]}
               />
               <Tooltip
-               formatter={(value: any, name: any, props: any) => {
-                //  tooltip(value,name)
+               formatter={(value: number, name: string, props: any) => {
+                //  tooltip(value,name,props)
                   if (name === '推定病床残数') {
                     return `${value} 床`;
                   } else {
                     return `${value} 人`;
                   }
+                  // return `${value} `;
                 }}
                 data-testid="tooltip"
               />
