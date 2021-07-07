@@ -13,9 +13,7 @@ import { icon } from "../atoms/IconButtonSelect";
 import logo from "../../assets/img/logo.png";
 
 const headers = {
-  logins: [
-    { text: "ログアウト", icon: "Logout", link: "" },
-  ],
+  logins: [{ text: "ログアウト", icon: "Logout", link: "" }],
   logouts: [
     { text: "ログイン", icon: "Login", link: "/login" },
     {
@@ -100,6 +98,9 @@ const Header: FC<Props> = ({ userData }) => {
   const classes = useStyles();
   const history = useHistory();
   const [toggle, setToggle] = useState(false);
+  const handleClick = (link: string) => {
+    history.push(link);
+  };
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" style={{ background: "#fd7e00" }}>
@@ -130,7 +131,7 @@ const Header: FC<Props> = ({ userData }) => {
                     <div style={{ textAlign: "center" }}>
                       <IconButtonSelect
                         icon={graph.icon}
-                        onClick={() => history.push(graph.link)}
+                        onClick={() => handleClick(graph.link)}
                       />
                     </div>
                     <div style={{ textAlign: "center" }}>
