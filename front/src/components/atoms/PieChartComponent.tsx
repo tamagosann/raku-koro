@@ -10,9 +10,10 @@ import {
   // 型
 import { Data } from '../../features/graphs/bedOccupancyRateSlice';
 
+
   const COLORS = ['#bdc3c7', '#ff2b2b'];
   const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({
+  export const renderCustomizedLabel:FC = ({
     cx,
     cy,
     midAngle,
@@ -26,15 +27,18 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
   
     return (
+      <>
       <text
         x={x}
         y={y}
         fill="white"
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
+        data-testid="text"
       >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
+      </>
     );
   };
 
@@ -56,8 +60,8 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
 
 export const PieChartComponent: FC<Props>= ({ data }: Props) => {
     return(
-        
-          <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="99%" height={400}>
+          
             <PieChart style={{ margin: '0 auto' }}>
               <Pie
                 startAngle={-270}
@@ -102,6 +106,7 @@ export const PieChartComponent: FC<Props>= ({ data }: Props) => {
                     return `${value} 人`;
                   }
                 }}
+                data-testid="tooltip"
               />
             </PieChart>
           </ResponsiveContainer>

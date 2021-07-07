@@ -5,13 +5,13 @@ import { store } from "../../app/store";
 import { BrowserRouter } from "react-router-dom";
 import { PrefectureDailyInfention } from "../index";
 
-describe("DeceasedPerson", () => {
+describe("PrefectureDairyInfection", () => {
   //毎回レンダリング画面を空にする
   afterEach(() => {
     cleanup();
   });
 
-  test("renders learn react link", () => {
+  test("render", () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -23,3 +23,6 @@ describe("DeceasedPerson", () => {
     screen.debug();
   });
 });
+
+//useEffectとloading問題
+//Stmtsは73.33
