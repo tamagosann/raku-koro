@@ -1,4 +1,3 @@
-import React from 'react';
 import { cleanup, render, screen } from '@testing-library/react';
 import TodayPcr from '../TodayPcr';
 import { Provider } from 'react-redux';

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommentList PCR存在する？ 1`] = `
+exports[`CommentList CommentList PCR存在する？ 1`] = `
 <div>
   <div
     class="recharts-responsive-container"

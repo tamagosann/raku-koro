@@ -8,11 +8,12 @@ import {
     Legend,
   } from 'recharts';
   // 型
-import { Data } from '../../features/graphs/bedOccupancyRateSlice';
+// import { Data } from '../../features/graphs/bedOccupancyRateSlice';
+
 
   const COLORS = ['#bdc3c7', '#ff2b2b'];
   const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({
+  export const renderCustomizedLabel:FC = ({
     cx,
     cy,
     midAngle,
@@ -20,37 +21,47 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
     outerRadius,
     percent,
     index,
-  }: any): JSX.Element => {
+  }:any): JSX.Element => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
   
     return (
+      <>
       <text
         x={x}
         y={y}
         fill="white"
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
+        data-testid="text"
       >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
+      </>
     );
   };
 
   interface Props {
-    element: Data;
     data: {
       name: string;
       value: number;
     }[];
   }
 
+  // const tooltip = (value:number,name:string,props:any) => {
+  //   if (name === '推定病床残数') {
+  //     return `${value} 床`;
+  //   } else {
+  //     return `${value} 人`;
+  //   }
+  // }
 
-export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
+
+export const PieChartComponent: FC<Props>= ({ data }: Props) => {
     return(
         <ResponsiveContainer width="99%" height={400}>
-          <>
+          
             <PieChart style={{ margin: '0 auto' }}>
               <Pie
                 startAngle={-270}
@@ -87,16 +98,21 @@ export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
                 ]}
               />
               <Tooltip
-               formatter={(value: any, name: any, props: any) => {
+               formatter={(value: number, name: string, props: any) => {
+                //  tooltip(value,name,props)
                   if (name === '推定病床残数') {
                     return `${value} 床`;
                   } else {
                     return `${value} 人`;
                   }
+                  // return `${value} `;
                 }}
+                data-testid="tooltip"
               />
             </PieChart>
-            </>
           </ResponsiveContainer>
+            
+            
+          
     )
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render ,screen} from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "../../app/store";
 import { BrowserRouter } from "react-router-dom";
@@ -19,6 +19,8 @@ describe("PrefectureDairyInfection", () => {
         </BrowserRouter>
       </Provider>
     );
+    expect(screen.getAllByRole('heading')[0].textContent).toBe("Loading...");
+    screen.debug();
   });
 });
 
