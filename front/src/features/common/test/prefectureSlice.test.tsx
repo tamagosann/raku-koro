@@ -8,10 +8,17 @@ describe('Reducer Redux Toolkit', () => {
       status: 'loading',
     };
     it('changeValue', () => {
-      expect(reducer(initialState, selectedPrefecture(47))).toEqual({
+      const action = { type: selectedPrefecture.type, payload: 47 };
+      const state = reducer(initialState, action);
+      // expect(state.status).toEqual('success');
+      expect(state).toEqual({
         prefCode: 47,
         status: 'success',
       });
+      // expect(reducer(initialState, selectedPrefecture(47))).toEqual({
+      //   prefCode: 47,
+      //   status: 'success',
+      // });
     });
   });
 });
