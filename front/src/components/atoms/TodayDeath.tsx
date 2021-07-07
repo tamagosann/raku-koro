@@ -1,6 +1,6 @@
-import React, {  FC, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 
-import {GraphState} from '../../features/graphs/totalDethSlice';
+import { GraphState } from '../../features/graphs/totalDeathSlice';
 
 interface Props {
   totalCorona: GraphState;
@@ -36,7 +36,6 @@ export const coronaCalculation = (totalCorona: GraphState) => {
 };
 
 const TodayDeth: FC<Props> = (props) => {
-
   const corona = useMemo(() => {
     return coronaCalculation(props.totalCorona);
   }, [props.totalCorona, coronaCalculation]);
@@ -44,17 +43,14 @@ const TodayDeth: FC<Props> = (props) => {
   return (
     <>
       <h2 style={{ fontSize: '24px' }}>累計死亡者数</h2>
-      <h2 style={{ fontSize: '32px' }}>
-        {corona.today.toLocaleString()}人
-      </h2>
+      <h2 style={{ fontSize: '32px' }}>{corona.today.toLocaleString()}人</h2>
       <h3 style={{ fontSize: '24px' }}>
         前日比：＋
         {corona.yesterday.toLocaleString()}人
       </h3>
       <h3 style={{ fontSize: '24px' }}>
         前々日比：＋
-        {corona.beforeYesterday.toLocaleString()}
-        人
+        {corona.beforeYesterday.toLocaleString()}人
       </h3>
     </>
   );
