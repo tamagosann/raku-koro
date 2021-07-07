@@ -82,7 +82,7 @@ const App = () => {
 
   return (
     <>
-      <Header />
+      <Header userData={userData}/>
       {/* ここの条件分岐に書くグラフのデータ取得ステータスを追加してください */}
       {userStatus === "loading" ||
       threadStatus === "loading" ||
@@ -95,7 +95,7 @@ const App = () => {
         <LoadingPage />
       ) : (
         <>
-          <Router/>
+          <Router />
         </>
       )}
       <Footer />
