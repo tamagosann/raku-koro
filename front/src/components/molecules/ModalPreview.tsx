@@ -45,7 +45,7 @@ export const ModalPreview: FC<Props> = ({ element, data }: Props) => {
           {element.prefecture} 病床使用率{' '}
           {((element.inpatient / element.secure_bed) * 100).toFixed(2)} % (参考)
         </h2>
-        <PieChartComponent data={data} element={element} />
+        <PieChartComponent data={data} />
 
         <p>PCR検査陽性者数：{element.pcr_positive.toLocaleString()}人</p>
         <p>うち重症者数：{element.injured.toLocaleString()}人</p>

@@ -55,8 +55,7 @@ describe(`TodayDeth`, () => {
     expect(screen.getAllByRole('heading')[3].textContent).toBe(
       '前々日比：＋200人'
     );
-    // screen.getByRole('');
-    screen.debug();
+
   });
   test(`renders TodayCorona component`, () => {
     render(
@@ -64,6 +63,5 @@ describe(`TodayDeth`, () => {
         <TodayDeth totalCorona={testData2} />
       </Provider>
     );
-    // screen.debug();
   });
 });

@@ -5,46 +5,35 @@ import {PieChartComponent} from "../PieChartComponent";
 import { BrowserRouter } from "react-router-dom";
 
 const element = {
-    pcr_positive: 0,
-    injured: 0,
-    secure_bed: 0,
+    pcr_positive: 10,
+    injured: 10,
+    secure_bed: 10,
     use_bed_rate: '',
-    inpatient: 0,
+    inpatient: 10,
     source: '',
     update: '',
-    home_recuperator: 0,
+    home_recuperator: 10,
     prefecture: '',
-    pref_code: 0,
-    injured_bed: 0,
+    pref_code: 10,
+    injured_bed: 10,
     use_injured_bed_rate: '',
   }
   
   const data = [
     {
       name: '推定病床残数',
-      value: element.secure_bed - element.inpatient,
+      value: 40
     },
     {
       name: '入院者数',
-      value: element.inpatient,
+      value: 15
     },
   ];
 
+  
+
 
 describe("CommentList", () => {
-
-beforeEach(() => {
-    render(
-      <Provider store={store}>
-        <PieChartComponent  element={element} data={data}/>
-      </Provider>
-    );
-  });
-
-  //毎回レンダリング画面を空にする
-  afterEach(() => {
-    cleanup();
-  });
 
 
   test(`PCR存在する？`, () => {
@@ -53,11 +42,11 @@ beforeEach(() => {
 
         const { container } = render(
         <Provider store={store}>
-            <PieChartComponent  element={element} data={data} />
+            <PieChartComponent data={data} />
         </Provider>
         );
         expect(container).toMatchSnapshot();
-        // screen.debug()
+        
 
 
     });
@@ -65,9 +54,7 @@ beforeEach(() => {
     test("renders learn react link", () => {
         render(
           <Provider store={store}>
-            <BrowserRouter>
-              <PieChartComponent element={element} data={data}/>
-            </BrowserRouter>
+              <PieChartComponent data={data}/>
           </Provider>
         );
         screen.debug();

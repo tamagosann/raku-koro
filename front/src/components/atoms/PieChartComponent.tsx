@@ -20,7 +20,7 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
     outerRadius,
     percent,
     index,
-  }: any): JSX.Element => {
+  }:any): JSX.Element => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -39,18 +39,25 @@ import { Data } from '../../features/graphs/bedOccupancyRateSlice';
   };
 
   interface Props {
-    element: Data;
     data: {
       name: string;
       value: number;
     }[];
   }
 
+  const tooltip = (value:number,name:string) => {
+    if (name === '推定病床残数') {
+      return `${value} 床`;
+    } else {
+      return `${value} 人`;
+    }
+  }
 
-export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
+
+export const PieChartComponent: FC<Props>= ({ data }: Props) => {
     return(
-        <ResponsiveContainer width="99%" height={400}>
-          <>
+        
+          <ResponsiveContainer width="100%" height={400}>
             <PieChart style={{ margin: '0 auto' }}>
               <Pie
                 startAngle={-270}
@@ -88,6 +95,7 @@ export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
               />
               <Tooltip
                formatter={(value: any, name: any, props: any) => {
+                //  tooltip(value,name)
                   if (name === '推定病床残数') {
                     return `${value} 床`;
                   } else {
@@ -96,7 +104,9 @@ export const PieChartComponent: FC<Props>= ({ element, data }: Props) => {
                 }}
               />
             </PieChart>
-            </>
           </ResponsiveContainer>
+            
+            
+          
     )
 }
