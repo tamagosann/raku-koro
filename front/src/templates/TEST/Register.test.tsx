@@ -5,6 +5,7 @@ import { store } from "../../app/store";
 import { BrowserRouter } from "react-router-dom";
 import { Register } from "../index";
 import userEvent from "@testing-library/user-event";
+import { act } from "react-test-renderer";
 
 describe("Register", () => {
   //毎回レンダリング画面を空にする
@@ -28,8 +29,6 @@ describe("Register", () => {
         </BrowserRouter>
       </Provider>
     );
-    const submitButton = screen.getByRole("button", { name: "登録" });
-    userEvent.click(submitButton);
   });
 });
 
