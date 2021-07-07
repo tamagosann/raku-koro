@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Legend,
   AreaChart,
@@ -26,7 +26,7 @@ interface Props {
   date: string;
 }
 
-export const ReChart = ({
+export const ReChart: FC<Props> = ({
   targetPrefecture,
   children,
   dataKey,
@@ -34,7 +34,7 @@ export const ReChart = ({
   endIndex,
   value,
   date,
-}: Props) => {
+}) => {
   return (
     <>
       {!Number(value) ? (
