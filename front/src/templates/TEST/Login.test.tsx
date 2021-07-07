@@ -3,9 +3,9 @@ import { cleanup, render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "../../app/store";
 import { BrowserRouter } from "react-router-dom";
-import { PcrPositiveRate } from "../index";
+import { Login } from "../index";
 
-describe("PcrPositiveRate", () => {
+describe("Login", () => {
   //毎回レンダリング画面を空にする
   afterEach(() => {
     cleanup();
@@ -15,11 +15,12 @@ describe("PcrPositiveRate", () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <PcrPositiveRate />
+          <Login />
         </BrowserRouter>
       </Provider>
     );
   });
 });
 
-//Stmtsは一応80パーセント
+//useEffect問題、react-hook-form動かない問題
+//stmtsは85パーセント

@@ -5,13 +5,13 @@ import { store } from "../../app/store";
 import { BrowserRouter } from "react-router-dom";
 import { InformationCorona } from "../index";
 
-describe("DeceasedPerson", () => {
+describe("Information Corona", () => {
   //毎回レンダリング画面を空にする
   afterEach(() => {
     cleanup();
   });
 
-  test("renders learn react link", () => {
+  test("render", () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -21,3 +21,5 @@ describe("DeceasedPerson", () => {
     );
   });
 });
+
+//Stmtsは100パーセント
