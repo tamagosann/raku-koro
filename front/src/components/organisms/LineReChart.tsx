@@ -13,7 +13,7 @@ import {
 
 // 型のインポート
 import { Data } from '../../features/graphs/totalCoronaSlice';
-import { DethData } from '../../features/graphs/totalDethSlice';
+import { DethData } from '../../features/graphs/totalDeathSlice';
 
 interface Props {
   data: Data[] | DethData[];
@@ -24,31 +24,38 @@ interface Props {
   endIndex: number;
 }
 
-const LineReChart: FC<Props> = ({ data, xDataKey, lineDataKey, lineName, startIndex, endIndex}) => {
+const LineReChart: FC<Props> = ({
+  data,
+  xDataKey,
+  lineDataKey,
+  lineName,
+  startIndex,
+  endIndex,
+}) => {
   return (
-    <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-    <LineChart data={data}>
-      <XAxis dataKey={xDataKey} tick={{ fontSize: '.6rem' }}/>
-      <YAxis />
-      <Tooltip />
-      <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-      <Legend verticalAlign="top" stroke="#fd7e00"/>
-      <Line
-        dataKey={lineDataKey}
-        name={lineName}
-        stroke="#fd7e00"
-        fill="#fd7e00"
-        strokeWidth={3}
-      />
-      <Brush
-        dataKey={xDataKey}
-        stroke="#fd7e00"
-        startIndex={startIndex}
-        endIndex={endIndex}
-      />
-    </LineChart>
-  </ResponsiveContainer>
-  )
-}
+    <ResponsiveContainer width='100%' height='100%' minHeight={400}>
+      <LineChart data={data}>
+        <XAxis dataKey={xDataKey} tick={{ fontSize: '.6rem' }} />
+        <YAxis />
+        <Tooltip />
+        <CartesianGrid stroke='#eee' strokeDasharray='5 5' />
+        <Legend verticalAlign='top' stroke='#fd7e00' />
+        <Line
+          dataKey={lineDataKey}
+          name={lineName}
+          stroke='#fd7e00'
+          fill='#fd7e00'
+          strokeWidth={3}
+        />
+        <Brush
+          dataKey={xDataKey}
+          stroke='#fd7e00'
+          startIndex={startIndex}
+          endIndex={endIndex}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  );
+};
 
 export default LineReChart;
