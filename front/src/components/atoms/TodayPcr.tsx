@@ -1,15 +1,10 @@
-import React, { useEffect, useState, FC } from 'react';
-import { useAppSelector } from '../../app/hooks';
-import { selectDailyPositive } from '../../features/graphs/dailyPositiveSlice';
+import React, { FC, useMemo } from 'react';
+import { GraphState } from '../../features/graphs/dailyPositiveSlice';
 
-const TodayPcr: FC = () => {
-  const positivRate = useAppSelector(selectDailyPositive);
-  const [coronaPositiv, setcoronaPositiv] = useState(positivRate.data);
-
-  useEffect(() => {
-    setcoronaPositiv(positivRate.data);
-  }, [positivRate]);
-
+interface Props {
+  positivRate: GraphState;
+}
+export const pcrCalculation = (positivRate: GraphState) => {
   let todayBedRate: string | undefined;
   let yesterdayBedRate: string | undefined;
   let dayBeforeYesterdayBedRate: string | undefined;
@@ -36,19 +31,36 @@ const TodayPcr: FC = () => {
       (dayBeforeYesterdayPositiv / dayBeforeYesterdayPcr) *
       100
     ).toFixed(2);
+    return {
+      today: todayBedRate,
+      yesterday: yesterdayBedRate,
+      beforeYesterday: dayBeforeYesterdayBedRate,
+    };
+  } else {
+    return {
+      today: 0,
+      yesterday: 0,
+      beforeYesterday: 0,
+    };
   }
+};
+
+const TodayPcr: FC<Props> = ({ positivRate }) => {
+  const pcr = useMemo(() => {
+    return pcrCalculation(positivRate);
+  }, [positivRate, pcrCalculation]);
 
   return (
     <>
       <h2 style={{ fontSize: '24px' }}>PCR検査陽性率</h2>
-      <h2 style={{ fontSize: '32px' }}>{todayBedRate}%</h2>
+      <h2 style={{ fontSize: '32px' }}>{pcr.today}%</h2>
       <h3 style={{ fontSize: '24px' }}>
         前日：
-        {yesterdayBedRate}%
+        {pcr.yesterday}%
       </h3>
       <h3 style={{ fontSize: '24px' }}>
         前々日：
-        {dayBeforeYesterdayBedRate}%
+        {pcr.beforeYesterday}%
       </h3>
     </>
   );
