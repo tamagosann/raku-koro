@@ -12,7 +12,7 @@ import TodayPcr from '../components/atoms/TodayPcr';
 import TodayBedOccupancyRate from '../components/atoms/TodayBedOccupancyRate';
 
 import { selectTotalCorona } from '../features/graphs/totalCoronaSlice';
-import { selectTotalDeth } from '../features/graphs/totalDethSlice';
+import { selectTotalDeth } from '../features/graphs/totalDeathSlice';
 import { selectBedOccupancyRate } from '../features/graphs/bedOccupancyRateSlice';
 import { selectDailyPositive } from '../features/graphs/dailyPositiveSlice';
 
