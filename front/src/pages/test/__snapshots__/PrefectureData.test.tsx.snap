@@ -24,9 +24,9 @@ exports[`Footerコンポーネント jest renderer test render correctly 1`] = `
           }
         }
       >
-        <p>
+        <h2>
           Loading...
-        </p>
+        </h2>
       </div>
     </div>
   </div>

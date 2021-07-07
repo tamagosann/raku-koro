@@ -55,7 +55,7 @@ const PrefectureDailyInfention: FC = () => {
     <>
       {prefecture_daily_infection.status === 'loading' ? (
         <Inner>
-          <p>Loading...</p>
+          <h2>Loading...</h2>
         </Inner>
       ) : (
         <Inner>
