@@ -7,7 +7,6 @@ import prefectureRuducer from '../features/common/prefectureSlice';
 import dailyDeadRuducer from '../features/graphs/dailyDeadSlice';
 import totalCoronaRuducer from '../features/graphs/totalCoronaSlice';
 import totalDethRuducer from '../features/graphs/totalDeathSlice';
-import vaccinationRuducer from '../features/graphs/vaccinationSlice';
 import bedOccupancyRateRuducer from '../features/graphs/bedOccupancyRateSlice';
 import dailyPositiveRuducer from '../features/graphs/dailyPositiveSlice';
 
@@ -21,7 +20,6 @@ export const store = configureStore({
     dailyDead: dailyDeadRuducer,
     totalCorona: totalCoronaRuducer,
     totalDeth: totalDethRuducer,
-    vaccination: vaccinationRuducer,
     bedOccupancyRate: bedOccupancyRateRuducer,
     dailyPositive: dailyPositiveRuducer,
   },
