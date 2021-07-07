@@ -1,4 +1,4 @@
-import { render,cleanup } from "@testing-library/react";
+import { render,cleanup,screen } from "@testing-library/react";
 import {Provider} from 'react-redux'
 import {store} from '../../../app/store'
 import {PieChartComponent} from "../PieChartComponent";
@@ -70,7 +70,9 @@ beforeEach(() => {
             </BrowserRouter>
           </Provider>
         );
+        screen.debug();
       });
+      
 
   });
 
