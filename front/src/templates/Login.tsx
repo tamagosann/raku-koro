@@ -52,7 +52,11 @@ const Login: FC = () => {
     <Inner>
       <Box mt={3} textAlign="center">
         <h2>ログイン</h2>
-        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+        {/* {errorMsg && ( */}
+          <p style={{ color: "red" }} data-testid="error">
+            {errorMsg}
+          </p>
+        {/* )} */}
         <form onSubmit={handleSubmit(doLogin)}>
           <Box mt={3}>
             <EmailInput control={control} error={errors.email!} />

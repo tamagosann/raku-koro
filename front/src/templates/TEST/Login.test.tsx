@@ -1,17 +1,23 @@
 import React from "react";
-import { cleanup, render } from "@testing-library/react";
-import { Provider } from "react-redux";
+import { cleanup, render, screen, fireEvent } from "@testing-library/react";
+import { Provider,useSelector } from "react-redux";
+import { useAppSelector } from "../../app/hooks";
 import { store } from "../../app/store";
 import { BrowserRouter } from "react-router-dom";
-import { Login } from "../index";
+import { Login } from "../";
 
 describe("Login", () => {
-  //毎回レンダリング画面を空にする
-  afterEach(() => {
-    cleanup();
+  jest.mock("react-redux");
+  const useSelectorMock = useSelector as jest.Mock<number>;
+  beforeEach(() => {
+    useSelectorMock.mockReturnValue(10);
   });
 
-  test("render", () => {
+  it("render", () => {
+    // const mockHistoryPush = jest.fn();
+    // jest.mock("react-router-dom", () => ({
+    //   useHistory: () => ({ push: mockHistoryPush }),
+    // }));
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -19,6 +25,12 @@ describe("Login", () => {
         </BrowserRouter>
       </Provider>
     );
+    expect(screen.getByTestId("error"))
+    screen.debug(screen.getByTestId("error"))
+    const routingButton = screen.getByRole("button", { name: "ログイン" });
+    // fireEvent.click(routingButton);
+    // screen.debug(routingButton);
+    // expect(mockHistoryPush).toBeCalled();
   });
 });
 

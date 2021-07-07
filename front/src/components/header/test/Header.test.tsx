@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { Header } from "../index";
-
+import userEvent from "@testing-library/user-event";
 import { store } from "../../../app/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -72,6 +72,7 @@ describe("Header", () => {
     let username = screen.getByText(/テスト太郎/);
     expect(fireEvent.click(username)).toBe(true);
   });
+  //要修正
   test("ボタンたちの動作確認(ログインなし)", () => {
     render(
       <Provider store={store}>
