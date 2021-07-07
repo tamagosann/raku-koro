@@ -1,51 +1,51 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
-import Router from "./Router";
-import { auth } from "./apis/firebase";
-import { useAppSelector } from "./app/hooks";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import Router from './Router';
+import { auth } from './apis/firebase';
+import { useAppSelector } from './app/hooks';
 
 //コンポーネント
-import { Header } from "./components/header";
-import { LoadingPage } from "./components/atoms";
-import { Footer } from "./components/atoms/Footer";
+import { Header } from './components/header';
+import { LoadingPage } from './components/atoms';
+import { Footer } from './components/atoms/Footer';
 
 // slice
 import {
   fetchDailyInfectionAsync,
   selectDailyInfectionStatus,
-} from "./features/graphs/dailyInfectionSlice";
+} from './features/graphs/dailyInfectionSlice';
 import {
   fetchDailyDeadAsync,
   selectDailyDeadStatus,
-} from "./features/graphs/dailyDeadSlice";
+} from './features/graphs/dailyDeadSlice';
 import {
   fetchTotalCoronaAsync,
   selectTotalCoronaStatus,
-} from "./features/graphs/totalCoronaSlice";
+} from './features/graphs/totalCoronaSlice';
 import {
   fetchTotalDethAsync,
   selectTotalDethStatus,
-} from "./features/graphs/totalDethSlice";
+} from './features/graphs/totalDeathSlice';
 import {
   fetchBedOccupancyRateAsync,
   selectBedOccupancyRateStatus,
-} from "./features/graphs/bedOccupancyRateSlice";
+} from './features/graphs/bedOccupancyRateSlice';
 import {
   fetchDailyPositiveAsync,
   selectDailyPositiveStatus,
-} from "./features/graphs/dailyPositiveSlice";
+} from './features/graphs/dailyPositiveSlice';
 
 import {
   unSetUser,
   selectUserStatus,
   selectUser,
   fetchUserDataAsync,
-} from "./features/user/userSlice";
+} from './features/user/userSlice';
 import {
   fetchThreadAsync,
   selectThreadStatus,
-} from "./features/thread/threadSlice";
+} from './features/thread/threadSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -82,16 +82,16 @@ const App = () => {
 
   return (
     <>
-      <Header userData={userData}/>
+      <Header userData={userData} />
       {/* ここの条件分岐に書くグラフのデータ取得ステータスを追加してください */}
-      {userStatus === "loading" ||
-      threadStatus === "loading" ||
-      bedOcuStatus === "loading" ||
-      totalDethStatus === "loading" ||
-      dayDeadStatus === "loading" ||
-      dayInfectStatus === "loading" ||
-      dayPosiStatus === "loading" ||
-      totalCoroStatus === "loading" ? (
+      {userStatus === 'loading' ||
+      threadStatus === 'loading' ||
+      bedOcuStatus === 'loading' ||
+      totalDethStatus === 'loading' ||
+      dayDeadStatus === 'loading' ||
+      dayInfectStatus === 'loading' ||
+      dayPosiStatus === 'loading' ||
+      totalCoroStatus === 'loading' ? (
         <LoadingPage />
       ) : (
         <>
