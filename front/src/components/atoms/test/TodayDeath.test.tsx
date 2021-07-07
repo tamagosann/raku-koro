@@ -1,9 +1,8 @@
-
 import { render, screen } from '@testing-library/react';
 import TodayDeth from '../TodayDeath';
 import { Provider } from 'react-redux';
 import { store } from '../../../app/store';
-import { GraphState } from '../../../features/graphs/totalDethSlice';
+import { GraphState } from '../../../features/graphs/totalDeathSlice';
 
 const testData: GraphState = {
   data: [
@@ -17,7 +16,7 @@ const testData: GraphState = {
     },
     {
       date: '2月8日',
-      ndeaths: 500
+      ndeaths: 500,
     },
   ],
   status: 'success',
