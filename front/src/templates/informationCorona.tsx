@@ -64,7 +64,7 @@ export const InformationCorona: FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Paper className={classes.paper}>
-                    <TodayDeth totalCorona={totalDeth}  />
+                    <TodayDeth totalCorona={totalDeth} />
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
